@@ -1,0 +1,53 @@
+name: Test, Build & Deploy
+
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-18.04
+    services:
+      mysql:
+        image: mysql:5.7.29
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: register_architektury_test
+        ports:
+          - 3306
+        # options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+    - uses: actions/checkout@v1
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: |
+        echo "::set-output name=dir::$(composer config cache-files-dir)"
+    - uses: actions/cache@v1
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+    - uses: shivammathur/setup-php@v1
+      with:
+        php-version: 7.2
+        extensions: mbstring, bcmath, fileinfo, pdo_mysql
+    - run: composer install --no-progress --no-interaction
+    - run: ./vendor/bin/phpunit
+      env:
+        APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
+        DATABASE_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/register_architektury_test
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-18.04
+    needs: [test]
+    if: github.ref == 'refs/heads/master'
+    steps:
+    - uses: actions/checkout@v1
+    - uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.2
+    - uses: atymic/deployer-php-action@0.1.0
+      with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
