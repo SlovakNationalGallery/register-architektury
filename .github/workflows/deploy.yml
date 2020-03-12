@@ -43,8 +43,12 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v1
+    - uses: shivammathur/setup-php@v1
+      with:
+        php-version: 7.2
+    - run: composer install --no-progress --no-interaction
     - uses: atymic/deployer-php-action@0.1.0
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-    - run: dep deploy production
+    - run: dep deploy
