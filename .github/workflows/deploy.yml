@@ -40,10 +40,10 @@ jobs:
     name: Deploy
     runs-on: ubuntu-18.04
     needs: [test]
-    # if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v1
-    - uses: shivammathur/setup-php@master
+    - uses: shivammathur/setup-php@v1
       with:
         php-version: 7.2
     - uses: atymic/deployer-php-action@0.1.0
