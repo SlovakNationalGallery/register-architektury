@@ -66,7 +66,7 @@ return [
 
         // Deployment is done and live
         'done' => [
-            //
+            'fpm:reload',
         ],
 
         // Deployment succeeded.
@@ -81,7 +81,7 @@ return [
 
         // After a deployment has been rolled back.
         'rollback' => [
-            //
+            'fpm:reload',
         ],
     ],
 
@@ -99,7 +99,8 @@ return [
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
         'repository' => 'https://github.com/SlovakNationalGallery/register-architektury.git',
-        'http_user' => 'www-data'
+        'http_user' => 'www-data',
+        'php_fpm_service' => 'php7.2-fpm',
     ],
 
     /*
