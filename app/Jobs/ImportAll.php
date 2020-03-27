@@ -55,8 +55,10 @@ class ImportAll implements ShouldQueue
                 S.[Realizácia] AS project_duration_dates,
                 Roky.[Rok0] AS decade,
                 Stav.[Stav] AS status,
+                S.[Štýlová charkteristika] AS style,
                 S.[Pole1] AS image_filename,
-                S.[Literatúra:] AS bibliography
+                S.[Literatúra:] AS bibliography,
+                S.[Opis] AS description
             FROM (Stavby AS S
             LEFT JOIN Stav ON Stav.Identifikácia = S.Modalita
             ) LEFT JOIN Roky ON Roky.Identifikácia = S.[Chronológia]
@@ -117,8 +119,10 @@ class ImportAll implements ShouldQueue
                             'project_duration_dates' => $row['project_duration_dates'],
                             'decade' => $row['decade'],
                             'status' => $row['status'],
+                            'style' => $row['style'],
                             'image_filename' => $row['image_filename'],
                             'bibliography' => $row['bibliography'],
+                            'description' => $row['description'],
                         ]
                     );
                 }
