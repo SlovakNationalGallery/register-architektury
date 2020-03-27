@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Architect;
 use App\Models\Building;
+use App\Models\Image;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -77,8 +78,19 @@ class ImportAll implements ShouldQueue
             ) LEFT JOIN Roky ON Roky.Identifikácia = S.[Chronológia]
         EOD);
 
-        DB::connection('mysql')->transaction(function() use ($architects, $buildings) {
-            $this->log->info('Processing ' . count($architects) . ' architects.');
+        // field 'Identifikačné číslo' is not queriable directly because of its name, hence S.*
+        $images = $this->fetchData(<<<'EOD'
+            SELECT
+                O.*,
+                O.[Názov dokumentu] AS title,
+                O.[Autor dokumentu] AS author,
+                O.[Rok] AS created_date,
+                O.[Zdroj originálu] AS source
+            FROM Obrazky AS O
+        EOD);
+
+        DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
+            $this->log->info('Processing ' . count($architects) . ' architects...');
 
             Architect::unguarded(function() use ($architects) {
                 Architect::query()->delete();
@@ -98,12 +110,14 @@ class ImportAll implements ShouldQueue
                 }
             });
 
-            $this->log->info('Processing ' . count($buildings) . ' buildings.');
+            $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
+                $ID_COLUMN_INDEX = 0;
+
                 Building::query()->delete();
                 foreach($buildings as $row) {
                     Building::updateOrCreate(
-                        ['source_id' => $row[0]],
+                        ['source_id' => $row[$ID_COLUMN_INDEX]],
                         [
                             'title' => $row['title'],
                             'title_alternatives' => $row['title_alternatives'],
@@ -125,7 +139,28 @@ class ImportAll implements ShouldQueue
                     );
                 }
             });
+
+            $this->log->info('Processing ' . count($images) . ' images...');
+            Image::unguarded(function() use ($images) {
+                $ID_COLUMN_INDEX = 0;
+                $BUILDING_COLUMN_INDEX = 9;
+
+                Image::query()->delete();
+                foreach($images as $row) {
+                    Image::updateOrCreate(
+                        ['source_id' => $row[$ID_COLUMN_INDEX]],
+                        [
+                            'title' => $row['title'],
+                            'author' => $row['author'],
+                            'created_date' => $row['created_date'],
+                            'source' => $row['source'],
+                            'building_id' => Building::where('source_id', $row[$BUILDING_COLUMN_INDEX])->firstOrFail()->id
+                        ]
+                    );
+                }
+            });
         });
+
         $this->log->info('🚀 Done');
     }
 
