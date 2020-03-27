@@ -90,10 +90,12 @@ class ImportAll implements ShouldQueue
         EOD);
 
         DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
-            $this->log->info('Processing ' . count($architects) . ' architects...');
+            Image::query()->delete();
+            Building::query()->delete();
+            Architect::query()->delete();
 
+            $this->log->info('Processing ' . count($architects) . ' architects...');
             Architect::unguarded(function() use ($architects) {
-                Architect::query()->delete();
                 foreach($architects as $row) {
                     Architect::updateOrCreate(
                         ['source_id' => $row['source_id']],
@@ -114,7 +116,6 @@ class ImportAll implements ShouldQueue
             Building::unguarded(function() use ($buildings) {
                 $ID_COLUMN_INDEX = 0;
 
-                Building::query()->delete();
                 foreach($buildings as $row) {
                     Building::updateOrCreate(
                         ['source_id' => $row[$ID_COLUMN_INDEX]],
@@ -145,7 +146,6 @@ class ImportAll implements ShouldQueue
                 $ID_COLUMN_INDEX = 0;
                 $BUILDING_COLUMN_INDEX = 9;
 
-                Image::query()->delete();
                 foreach($images as $row) {
                     Image::updateOrCreate(
                         ['source_id' => $row[$ID_COLUMN_INDEX]],
