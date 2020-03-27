@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use PDO;
@@ -18,6 +19,10 @@ use PDO;
 class ImportAll implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    const BUILDING_SOURCE_ID_COLUMN = 0;
+    const ARCHITECT_SOURCE_ID_COLUMN = 'source_id';
+    const IMAGE_SOURCE_ID_COLUMN = 0;
 
     /**
      * Create a new job instance.
@@ -93,17 +98,16 @@ class ImportAll implements ShouldQueue
         EOD);
 
         DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
-            Image::query()->delete();
-            Architect::query()->delete();
-            Building::query()->delete();
+            // Delete objects no longer present in source
+            Image::whereNotIn('source_id', Arr::pluck($images, self::IMAGE_SOURCE_ID_COLUMN))->delete();
+            Architect::whereNotIn('source_id', Arr::pluck($architects, self::ARCHITECT_SOURCE_ID_COLUMN))->delete();
+            Building::whereNotIn('source_id', Arr::pluck($buildings, self::BUILDING_SOURCE_ID_COLUMN))->delete();
 
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
-                $ID_COLUMN_INDEX = 0;
-
                 foreach($buildings as $row) {
                     Building::updateOrCreate(
-                        ['source_id' => $row[$ID_COLUMN_INDEX]],
+                        ['source_id' => $row[self::BUILDING_SOURCE_ID_COLUMN]],
                         [
                             'title' => $row['title'],
                             'title_alternatives' => $row['title_alternatives'],
@@ -134,7 +138,7 @@ class ImportAll implements ShouldQueue
                     $building_source_ids = empty($row['building_source_ids']) ? [] : explode(';', $row['building_source_ids']);
 
                     Architect::updateOrCreate(
-                        ['source_id' => $row['source_id']],
+                        ['source_id' => $row[self::ARCHITECT_SOURCE_ID_COLUMN]],
                         [
                             'first_name' => $row['first_name'],
                             'last_name' => $row['last_name'],
@@ -152,18 +156,17 @@ class ImportAll implements ShouldQueue
 
             $this->log->info('Processing ' . count($images) . ' images...');
             Image::unguarded(function() use ($images) {
-                $ID_COLUMN_INDEX = 0;
                 $BUILDING_COLUMN_INDEX = 9;
 
                 foreach($images as $row) {
                     $building = Building::where('source_id', $row[$BUILDING_COLUMN_INDEX])->first();
                     if (!$building) {
-                        $this->log->warning('Skipping image ' . $row['title'] . 'referencing an unknown building');
+                        $this->log->warning('Skipping image ' . $row[self::IMAGE_SOURCE_ID_COLUMN] . ' referencing an unknown building');
                         continue;
                     }
 
                     Image::updateOrCreate(
-                        ['source_id' => $row[$ID_COLUMN_INDEX]],
+                        ['source_id' => $row[self::IMAGE_SOURCE_ID_COLUMN]],
                         [
                             'title' => $row['title'],
                             'author' => $row['author'],
