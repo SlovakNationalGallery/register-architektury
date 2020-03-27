@@ -3,6 +3,8 @@
 namespace App\Jobs;
 
 use App\Models\Architect;
+use App\Models\Building;
+use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -21,10 +23,10 @@ class ImportAll implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($logChannel= 'default')
     {
         $this->source = new PDO("odbc:DRIVER={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=storage/app/source-db.accdb; Uid=''; Pwd='';");
-        $this->log = Log::channel('stderr');
+        $this->log = Log::channel($logChannel);
     }
 
     /**
@@ -34,6 +36,7 @@ class ImportAll implements ShouldQueue
      */
     public function handle()
     {
+        $this->log->info('Fetching data');
         $architects = $this->fetchData(<<<'EOD'
             SELECT
                 A.Identifikácia AS source_id,
@@ -49,28 +52,81 @@ class ImportAll implements ShouldQueue
             ) LEFT JOIN Mesto AS MiestoUmrtia ON MiestoUmrtia.Identifikácia = A.[Miesto úmrtia]
         EOD);
 
-        DB::transaction(function() use ($architects) {
-            $processedCount = 0;
+        // field 'Evid_č' is not queriable directly because of its name, hence S.*
+        $buildings = $this->fetchData(<<<'EOD'
+            SELECT
+                S.*,
+                S.[Pôvodný názov diela] AS title,
+                S.[Alternatívne názvy] AS title_alternatives,
+                S.[Dátum spracovania] AS processed_date,
+                S.[Architekt] AS architect_names,
+                S.[Stavebnik] AS builder,
+                S.[Stavitel] AS builder_authority,
+                S.[miesto] AS location_city,
+                S.[okres] AS location_district,
+                S.[ulica] AS location_street,
+                S.[GPS] AS location_gps,
+                S.[Projekt] AS project_start_dates,
+                S.[Realizácia] AS project_duration_dates,
+                Roky.[Rok0] AS decade,
+                Stav.[Stav] AS status,
+                S.[Pole1] AS image_filename,
+                S.[Literatúra:] AS bibliography
+            FROM (Stavby AS S
+            LEFT JOIN Stav ON Stav.Identifikácia = S.Modalita
+            ) LEFT JOIN Roky ON Roky.Identifikácia = S.[Chronológia]
+        EOD);
 
-            Architect::truncate();
-            foreach($architects as $row) {
-                Architect::updateOrCreate(
-                    ['source_id' => $row['source_id']],
-                    [
-                        'first_name' => $row['first_name'],
-                        'last_name' => $row['last_name'],
-                        'birth_date' => $row['birth_date'],
-                        'birth_place' => $row['birth_place'],
-                        'death_date' => $row['death_date'],
-                        'death_place' => $row['death_place'],
-                        'bio' => $row['bio'],
-                    ]
-                );
-                $processedCount++;
-            }
-            $this->log->info("Processed $processedCount architect records.");
+        DB::connection('mysql')->transaction(function() use ($architects, $buildings) {
+            $this->log->info('Processing ' . count($architects) . ' architects.');
+
+            Architect::unguarded(function() use ($architects) {
+                Architect::query()->delete();
+                foreach($architects as $row) {
+                    Architect::updateOrCreate(
+                        ['source_id' => $row['source_id']],
+                        [
+                            'first_name' => $row['first_name'],
+                            'last_name' => $row['last_name'],
+                            'birth_date' => $row['birth_date'],
+                            'birth_place' => $row['birth_place'],
+                            'death_date' => $row['death_date'],
+                            'death_place' => $row['death_place'],
+                            'bio' => $row['bio'],
+                        ]
+                    );
+                }
+            });
+
+            $this->log->info('Processing ' . count($buildings) . ' buildings.');
+            Building::unguarded(function() use ($buildings) {
+                Building::query()->delete();
+                foreach($buildings as $row) {
+                    Building::updateOrCreate(
+                        ['source_id' => $row[0]],
+                        [
+                            'title' => $row['title'],
+                            'title_alternatives' => $row['title_alternatives'],
+                            'processed_date' => $row['processed_date'],
+                            'architect_names' => $row['architect_names'],
+                            'builder' => $row['builder'],
+                            'builder_authority' => $row['builder_authority'],
+                            'location_city' => $row['location_city'],
+                            'location_district' => $row['location_district'],
+                            'location_street' => $row['location_street'],
+                            'location_gps' => $row['location_gps'],
+                            'project_start_dates' => $row['project_start_dates'],
+                            'project_duration_dates' => $row['project_duration_dates'],
+                            'decade' => $row['decade'],
+                            'status' => $row['status'],
+                            'image_filename' => $row['image_filename'],
+                            'bibliography' => $row['bibliography'],
+                        ]
+                    );
+                }
+            });
         });
-
+        $this->log->info('🚀 Done');
     }
 
     private function fetchData($query)
