@@ -26,7 +26,7 @@ class ImportAll implements ShouldQueue
      */
     public function __construct($logChannel= 'default')
     {
-        $this->source = new PDO("odbc:DRIVER={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=storage/app/source-db.accdb; Uid=''; Pwd='';");
+        $this->source = new PDO("odbc:DRIVER={Microsoft Access Driver (*.mdb, *.accdb)}; DBQ=storage/app/source-db-weinwurm.accdb; Uid=''; Pwd='';");
         $this->log = Log::channel($logChannel);
     }
 
@@ -37,22 +37,6 @@ class ImportAll implements ShouldQueue
      */
     public function handle()
     {
-        $this->log->info('Fetching data');
-        $architects = $this->fetchData(<<<'EOD'
-            SELECT
-                A.Identifikácia AS source_id,
-                A.Meno AS first_name,
-                A.Priezvisko AS last_name,
-                A.[Dátum narodenia] AS birth_date,
-                MiestoNarodenia.Mesto AS birth_place,
-                A.[Dátum úmrtia] AS death_date,
-                MiestoUmrtia.Mesto AS death_place,
-                A.Životopis AS bio
-            FROM (Architekti AS A
-            LEFT JOIN Mesto AS MiestoNarodenia ON MiestoNarodenia.Identifikácia = A.[Miesto narodenia]
-            ) LEFT JOIN Mesto AS MiestoUmrtia ON MiestoUmrtia.Identifikácia = A.[Miesto úmrtia]
-        EOD);
-
         // field 'Evid_č' is not queriable directly because of its name, hence S.*
         $buildings = $this->fetchData(<<<'EOD'
             SELECT
@@ -78,6 +62,23 @@ class ImportAll implements ShouldQueue
             ) LEFT JOIN Roky ON Roky.Identifikácia = S.[Chronológia]
         EOD);
 
+        $this->log->info('Fetching data');
+        $architects = $this->fetchData(<<<'EOD'
+            SELECT
+                A.Identifikácia AS source_id,
+                A.Meno AS first_name,
+                A.Priezvisko AS last_name,
+                A.[Dátum narodenia] AS birth_date,
+                MiestoNarodenia.Mesto AS birth_place,
+                A.[Dátum úmrtia] AS death_date,
+                MiestoUmrtia.Mesto AS death_place,
+                A.Životopis AS bio,
+                A.diela AS building_source_ids
+            FROM (Architekti AS A
+            LEFT JOIN Mesto AS MiestoNarodenia ON MiestoNarodenia.Identifikácia = A.[Miesto narodenia]
+            ) LEFT JOIN Mesto AS MiestoUmrtia ON MiestoUmrtia.Identifikácia = A.[Miesto úmrtia]
+        EOD);
+
         // field 'Identifikačné číslo' is not queriable directly because of its name, hence S.*
         $images = $this->fetchData(<<<'EOD'
             SELECT
@@ -91,26 +92,8 @@ class ImportAll implements ShouldQueue
 
         DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
             Image::query()->delete();
-            Building::query()->delete();
             Architect::query()->delete();
-
-            $this->log->info('Processing ' . count($architects) . ' architects...');
-            Architect::unguarded(function() use ($architects) {
-                foreach($architects as $row) {
-                    Architect::updateOrCreate(
-                        ['source_id' => $row['source_id']],
-                        [
-                            'first_name' => $row['first_name'],
-                            'last_name' => $row['last_name'],
-                            'birth_date' => $row['birth_date'],
-                            'birth_place' => $row['birth_place'],
-                            'death_date' => $row['death_date'],
-                            'death_place' => $row['death_place'],
-                            'bio' => $row['bio'],
-                        ]
-                    );
-                }
-            });
+            Building::query()->delete();
 
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
@@ -141,12 +124,40 @@ class ImportAll implements ShouldQueue
                 }
             });
 
+            $this->log->info('Processing ' . count($architects) . ' architects...');
+            Architect::unguarded(function() use ($architects) {
+                foreach($architects as $row) {
+                    $building_source_ids = empty($row['building_source_ids']) ? [] : explode(';', $row['building_source_ids']);
+
+                    Architect::updateOrCreate(
+                        ['source_id' => $row['source_id']],
+                        [
+                            'first_name' => $row['first_name'],
+                            'last_name' => $row['last_name'],
+                            'birth_date' => $row['birth_date'],
+                            'birth_place' => $row['birth_place'],
+                            'death_date' => $row['death_date'],
+                            'death_place' => $row['death_place'],
+                            'bio' => $row['bio'],
+                        ]
+                    )->buildings()->sync(
+                        Building::whereIn('source_id', $building_source_ids)->pluck('id')
+                    );
+                }
+            });
+
             $this->log->info('Processing ' . count($images) . ' images...');
             Image::unguarded(function() use ($images) {
                 $ID_COLUMN_INDEX = 0;
                 $BUILDING_COLUMN_INDEX = 9;
 
                 foreach($images as $row) {
+                    $building = Building::where('source_id', $row[$BUILDING_COLUMN_INDEX])->first();
+                    if (!$building) {
+                        $this->log->warning('Skipping image ' . $row['title'] . 'referencing an unknown building');
+                        continue;
+                    }
+
                     Image::updateOrCreate(
                         ['source_id' => $row[$ID_COLUMN_INDEX]],
                         [
@@ -154,7 +165,7 @@ class ImportAll implements ShouldQueue
                             'author' => $row['author'],
                             'created_date' => $row['created_date'],
                             'source' => $row['source'],
-                            'building_id' => Building::where('source_id', $row[$BUILDING_COLUMN_INDEX])->firstOrFail()->id
+                            'building_id' => $building->id,
                         ]
                     );
                 }
