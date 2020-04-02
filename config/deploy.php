@@ -101,6 +101,10 @@ return [
         'repository' => 'https://github.com/SlovakNationalGallery/register-architektury.git',
         'http_user' => 'www-data',
         'php_fpm_service' => 'php7.2-fpm',
+        'shared_dirs' => [
+            'public/media',
+            'storage',
+        ],
     ],
 
     /*
