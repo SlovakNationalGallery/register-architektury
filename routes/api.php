@@ -1,5 +1,7 @@
 <?php
 
+use App\Jobs\Upstream\ImportAll;
+use App\Jobs\Upstream\ResetDatabase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('sync/reset', 'Upstream\ResetDatabase');
+Route::post('sync/reset', function() {
+    ResetDatabase::dispatchNow();
+});
+
+Route::post('sync/start', function() {
+    ImportAll::dispatchNow();
+});
