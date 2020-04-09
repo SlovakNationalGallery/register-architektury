@@ -31,6 +31,7 @@ jobs:
         php-version: 7.2
         extensions: mbstring, bcmath, fileinfo, pdo_mysql
     - run: composer install --no-progress --no-interaction
+    - run: npm install && npm run production
     - run: ./vendor/bin/phpunit
       env:
         APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
