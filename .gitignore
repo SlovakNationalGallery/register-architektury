@@ -1,8 +1,13 @@
 /node_modules
 /public/hot
 /public/storage
+<<<<<<< HEAD
 /public/css
 /public/js
+=======
+/public/js
+/public/css
+>>>>>>> npm run dev
 /storage/*.key
 /vendor
 .env
@@ -13,3 +18,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+mix-manifest.json
