@@ -1,90 +1,64 @@
 @extends('layouts.app')
 @section('title', __('app.title'))
 
-@push('styles')
-<style>
-    html, body {
-        background-color: #fff;
-        color: #636b6f;
-        font-weight: 200;
-        height: 100vh;
-        margin: 0;
-    }
-
-    .full-height {
-        height: 100vh;
-    }
-
-    .flex-center {
-        align-items: center;
-        display: flex;
-        justify-content: center;
-    }
-
-    .position-ref {
-        position: relative;
-    }
-
-    .top-right {
-        position: absolute;
-        right: 10px;
-        top: 18px;
-    }
-
-    .content {
-        text-align: center;
-    }
-
-    .title {
-        font-size: 84px;
-    }
-
-    .links > a {
-        color: #636b6f;
-        padding: 0 25px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: .1rem;
-        text-decoration: none;
-        text-transform: uppercase;
-    }
-
-    .m-b-md {
-        margin-bottom: 30px;
-    }
-</style>
-@endpush
 @section('content')
-<div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-        <div class="top-right links">
-            @auth
-                <a href="{{ url('/home') }}">Home</a>
-            @else
-                <a href="{{ route('login') }}">Login</a>
-
-                @if (Route::has('register'))
-                    <a href="{{ route('register') }}">Register</a>
-                @endif
-            @endauth
-        </div>
-    @endif
-
-    <div class="content">
-        <div class="title m-b-md">
-            Laravel
-        </div>
-
-        <div class="links">
-            <a href="https://laravel.com/docs">Docs!</a>
-            <a href="https://laracasts.com">Laracasts</a>
-            <a href="https://laravel-news.com">News</a>
-            <a href="https://blog.laravel.com">Blog</a>
-            <a href="https://nova.laravel.com">Nova</a>
-            <a href="https://forge.laravel.com">Forge</a>
-            <a href="https://vapor.laravel.com">Vapor</a>
-            <a href="https://github.com/laravel/laravel">GitHub</a>
-        </div>
+<div class="container">
+  <div class="md-y-5">&nbsp;</div>
+  <div class="row mt-5 no-gutters">
+    <div class="col-md-4 py-3 border border-dark text-center">
+      Register modernej architektury oA HÚ SAV
     </div>
+    <div class="col-md-4 py-3 border border-dark text-center">
+      lupa_______________________.
+    </div>
+    <div class="col-md-4 py-3 border border-dark text-center">
+      <span class="pr-3"><u>SK</u></span>
+      <span class="pr-3"><u>EN</u></span>
+      <span class="pr-3">(+ menu? ≈)</span>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-3 py-3 border border-dark text-center">
+      oA
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      kolekcie
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      mapy
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      Register
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      DOCOMO
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      ŠUR
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      ATRIUM
+    </div>
+    <div class="col-md-3 py-3 border border-dark text-center">
+      MOMOVO
+    </div>
+  </div>
+  <div class="row no-gutters">
+  @php
+    //TODO remove this once we have data
+    $faker = Faker\Factory::create(config('app.faker_locale'));
+    $faker->addProvider(new Faker\Provider\Lorem($faker));
+  @endphp
+  @foreach (range(1, 8) as $n)
+    <div class="col-md-3 border border-dark text-center">
+      <img src="http://placekitten.com/300/350?image={{ $n }}" class="img-fluid">
+      <div class="small p-3">
+        <h6>{{ Str::ucfirst($faker->words(3, true)) }}</h6>
+        {{ implode(" ", array_map(function($w) { return "#$w"; }, $faker->words(4))) }}
+      </div>
+    </div>
+  @endforeach
+  </div>
+  <div class="my-5">&nbsp;</div>
 </div>
 @endsection
