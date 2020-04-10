@@ -1,13 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
-<<<<<<< HEAD
-/public/css
-/public/js
-=======
 /public/js
 /public/css
->>>>>>> npm run dev
 /storage/*.key
 /vendor
 .env
