@@ -53,7 +53,7 @@ return [
         'build' => [
             'npm:install',
             'npm:production',
-            'artisan:backpack:install',
+            'backpack:install',
         ],
 
         // Deployment is done but not live yet (before symlink)
@@ -153,7 +153,7 @@ return [
     */
 
     'include' => [
-        //
+        'deployer/backpack.php',
     ],
 
     /*
