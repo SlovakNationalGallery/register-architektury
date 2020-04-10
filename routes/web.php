@@ -14,5 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    //TODO move fzaninotto/faker to require-dev in composer.json once we have data
+    $faker = Faker\Factory::create(config('app.faker_locale'));
+    $faker->addProvider(new Faker\Provider\Lorem($faker));
+    return view('welcome', compact('faker'));
 });

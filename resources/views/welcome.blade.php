@@ -44,11 +44,6 @@
     </div>
   </div>
   <div class="row no-gutters">
-  @php
-    //TODO remove this once we have data
-    $faker = Faker\Factory::create(config('app.faker_locale'));
-    $faker->addProvider(new Faker\Provider\Lorem($faker));
-  @endphp
   @foreach (range(1, 8) as $n)
     <div class="col-md-3 border border-dark text-center">
       <img src="http://placekitten.com/300/350?image={{ $n }}" class="img-fluid">
