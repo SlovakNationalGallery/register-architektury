@@ -16,7 +16,7 @@ class CreatePublications extends Migration
             $table->increments('id');
 
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('authors');
             $table->string('cover_image')->nullable();
             $table->text('description')->nullable();
