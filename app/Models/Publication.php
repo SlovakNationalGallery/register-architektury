@@ -4,14 +4,22 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Date;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Publication extends Model
 {
-    use CrudTrait;
+    use CrudTrait, HasSlug;
 
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title')
+            ->saveSlugsTo('slug');
+    }
 
     public function getIsPublishedAttribute()
     {
