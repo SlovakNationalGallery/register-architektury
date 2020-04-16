@@ -4,3 +4,5 @@
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('building') }}'><i class='nav-icon la la-building'></i> Buildings</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('image') }}'><i class='nav-icon la la-image'></i> Images</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ backpack_url('publications') }}'><i class='nav-icon la la-book'></i> Publications</a></li>
+
+<li class="nav-item"><a class="nav-link" href="{{ backpack_url('elfinder') }}"><i class="nav-icon la la-files-o"></i> <span>{{ trans('backpack::crud.file_manager') }}</span></a></li>
