@@ -61,10 +61,14 @@ class PublicationCrudController extends CrudController
             ],
             [
                 'name' => 'published_at',
-                'type' => 'datetime',
-                'allows_null' => true,
+                'type' => 'datetime_picker',
+                'datetime_picker_options' => [
+                    'language' => 'sk',
+                    'showClear' => true,
+                    'stepping' => 30,
+                ],
                 'wrapper'   => [
-                    'class' => 'col-sm-8 col-md-6',
+                    'class' => 'col-sm-8 col-md-6 form-group',
                 ],
             ],
         ]);
