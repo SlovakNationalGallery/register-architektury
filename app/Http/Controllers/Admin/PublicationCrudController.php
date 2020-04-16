@@ -28,15 +28,11 @@ class PublicationCrudController extends CrudController
 
         $this->crud->setColumns([
             [
-                'name' => 'cover_image',
-                'type' => 'image',
-                'height' => '40px',
-                'width' => '40px',
-
+                'name' => 'title',
+                'type' => 'publication',
             ],
-            'title',
             [
-                'name' => 'Published',
+                'name' => 'published',
                 'type' => 'published_at',
             ],
             [
