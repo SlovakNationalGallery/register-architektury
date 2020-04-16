@@ -47,9 +47,17 @@ class PublicationCrudController extends CrudController
 
         $this->crud->addFields([
             'title',
-            'slug',
+            [
+                'name' => 'slug',
+                'label' => 'Slug (URL)',
+                'type' => 'text',
+                'hint' => 'Will be automatically generated from your title, if left empty.'
+            ],
+            [
+                'name' => 'cover_image',
+                'type' => 'browse',
+            ],
             'authors',
-            'cover_image',
             [
                 'name' => 'description',
                 'label' => 'Description',
