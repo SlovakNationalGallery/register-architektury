@@ -57,7 +57,7 @@ class PublicationCrudController extends CrudController
             [
                 'name' => 'description',
                 'label' => 'Description',
-                'type' => 'summernote',
+                'type' => 'tinymce',
             ],
             [
                 'name' => 'published_at',
