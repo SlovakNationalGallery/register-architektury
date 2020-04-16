@@ -56,8 +56,11 @@ class PublicationCrudController extends CrudController
             'authors',
             [
                 'name' => 'description',
-                'label' => 'Description',
                 'type' => 'tinymce',
+                'options' => [
+                    'entity_encoding' => 'raw',
+                    'height' => 480
+                ]
             ],
             [
                 'name' => 'published_at',

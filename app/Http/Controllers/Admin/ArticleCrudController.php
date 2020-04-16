@@ -52,7 +52,8 @@ class ArticleCrudController extends CrudController
                 'name' => 'content',
                 'type' => 'tinymce',
                 'options' => [
-                    'entity_encoding' => 'raw'
+                    'entity_encoding' => 'raw',
+                    'height' => 480
                 ]
             ],
             [
