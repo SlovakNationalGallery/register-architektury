@@ -1,7 +1,11 @@
 <!-- items sortable -->
 @php
-    $options = $field['model']::all();
-    $values = $field['value'] ?? [];
+    $old_ids = old(square_brackets_to_dots($field['name']));
+    $values = $old_ids
+        ? $field['model']::whereIn('id', $old_ids)->get()
+        : $field['value'] ?? collect([]);
+
+    $options = $field['model']::whereNotIn('id', $values->pluck('id'))->get();
 @endphp
 
 @include('crud::fields.inc.wrapper_start')
@@ -14,12 +18,9 @@
 
     <div class="input-group">
     <select multiple id="items" class="form-control select2_multiple">
-       @foreach ($options as $option)
-           {{-- list only unused options --}}
-           @if(!(in_array($option->getKey(), $field['value']->pluck($option->getKeyName(), $option->getKeyName())->toArray())))
-               <option value="{{ $option->getKey() }}" data-preview="{{ asset($option->preview) }}">{{ $option->title }}</option>
-           @endif
-       @endforeach
+    @foreach ($options as $option)
+        <option value="{{ $option->getKey() }}" data-preview="{{ asset($option->preview) }}">{{ $option->title }}</option>
+    @endforeach
     </select>
     <span class="input-group-btn">
       <button id="addItems" class="btn btn-default"><i class="la la-plus"></i>&nbsp; add items</button>
@@ -95,11 +96,9 @@
                         });
 
                         var options = [];
-                        @if (count($options))
-                            @foreach ($options as $option)
-                                options.push({{ $option->getKey() }});
-                            @endforeach
-                        @endif
+                        @foreach ($options as $option)
+                            options.push({{ $option->getKey() }});
+                        @endforeach
                     }
                 });
 
