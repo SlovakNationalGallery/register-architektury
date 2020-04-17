@@ -14,8 +14,8 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 class CollectionCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -64,6 +64,12 @@ class CollectionCrudController extends CrudController
                 ]
             ],
             [
+                'name' => 'buildings',
+                'type' => 'select_multiple',
+                'attribute' => 'title',
+                // 'type' => 'items_sortable',
+            ],
+            [
                 'name' => 'published_at',
                 'type' => 'datetime_picker',
                 'datetime_picker_options' => [
@@ -86,5 +92,28 @@ class CollectionCrudController extends CrudController
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
+    }
+
+    public function update()
+    {
+        $response = $this->traitUpdate();
+        $this->syncBuildingPositions();
+        return $response;
+    }
+
+    public function store()
+    {
+      $response = $this->traitStore();
+      $this->syncBuildingPositions();
+      return $response;
+    }
+
+    private function syncBuildingPositions() {
+        $buildings = [];
+        $building_ids = $this->crud->getRequest()->get('buildings', []);
+        foreach ($building_ids as $building_position => $building_id) {
+            $buildings[$building_id] = ['position' => $building_position];
+        }
+        $this->crud->getCurrentEntry()->buildings()->sync($buildings);
     }
 }
