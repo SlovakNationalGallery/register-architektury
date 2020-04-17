@@ -6,10 +6,11 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\Publishable;
 
 class Publication extends Model
 {
-    use CrudTrait, HasSlug;
+    use CrudTrait, HasSlug, Publishable;
 
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
@@ -19,11 +20,5 @@ class Publication extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
-    }
-
-    public function getIsPublishedAttribute()
-    {
-        if (!isset($this->published_at)) return false;
-        return $this->published_at->isPast();
     }
 }
