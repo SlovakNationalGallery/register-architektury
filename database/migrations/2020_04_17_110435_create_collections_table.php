@@ -27,7 +27,7 @@ class CreateCollectionsTable extends Migration
         Schema::create('building_collection', function (Blueprint $table) {
             $table->foreignId('building_id')->constrained()->onDelete('cascade');
             $table->foreignId('collection_id')->constrained()->onDelete('cascade');
-            $table->integer('position');
+            $table->integer('position')->default(0);
         });
     }
 
