@@ -24,6 +24,6 @@ class Collection extends Model
 
     public function buildings()
     {
-        return $this->belongsToMany('App\Models\Building')->withPivot('position');
+        return $this->belongsToMany('App\Models\Building')->withPivot('position')->orderBy('position');
     }
 }

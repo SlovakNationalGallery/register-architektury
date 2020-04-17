@@ -65,9 +65,7 @@ class CollectionCrudController extends CrudController
             ],
             [
                 'name' => 'buildings',
-                'type' => 'select_multiple',
-                'attribute' => 'title',
-                // 'type' => 'items_sortable',
+                'type' => 'items_sortable',
             ],
             [
                 'name' => 'published_at',
