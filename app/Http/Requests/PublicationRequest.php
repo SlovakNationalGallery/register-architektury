@@ -28,7 +28,6 @@ class PublicationRequest extends FormRequest
         return [
             'title' => 'required|min:2|max:255',
             'authors' => 'required|min:2|max:255',
-            'cover_image' => 'image',
         ];
     }
 
