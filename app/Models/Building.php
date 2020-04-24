@@ -24,9 +24,84 @@ class Building extends Model
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
-                    ]
+                    ],
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                    'stemmed' => [
+                        'type' => 'text',
+                        'analyzer' => 'default_analyzer',
+                    ],
+                    // 'suggest' => [
+                    //     'type' => 'text',
+                    //     'analyzer' => 'autocomplete_analyzer',
+                    //     'search_analyzer' => 'asciifolding_analyzer',
+                    // ]
                 ]
             ],
+            'title_alternatives' => [
+                'type' => 'text',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                    'stemmed' => [
+                        'type' => 'text',
+                        'analyzer' => 'default_analyzer',
+                    ],
+                    // 'suggest' => [
+                    //     'type' => 'text',
+                    //     'analyzer' => 'autocomplete_analyzer',
+                    //     'search_analyzer' => 'asciifolding_analyzer',
+                    // ]
+                ]
+            ],
+            'description' => [
+                'type' => 'text',
+                'fields' => [
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                    'stemmed' => [
+                        'type' => 'text',
+                        'analyzer' => 'default_analyzer',
+                    ],
+                ]
+            ],
+            'architect_names' => [
+                'type' => 'text',
+                'fields' => [
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                ]
+            ],
+            'location_city' => [
+                'type' => 'text',
+                'fields' => [
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                ]
+            ],
+            'location_city' => [
+                'type' => 'text',
+                'fields' => [
+                    'folded' => [
+                        'type' => 'text',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ],
+                ]
+            ],
+            // @TODO: location_gps store as geo_point https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-point.html
         ]
     ];
 
