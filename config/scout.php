@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'prefix' => env('SCOUT_PREFIX', 'regarch'),
+    'prefix' => env('SCOUT_PREFIX', 'regarch_'),
 
     /*
     |--------------------------------------------------------------------------

@@ -11,7 +11,7 @@ class Building extends Model
     use CrudTrait;
     use Searchable;
 
-    protected $indexConfigurator = \App\RegarchIndexConfigurator::class;
+    protected $indexConfigurator = \App\Elasticsearch\BuildingIndexConfigurator::class;
 
     protected $searchRules = [
         //

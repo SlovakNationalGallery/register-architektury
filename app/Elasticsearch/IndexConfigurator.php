@@ -1,11 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Elasticsearch;
 
-use ScoutElastic\IndexConfigurator;
 use ScoutElastic\Migratable;
+use ScoutElastic\IndexConfigurator as BaseIndexConfigurator;
 
-class RegarchIndexConfigurator extends IndexConfigurator
+class IndexConfigurator extends BaseIndexConfigurator
 {
     use Migratable;
 
