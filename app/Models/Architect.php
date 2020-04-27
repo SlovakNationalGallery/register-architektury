@@ -11,7 +11,7 @@ class Architect extends Model
     use CrudTrait;
     use Searchable;
 
-    protected $indexConfigurator = \App\Elasticsearch\ArchitectIndexConfigurator::class;
+    protected $indexConfigurator = \App\Elasticsearch\ArchitectsIndexConfigurator::class;
 
     protected $searchRules = [
         //
