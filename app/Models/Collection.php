@@ -8,7 +8,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\Publishable;
 
-class Publication extends Model
+class Collection extends Model
 {
     use CrudTrait, HasSlug, Publishable;
 
@@ -20,5 +20,10 @@ class Publication extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function buildings()
+    {
+        return $this->belongsToMany('App\Models\Building')->withPivot('position')->orderBy('position');
     }
 }

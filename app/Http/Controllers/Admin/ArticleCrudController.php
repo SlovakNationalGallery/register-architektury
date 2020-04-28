@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\PublicationRequest;
-use App\Models\Publication;
+use App\Http\Requests\ArticleRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class PublicationCrudController
+ * Class ArticleCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class PublicationCrudController extends CrudController
+class ArticleCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -22,23 +21,19 @@ class PublicationCrudController extends CrudController
 
     public function setup()
     {
-        $this->crud->setModel('App\Models\Publication');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/publications');
-        $this->crud->setEntityNameStrings('publication', 'publications');
+        $this->crud->setModel('App\Models\Article');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/articles');
+        $this->crud->setEntityNameStrings('article', 'articles');
 
         $this->crud->setColumns([
             [
                 'name' => 'title',
-                'type' => 'publication',
+                'type' => 'article',
             ],
             [
                 'name' => 'published',
                 'type' => 'published_at',
-            ],
-            [
-                'name' => 'updated_at',
-                'type' => 'updated_at',
-            ],
+            ]
         ]);
 
         $this->crud->addFields([
@@ -53,13 +48,14 @@ class PublicationCrudController extends CrudController
                 'name' => 'cover_image',
                 'type' => 'browse',
             ],
-            'authors',
             [
-                'name' => 'description',
+                'name' => 'content',
                 'type' => 'tinymce',
                 'options' => [
                     'entity_encoding' => 'raw',
-                    'height' => 480
+                    'height' => 480,
+                    'plugins' => 'image,link,media,anchor,fullscreen',
+                    'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | fullscreen'
                 ]
             ],
             [
@@ -77,15 +73,9 @@ class PublicationCrudController extends CrudController
         ]);
     }
 
-    protected function setupListOperation()
-    {
-        //
-    }
-
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(PublicationRequest::class);
-        //
+        $this->crud->setValidation(ArticleRequest::class);
     }
 
     protected function setupUpdateOperation()

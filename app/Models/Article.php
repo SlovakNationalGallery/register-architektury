@@ -8,7 +8,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\Publishable;
 
-class Publication extends Model
+class Article extends Model
 {
     use CrudTrait, HasSlug, Publishable;
 
