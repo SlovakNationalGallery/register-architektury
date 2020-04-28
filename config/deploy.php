@@ -29,7 +29,43 @@ return [
     */
 
     'strategies' => [
-        //
+        
+        'scout_init' => [
+            'hook:start',
+            'deploy:prepare',
+            'deploy:lock',
+            'deploy:release',
+            'deploy:update_code',
+            'deploy:shared',
+            'deploy:vendors',
+            'hook:build',
+            'deploy:writable',
+            'hook:ready',
+            'scout:init',
+            'deploy:symlink',
+            'deploy:unlock',
+            'cleanup',
+            'hook:done',
+        ],
+
+        'scout_update' => [
+            'hook:start',
+            'deploy:prepare',
+            'deploy:lock',
+            'deploy:release',
+            'deploy:update_code',
+            'deploy:shared',
+            'deploy:vendors',
+            'hook:build',
+            'deploy:writable',
+            'hook:ready',
+            'scout:update',
+            'deploy:symlink',
+            'deploy:unlock',
+            'cleanup',
+            'hook:done',
+        ],
+
     ],
 
     /*
@@ -123,6 +159,7 @@ return [
         'webumenia.sk' => [
             'deploy_path' => '/var/www/register-architektury.sk',
             'user' => 'lab_sng',
+            'branch' => 'master',
         ],
     ],
 
@@ -154,6 +191,7 @@ return [
 
     'include' => [
         'deployer/backpack.php',
+        'deployer/scout.php',
     ],
 
     /*
