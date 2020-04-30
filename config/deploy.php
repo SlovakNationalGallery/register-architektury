@@ -29,43 +29,7 @@ return [
     */
 
     'strategies' => [
-        
-        'scout_init' => [
-            'hook:start',
-            'deploy:prepare',
-            'deploy:lock',
-            'deploy:release',
-            'deploy:update_code',
-            'deploy:shared',
-            'deploy:vendors',
-            'hook:build',
-            'deploy:writable',
-            'hook:ready',
-            'scout:init',
-            'deploy:symlink',
-            'deploy:unlock',
-            'cleanup',
-            'hook:done',
-        ],
-
-        'scout_update' => [
-            'hook:start',
-            'deploy:prepare',
-            'deploy:lock',
-            'deploy:release',
-            'deploy:update_code',
-            'deploy:shared',
-            'deploy:vendors',
-            'hook:build',
-            'deploy:writable',
-            'hook:ready',
-            'scout:update',
-            'deploy:symlink',
-            'deploy:unlock',
-            'cleanup',
-            'hook:done',
-        ],
-
+        //
     ],
 
     /*
@@ -99,6 +63,7 @@ return [
             'artisan:cache:clear',
             'artisan:config:cache',
             'artisan:migrate',
+            // 'elastic:migrate',
         ],
 
         // Deployment is done and live
@@ -191,7 +156,7 @@ return [
 
     'include' => [
         'deployer/backpack.php',
-        'deployer/scout.php',
+        'deployer/elastic.php',
     ],
 
     /*
