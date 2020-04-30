@@ -95,10 +95,14 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
-                    $row->location_gps = $this->parseLocationGPS($row->location_gps);
+
+                    $parsed_row = array_map('trim', (array) $row); // remove spaces
+                    $parsed_row['location_gps'] = $this->parseLocationGPS($parsed_row['location_gps']);                    
+
+                    $parsed_row = array_filter($parsed_row, 'strlen'); // remove empty values
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        (array) $row
+                        $parsed_row
                     );
                 }
             });
