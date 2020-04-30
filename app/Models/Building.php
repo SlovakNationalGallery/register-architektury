@@ -116,25 +116,4 @@ class Building extends Model
     {
         return $this->hasMany('App\Models\Image');
     }
-
-    public function getLocationGpsAttribute($value)
-    {
-    	// convert Degree, Minutes, Seconds (DMS) to decimal if necessary
-    	if (strpos($value, '°') !== false) {
-    		$parts = preg_split("/[^\d\w.]+/", trim($value));
-    		$lat = $this->DMStoDD($parts[0], $parts[1], $parts[2], $parts[3]);
-		    $lng = $this->DMStoDD($parts[4], $parts[5], $parts[6], $parts[7]);
-		    return "$lat,$lng";
-    	}
-    }
-
-    private function DMStoDD($degrees, $minutes, $seconds, $direction)
-    {
-        $dd = $degrees + $minutes/60 + $seconds/(60*60);
-
-        if ($direction == "S" || $direction == "W") {
-            $dd = $dd * -1;
-        } 
-        return $dd;
-    }    
 }
