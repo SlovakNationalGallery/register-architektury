@@ -62,10 +62,6 @@
             "@php artisan backpack:install",
             "@php artisan elfinder:publish"
         ],
-        "post-update-cmd": [
-            "@php artisan backpack:install",
-            "@php artisan elfinder:publish"
-        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
