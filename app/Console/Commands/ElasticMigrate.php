@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use ScoutElastic\Facades\ElasticClient;
 
 class ElasticMigrate extends Command
 {
@@ -18,7 +19,13 @@ class ElasticMigrate extends Command
      *
      * @var string
      */
-    protected $description = 'Update index mapping for all searchable models.';
+    protected $description = 'Create or update index mapping for all searchable models';
+
+    protected $indexConfigurators = [
+        '\App\Models\Building' => 'App\Elasticsearch\BuildingsIndexConfigurator',
+        '\App\Models\Architect' => 'App\Elasticsearch\ArchitectsIndexConfigurator',
+    ];
+
 
     /**
      * Create a new command instance.
@@ -41,24 +48,48 @@ class ElasticMigrate extends Command
 
         $this->info('Processing ...');
 
-        // migrate buildings
-        $this->call('elastic:update-index', [
-            'index-configurator' => 'App\Elasticsearch\BuildingsIndexConfigurator',
-        ]);
-        $this->call('elastic:migrate', [
-            'model' => '\App\Models\Building',
-            'target-index' => 'regarch_buildings_'.$version_number
-        ]);
+        foreach ($this->indexConfigurators as $model => $indexConfigurator) {
+            $index_name = $this->getIndexName($indexConfigurator);
 
-        // migrate architects
-        $this->call('elastic:update-index', [
-            'index-configurator' => 'App\Elasticsearch\ArchitectsIndexConfigurator',
-        ]);
-        $this->call('elastic:migrate', [
-            'model' => '\App\Models\Architect',
-            'target-index' => 'regarch_architects_'.$version_number
-        ]);
+            $already_exists = ElasticClient::indices()->exists([
+                'index' => $index_name
+            ]);
+
+            if ($already_exists) {
+                // migrate
+                $this->comment('Index [' . $index_name . '] already exists. Will be updated.');
+
+                $this->call('elastic:update-index', [
+                    'index-configurator' => $indexConfigurator,
+                ]);
+                $this->call('elastic:migrate', [
+                    'model' => $model,
+                    'target-index' => $index_name.$version_number
+                ]);
+
+            } else {
+                // create
+                $this->comment('Index [' . $index_name . '] does not exist yet. Will be created.');
+
+                $this->call('elastic:create-index', [
+                    'index-configurator' => $indexConfigurator
+                ]);
+                $this->call('elastic:update-mapping', [
+                    'model' => $model
+                ]);
+                $this->call('scout:import', [
+                    'model' => $model
+                ]);
+            }
+
+        }
 
         $this->info('🚀 Done');
+    }
+
+    private function getIndexName($indexConfigurator)
+    {
+        $indexConfiguratorClass = new $indexConfigurator;
+        return $indexConfiguratorClass->getName();
     }
 }
