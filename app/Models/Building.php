@@ -92,15 +92,6 @@ class Building extends Model
                     ],
                 ]
             ],
-            'location_city' => [
-                'type' => 'text',
-                'fields' => [
-                    'folded' => [
-                        'type' => 'text',
-                        'analyzer' => 'asciifolding_analyzer',
-                    ],
-                ]
-            ],
             'location_gps' => [
                 'type' => 'geo_point',
             ],
