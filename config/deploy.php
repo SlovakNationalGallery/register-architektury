@@ -152,7 +152,7 @@ return [
     */
 
     'include' => [
-        'deployer/backpack.php',
+        //
     ],
 
     /*
