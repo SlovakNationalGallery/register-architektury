@@ -53,7 +53,6 @@ return [
         'build' => [
             'npm:install',
             'npm:production',
-            'backpack:install',
         ],
 
         // Deployment is done but not live yet (before symlink)
@@ -155,7 +154,6 @@ return [
     */
 
     'include' => [
-        'deployer/backpack.php',
         'deployer/elastic.php',
     ],
 

@@ -34,6 +34,18 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
     }
 
     /**
+     * Configure the Telescope authorization services.
+     *
+     * @return void
+     */
+    protected function authorization()
+    {
+        Telescope::auth(function ($request) {
+            return app()->environment('local') || $request->user('backpack');
+        });
+    }
+
+    /**
      * Prevent sensitive request details from being logged by Telescope.
      *
      * @return void
@@ -51,21 +63,5 @@ class TelescopeServiceProvider extends TelescopeApplicationServiceProvider
             'x-csrf-token',
             'x-xsrf-token',
         ]);
-    }
-
-    /**
-     * Register the Telescope gate.
-     *
-     * This gate determines who can access Telescope in non-local environments.
-     *
-     * @return void
-     */
-    protected function gate()
-    {
-        Gate::define('viewTelescope', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
-        });
     }
 }
