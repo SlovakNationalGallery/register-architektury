@@ -62,6 +62,7 @@ return [
             'artisan:cache:clear',
             'artisan:config:cache',
             'artisan:migrate',
+            'elastic:migrate',
         ],
 
         // Deployment is done and live
@@ -122,6 +123,7 @@ return [
         'webumenia.sk' => [
             'deploy_path' => '/var/www/register-architektury.sk',
             'user' => 'lab_sng',
+            'branch' => 'master',
         ],
     ],
 
@@ -152,7 +154,7 @@ return [
     */
 
     'include' => [
-        //
+        'deployer/elastic.php',
     ],
 
     /*

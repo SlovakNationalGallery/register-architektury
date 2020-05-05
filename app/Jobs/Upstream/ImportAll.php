@@ -95,9 +95,14 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
+
+                    $parsed_row = array_map('trim', (array) $row); // remove spaces
+                    $parsed_row['location_gps'] = $this->parseLocationGPS($parsed_row['location_gps']);                    
+
+                    $parsed_row = array_filter($parsed_row, 'strlen'); // remove empty values
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        (array) $row
+                        $parsed_row
                     );
                 }
             });
@@ -135,5 +140,29 @@ class ImportAll implements ShouldQueue
         });
 
         $this->log->info('🚀 Done');
+    }
+
+    private function parseLocationGPS($str)
+    {
+        $str = trim($str);
+        // convert Degree, Minutes, Seconds (DMS) to decimal if necessary
+        if (strpos($str, '°') !== false) {
+            $parts = preg_split("/[^\d\w.]+/", trim($str));
+            $lat = $this->DMStoDD($parts[0], $parts[1], $parts[2], $parts[3]);
+            $lng = $this->DMStoDD($parts[4], $parts[5], $parts[6], $parts[7]);
+            return "$lat,$lng";
+        }
+
+        return $str;
+    }
+
+    private function DMStoDD($degrees, $minutes, $seconds, $direction)
+    {
+        $dd = $degrees + $minutes/60 + $seconds/(60*60);
+
+        if ($direction == "S" || $direction == "W") {
+            $dd = $dd * -1;
+        } 
+        return $dd;
     }
 }
