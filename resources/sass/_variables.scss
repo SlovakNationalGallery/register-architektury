@@ -1,4 +1,7 @@
 // Typography
-$font-family-sans-serif: 'Roboto Mono', monospace;
+$font-family-sans-serif:      'Inter', sans-serif;
+$font-family-monospace:       'IBM Plex Mono', monospace;
+$font-family-base:            $font-family-monospace;
+
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
