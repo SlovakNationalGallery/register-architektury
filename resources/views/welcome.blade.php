@@ -2,19 +2,20 @@
 @section('title', __('app.title'))
 
 @section('content')
-<div class="container">
-  <div class="md-y-5">&nbsp;</div>
-  <div class="row mt-5 no-gutters">
-    <div class="col-md-4 py-3 border border-dark text-center">
-      Register modernej architektury oA HÚ SAV
+<div class="container-fluid p-0">
+  <div class="row no-gutters align-items-stretch">
+    <div class="col-md-4 py-3 border border-dark text-center align-items-center">
+      <h1 class="ls-1 my-auto">Register modernej architektury oA HÚ SAV</h1>
+    </div>
+    <div class="col-md-4 border border-dark text-center d-flex">
+      <form class="px-3 my-auto w-100">
+        <input type="text" name="search" class="form-control form-control-sm">
+      </form>
     </div>
     <div class="col-md-4 py-3 border border-dark text-center">
-      lupa_______________________.
-    </div>
-    <div class="col-md-4 py-3 border border-dark text-center">
-      <span class="pr-3"><u>SK</u></span>
-      <span class="pr-3"><u>EN</u></span>
-      <span class="pr-3">(+ menu? ≈)</span>
+      <a href="#" class="mx-1 text-dark ls-2">SK</a>
+      /
+      <a href="#" class="mx-1 text-dark ls-2">EN</a>
     </div>
   </div>
   <div class="row no-gutters">
