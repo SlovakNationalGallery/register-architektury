@@ -39,16 +39,28 @@
     </div>
   </div>
   <div class="row no-gutters">
-  @foreach (range(1, 8) as $n)
-    <div class="col-md-3 border border-dark text-center">
-      <img src="http://placekitten.com/300/350?image={{ $n }}" class="img-fluid">
-      <div class="small p-3">
-        <h6>{{ Str::ucfirst($faker->words(3, true)) }}</h6>
-        {{ implode(" ", array_map(function($w) { return "#$w"; }, $faker->words(4))) }}
+    <div class="col-md-12 border border-dark p-3">
+      <div class="row no-gutters">
+      @foreach ($buildings as $i=>$building)
+        <div class="col-md-4">
+          <div class="card m-3 border-dark">
+            {{-- <img src="https://placeimg.com/500/300/arch/grayscale/{{ $i }}" class="card-img-top" alt="..."> --}}
+            <img src="https://picsum.photos/500/300?grayscale&random={{ $i }}" class="card-img-top" alt="...">
+            <div class="card-body">
+              <div class="mb-3 mt-2 tags">
+                @foreach ($building->tags as $tag)
+                  <a class="btn btn-outline-dark btn-sm mb-2" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
+                @endforeach
+              </div>
+              <p class="card-text">
+                {{ $building->title }}
+              </p>
+            </div>
+          </div>
+        </div>
+      @endforeach
       </div>
     </div>
-  @endforeach
   </div>
-  <div class="my-5">&nbsp;</div>
 </div>
 @endsection

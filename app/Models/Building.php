@@ -107,4 +107,29 @@ class Building extends Model
     {
         return $this->hasMany('App\Models\Image');
     }
+
+    public function getTagsAttribute()
+    {
+        $tags = [];
+        $tags = $this->makeArray($this->architect_names);
+        $tags[] = $this->location_city;
+        $tags[] = $this->project_duration_dates;
+        return $tags;
+    }
+
+    private function makeArray($str, $delimiter = ',')
+    {
+        if (is_array($str)) {
+            return $str;
+        }
+
+        $array = explode($delimiter, $str);
+        $array = array_map(function ($value) {
+            return trim($value);
+        }, $array);
+
+        return array_filter($array, function ($value) {
+            return $value !== "";
+        });
+    }
 }

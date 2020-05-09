@@ -1,5 +1,10 @@
+
 // Colors
 $gray-200: #EBEAEA;
+
+// Options
+$enable-rounded: false;
+$enable-responsive-font-sizes: true;
 
 // Typography
 $font-family-sans-serif:      'Inter', sans-serif;
@@ -10,8 +15,6 @@ $font-size-base: 0.8rem;
 $line-height-base: 1.6;
 $font-size-lg: $font-size-base * 1.2;
 $font-size-md: $font-size-base * 1.1;
-
-$enable-responsive-font-sizes: true;
 
 $letter-spacing-1: 0.04rem;
 $letter-spacing-2: 0.08rem;
@@ -28,4 +31,3 @@ $input-border-radius-lg:                none;
 $input-border-radius-sm:                none;
 $input-border-color:                    #000;
 $input-border-width:                    1px;
-
