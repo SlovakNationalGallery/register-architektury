@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $buildings = \App\Models\Building::paginate(9);
+Route::get('/', function (Request $request) {
+    $buildings = (new \App\Models\Building)->newQuery();
+
+    if ($request->has('search')) {
+    	$buildings = \App\Models\Building::search($request->input('search'));
+    }
+
+    $buildings = $buildings->paginate(12);
     return view('welcome', compact('buildings'));
 });
