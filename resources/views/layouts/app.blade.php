@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-100">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +20,19 @@
     @stack('styles')
   </head>
 
-  <body>
-    <div id="app">
-        @yield('content')
+  <body class="h-100">
+    <div id="app" class="d-flex flex-column h-100">
+        <main role="main" class="flex-shrink-0">
+            @yield('content')
+        </main>
+
+        <footer class="footer mt-auto py-3 border-top border-dark">
+            <div class="container-fluid">
+                <span class="ls-1">
+                    Register modernej architektúry <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline text-dark" target="_blank">Oddelenia architektúry</a> Historického ústavu <a href="https://www.sav.sk/" class="link-underline text-dark" target="_blank">Slovenskej akadémie vied</a>.
+                </span>
+            </div>
+        </footer>
     </div>
     <script type="text/javascript" src="{{ mix('/js/app.js') }}"></script>
     @stack('scripts')

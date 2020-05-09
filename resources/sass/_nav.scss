@@ -7,7 +7,7 @@ a.nav-link {
 
 	&:hover {
 		color: $dark;
-		background-color: #EBEAEA;
+		background-color: $gray-200;
 	}
 
 	.main-nav & {
