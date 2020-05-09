@@ -19,29 +19,23 @@
     </div>
   </div>
   <div class="row no-gutters">
-    <div class="col-md-3 py-3 border border-dark text-center">
-      oA
+    <div class="col-md-12">
+      <nav class="nav nav-justified main-nav">
+        <a class="nav-item py-3 ls-1 border border-dark nav-link" href="#">oA</a>
+        <a class="nav-item py-3 ls-1 border border-dark text-uppercase nav-link" href="#">architekti</a>
+        <a class="nav-item py-3 ls-1 border border-dark text-uppercase nav-link" href="#">objekty</a>
+        <a class="nav-item py-3 ls-1 border border-dark text-uppercase nav-link" href="#">kolekcie</a>
+      </nav>
     </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      kolekcie
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      mapy
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      Register
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      DOCOMO
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      ŠUR
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      ATRIUM
-    </div>
-    <div class="col-md-3 py-3 border border-dark text-center">
-      MOMOVO
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-12">
+      <nav class="nav nav-justified sub-nav">
+        <a class="nav-item py-3 ls-2 border border-dark nav-link" href="#">MoMoWo</a>
+        <a class="nav-item py-3 ls-2 border border-dark text-uppercase nav-link" href="#">ATRIUM</a>
+        <a class="nav-item py-3 ls-2 border border-dark nav-link" href="#">ŠUR</a>
+        <a class="nav-item py-3 ls-2 border border-dark nav-link" href="#">Do.co,mo.mo</a>
+      </nav>
     </div>
   </div>
   <div class="row no-gutters">
