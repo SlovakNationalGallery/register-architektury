@@ -28,7 +28,7 @@
 
         <footer class="footer mt-auto py-3 border-top border-dark">
             <div class="container-fluid">
-                <span class="ls-1">
+                <span class="ls-2">
                     Register modernej architektúry <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline text-dark" target="_blank">Oddelenia architektúry</a> Historického ústavu <a href="https://www.sav.sk/" class="link-underline text-dark" target="_blank">Slovenskej akadémie vied</a>.
                 </span>
             </div>
