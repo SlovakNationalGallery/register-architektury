@@ -1,6 +1,8 @@
 
 // Colors
 $gray-200: #EBEAEA;
+$gray-800: #343a40;
+$black:    #000;
 
 // Options
 $enable-rounded: false;
@@ -25,6 +27,11 @@ $h1-font-size: $font-size-lg;
 $h2-font-size: $font-size-base;
 $h3-font-size: $font-size-base;
 
+// Links
+$link-color:                              $gray-800;
+$link-hover-color:                        $black;
+
+// Forms
 $input-box-shadow:                      none;
 $input-focus-box-shadow:                none;
 $input-border-radius:                   none;

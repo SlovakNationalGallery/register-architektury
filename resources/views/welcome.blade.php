@@ -9,7 +9,7 @@
     </div>
     <div class="col-md-4 border border-dark text-center d-flex">
       <form class="px-3 my-auto w-100">
-        <input type="text" name="search" class="form-control form-control-sm">
+        <input type="text" name="search" class="form-control form-control-sm" value="{{ request('search') }}">
       </form>
     </div>
     <div class="col-md-4 py-3 border border-dark text-center">
@@ -41,24 +41,29 @@
   <div class="row no-gutters">
     <div class="col-md-12 border border-dark p-3">
       <div class="row no-gutters">
-      @foreach ($buildings as $i=>$building)
-        <div class="col-md-4 d-flex align-items-stretch">
-          <div class="card m-3 border-dark">
-            {{-- <img src="https://placeimg.com/500/300/arch/grayscale/{{ $i }}" class="card-img-top" alt="..."> --}}
-            <img src="https://picsum.photos/500/300?grayscale&random={{ $i }}" class="card-img-top" alt="...">
-            <div class="card-body ls-1">
-              <div class="mb-3 mt-2 tags">
-                @foreach ($building->tags as $tag)
-                  <a class="btn btn-outline-dark btn-sm mb-2" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
-                @endforeach
+        @foreach ($buildings as $i=>$building)
+          <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card m-3 border-dark">
+              {{-- <img src="https://placeimg.com/500/300/arch/grayscale/{{ $i }}" class="card-img-top" alt="..."> --}}
+              <img src="https://picsum.photos/500/300?grayscale&random={{ $i }}" class="card-img-top" alt="...">
+              <div class="card-body ls-1">
+                <div class="mb-3 mt-2 tags">
+                  @foreach ($building->tags as $tag)
+                    <a class="btn btn-outline-dark btn-sm mb-2" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
+                  @endforeach
+                </div>
+                <p class="card-text">
+                  {{ $building->title }}
+                </p>
               </div>
-              <p class="card-text">
-                {{ $building->title }}
-              </p>
             </div>
           </div>
+        @endforeach
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          {{ $buildings->withQueryString()->links() }}
         </div>
-      @endforeach
       </div>
     </div>
   </div>

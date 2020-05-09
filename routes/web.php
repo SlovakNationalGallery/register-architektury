@@ -15,10 +15,11 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function (Request $request) {
+    $search = $request->input('search');
     $buildings = (new \App\Models\Building)->newQuery();
 
-    if ($request->has('search')) {
-    	$buildings = \App\Models\Building::search($request->input('search'));
+    if (!empty($search)) {
+    	$buildings = \App\Models\Building::search($search);
     }
 
     $buildings = $buildings->paginate(12);
