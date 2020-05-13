@@ -44,7 +44,6 @@
         @foreach ($buildings as $i=>$building)
           <div class="col-md-4 d-flex align-items-stretch">
             <div class="card m-3 border-dark">
-              {{-- <img src="https://placeimg.com/500/300/arch/grayscale/{{ $i }}" class="card-img-top" alt="..."> --}}
               <img src="https://picsum.photos/500/300?grayscale&random={{ $i }}" class="card-img-top" alt="...">
               <div class="card-body ls-1">
                 <div class="mb-3 mt-2 tags">
