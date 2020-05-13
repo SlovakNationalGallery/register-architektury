@@ -5,7 +5,7 @@
 <div class="container-fluid p-0">
   <div class="row no-gutters align-items-stretch">
     <div class="col-md-4 py-3 border border-dark text-center align-items-center">
-      <h1 class="ls-2 my-auto">Register modernej architektury oA HÚ SAV</h1>
+      <h1 class="ls-2 my-auto">Register modernej architektúry oA HÚ SAV</h1>
     </div>
     <div class="col-md-4 border border-dark text-center d-flex">
       <form class="px-3 my-auto w-100">
