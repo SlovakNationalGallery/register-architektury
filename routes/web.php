@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    //TODO move fzaninotto/faker to require-dev in composer.json once we have data
-    $faker = Faker\Factory::create(config('app.faker_locale'));
-    $faker->addProvider(new Faker\Provider\Lorem($faker));
-    return view('welcome', compact('faker'));
+Route::get('/', function (Request $request) {
+    $search = $request->input('search');
+    $buildings = (new \App\Models\Building)->newQuery();
+
+    if (!empty($search)) {
+    	$buildings = \App\Models\Building::search($search);
+    }
+
+    $buildings = $buildings->paginate(12);
+    return view('welcome', compact('buildings'));
 });

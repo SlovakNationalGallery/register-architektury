@@ -1,0 +1,13 @@
+a.link-underline {
+    text-decoration: none;
+    border-bottom: 1px solid $dark;
+
+    -webkit-transition: border .2s ease-in-out;
+    -moz-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+
+    @include hover() {
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+    }
+}
