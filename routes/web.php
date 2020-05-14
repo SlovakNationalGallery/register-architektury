@@ -25,3 +25,6 @@ Route::get('/', function (Request $request) {
     $buildings = $buildings->paginate(12);
     return view('welcome', compact('buildings'));
 });
+
+
+Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
