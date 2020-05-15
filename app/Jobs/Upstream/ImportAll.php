@@ -2,6 +2,7 @@
 
 namespace App\Jobs\Upstream;
 
+use App\Jobs\ReindexAll;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\Image;
@@ -13,6 +14,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Queue;
 
 class ImportAll implements ShouldQueue
 {
@@ -86,7 +88,7 @@ class ImportAll implements ShouldQueue
                 'Zdroj originálu AS source'
             )->get();
 
-        DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
+        $this->inTransaction(function() use ($architects, $buildings, $images) {
             // Delete objects no longer present in source
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
             Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
@@ -97,8 +99,10 @@ class ImportAll implements ShouldQueue
                 foreach($buildings as $row) {
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
 
-                    $row->location_lat = $gpsLocation->lat;
-                    $row->location_lon = $gpsLocation->lon;
+                    if ($gpsLocation) {
+                        $row->location_lat = $gpsLocation->lat;
+                        $row->location_lon = $gpsLocation->lon;
+                    }
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -139,6 +143,9 @@ class ImportAll implements ShouldQueue
             });
         });
 
+        $this->log->info('Enqueing search re-index');
+        Queue::push(new ReindexAll());
+
         $this->log->info('🚀 Done');
     }
 
@@ -151,7 +158,7 @@ class ImportAll implements ShouldQueue
             $parts = preg_split("/[^\d\w.]+/", $str);
             $lat = $this->DMStoDD($parts[0], $parts[1], $parts[2], $parts[3]);
             $lon = $this->DMStoDD($parts[4], $parts[5], $parts[6], $parts[7]);
-            return (object) compact($lat, $lon);
+            return (object) compact('lat', 'lon');
         }
 
         $parts = explode(',', $str);
@@ -169,5 +176,15 @@ class ImportAll implements ShouldQueue
             $dd = $dd * -1;
         }
         return $dd;
+    }
+
+    private function inTransaction($callback) {
+        Building::withoutSyncingToSearch(function () use ($callback) {
+            Architect::withoutSyncingToSearch(function () use ($callback) {
+                DB::connection('mysql')->transaction(function () use ($callback) {
+                    return $callback();
+                });
+            });
+        });
     }
 }
