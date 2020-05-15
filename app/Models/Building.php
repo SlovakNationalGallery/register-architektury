@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use ScoutElastic\Searchable;
 
 class Building extends Model
@@ -115,6 +116,21 @@ class Building extends Model
         $tags[] = $this->location_city;
         $tags[] = $this->project_duration_dates;
         return $tags;
+    }
+
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        if ($this->location_lat && $this->location_lon) {
+            $array = Arr::except((array) $array, ['location_lat', 'location_lon']);
+            $array['location_gps'] = [
+                'lat' => $this->location_lat,
+                'lon' => $this->location_lon,
+            ];
+        }
+
+        return $array;
     }
 
     private function makeArray($str, $delimiter = ',')
