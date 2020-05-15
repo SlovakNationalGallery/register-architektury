@@ -21,7 +21,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "lorisleiva/laravel-deployer": "^0.3.0",
-        "spatie/laravel-sluggable": "^2.2"
+        "spatie/laravel-sluggable": "^2.2",
+        "spatie/laravel-translatable": "^4.3"
     },
     "require-dev": {
         "backpack/generators": "^2.0",
