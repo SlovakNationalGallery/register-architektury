@@ -5,11 +5,18 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
+use Spatie\Translatable\HasTranslations;
 
 class Building extends Model
 {
     use CrudTrait;
     use Searchable;
+    use HasTranslations;
+
+    public $translatable = [
+        'title',
+        'description',
+    ];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
