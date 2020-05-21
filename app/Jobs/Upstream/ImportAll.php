@@ -2,7 +2,6 @@
 
 namespace App\Jobs\Upstream;
 
-use App\Jobs\ReindexAll;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\Image;
@@ -12,9 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Queue;
 
 class ImportAll implements ShouldQueue
 {
@@ -141,7 +140,7 @@ class ImportAll implements ShouldQueue
         });
 
         $this->log->info('Enqueing search re-index');
-        Queue::push(new ReindexAll());
+        Artisan::call('regarch:elastic:migrate');
 
         $this->log->info('🚀 Done');
     }
