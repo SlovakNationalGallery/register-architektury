@@ -125,16 +125,16 @@
         </form>
     </div>
 
-    <section id="building-card" class="cd-building-card">
-    <h2>Building Card Component</h2>
+</section>
+
+<section id="building-card" class="cd-building-card">
+    <h2>Component: building_card</h2>
 
     <div class="cd-box">
-        @include('components.building-card', ['building' => \App\Models\Building::first() ])
+        @include('components.building-card', ['building' => factory(App\Models\Building::class)->make() ])
     </div>
 </section>
 
-
-</section>
 </main>
 @stop
 

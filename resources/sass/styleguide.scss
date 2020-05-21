@@ -119,6 +119,10 @@ section {
         content: '6. ';
     }
 
+    &:nth-of-type(7) h2::before {
+        content: '7. ';
+    }
+
     @include MQ(S) {
         margin: 3em 0 5em;
     }
