@@ -2,14 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\SearchableWithTranslations;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
+use Spatie\Translatable\HasTranslations;
 
 class Building extends Model
 {
     use CrudTrait;
     use Searchable;
+    use HasTranslations;
+    use SearchableWithTranslations;
+
+    public $translatable = [
+        'title',
+        'description',
+    ];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
@@ -115,6 +124,11 @@ class Building extends Model
         $tags[] = $this->location_city;
         $tags[] = $this->project_duration_dates;
         return $tags;
+    }
+
+    public function toSearchableArray()
+    {
+        return $this->toSearchableArrayWithTranslations();
     }
 
     private function makeArray($str, $delimiter = ',')

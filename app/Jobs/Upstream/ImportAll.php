@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -86,7 +87,7 @@ class ImportAll implements ShouldQueue
                 'Zdroj originálu AS source'
             )->get();
 
-        DB::connection('mysql')->transaction(function() use ($architects, $buildings, $images) {
+        $this->inTransaction(function() use ($architects, $buildings, $images) {
             // Delete objects no longer present in source
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
             Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
@@ -95,14 +96,13 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
+                    $row = $this->trimRow($row);
+                    $gpsLocation = $this->parseLocationGPS($row->location_gps);
+                    $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
 
-                    $parsed_row = array_map('trim', (array) $row); // remove spaces
-                    $parsed_row['location_gps'] = $this->parseLocationGPS($parsed_row['location_gps']);                    
-
-                    $parsed_row = array_filter($parsed_row, 'strlen'); // remove empty values
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        $parsed_row
+                        (array) $row
                     );
                 }
             });
@@ -139,21 +139,29 @@ class ImportAll implements ShouldQueue
             });
         });
 
+        $this->log->info('Enqueing search re-index');
+        Artisan::call('regarch:elastic:migrate');
+
         $this->log->info('🚀 Done');
     }
 
     private function parseLocationGPS($str)
     {
         $str = trim($str);
+
         // convert Degree, Minutes, Seconds (DMS) to decimal if necessary
         if (strpos($str, '°') !== false) {
-            $parts = preg_split("/[^\d\w.]+/", trim($str));
+            $parts = preg_split("/[^\d\w.]+/", $str);
             $lat = $this->DMStoDD($parts[0], $parts[1], $parts[2], $parts[3]);
-            $lng = $this->DMStoDD($parts[4], $parts[5], $parts[6], $parts[7]);
-            return "$lat,$lng";
+            $lon = $this->DMStoDD($parts[4], $parts[5], $parts[6], $parts[7]);
+            return (object) compact('lat', 'lon');
         }
 
-        return $str;
+        $parts = explode(',', $str);
+        if (is_numeric($parts[0]) && is_numeric($parts[1])) return (object) [
+            'lat' => (float) $parts[0],
+            'lon' => (float) $parts[1],
+        ];
     }
 
     private function DMStoDD($degrees, $minutes, $seconds, $direction)
@@ -162,7 +170,24 @@ class ImportAll implements ShouldQueue
 
         if ($direction == "S" || $direction == "W") {
             $dd = $dd * -1;
-        } 
+        }
         return $dd;
+    }
+
+    private function inTransaction($callback) {
+        Building::withoutSyncingToSearch(function () use ($callback) {
+            Architect::withoutSyncingToSearch(function () use ($callback) {
+                DB::connection('mysql')->transaction(function () use ($callback) {
+                    return $callback();
+                });
+            });
+        });
+    }
+
+    private function trimRow($row) {
+        return (object) array_map(function ($value) {
+            if (empty($value)) return $value;
+            return trim($value);
+        }, (array) $row);
     }
 }
