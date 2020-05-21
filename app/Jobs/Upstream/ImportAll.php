@@ -97,16 +97,13 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
+                    $row = $this->trimRow($row);
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
-
-                    if ($gpsLocation) {
-                        $row->location_lat = $gpsLocation->lat;
-                        $row->location_lon = $gpsLocation->lon;
-                    }
+                    $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        Arr::except((array) $row, ['location_gps'])
+                        (array) $row
                     );
                 }
             });
@@ -186,5 +183,12 @@ class ImportAll implements ShouldQueue
                 });
             });
         });
+    }
+
+    private function trimRow($row) {
+        return (object) array_map(function ($value) {
+            if (empty($value)) return $value;
+            return trim($value);
+        }, (array) $row);
     }
 }
