@@ -1,0 +1,472 @@
+// mixins
+@import "variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@mixin transform($transforms) {
+    -webkit-transform: $transforms;
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    transform: $transforms;
+}
+
+@mixin transition($transition) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+// breakpoints
+
+$S:     768px;
+$M:     1024px;
+$L:     1600px;
+
+// media queries
+
+@mixin MQ($canvas) {
+  @if $canvas == S {
+   @media only screen and (min-width: $S) { @content; }
+  }
+  @else if $canvas == M {
+   @media only screen and (min-width: $M) { @content; }
+  }
+  @else if $canvas == L {
+   @media only screen and (min-width: $L) { @content; }
+  }
+}
+
+// super light grid - it works with the .cd-container class inside style.scss
+
+@mixin column($percentage, $float-direction:left) {
+  width: 100% * $percentage;
+  float: $float-direction;
+}
+
+
+/* --------------------------------
+
+xBasic style
+
+-------------------------------- */
+
+$color-1: $primary;
+$color-2: $secondary;
+$color-3: $success;
+$color-4: $info;
+$color-5: $warning;
+
+
+main {
+    width: 90%;
+    max-width: $M;
+    margin: 0 auto;
+    padding: 50px 0;
+
+    > h1 {
+        text-align: center;
+    }
+
+    @include MQ(M) {
+        padding-top: 80px;
+    }
+
+    @include MQ(L) {
+        max-width: none;
+        padding: 120px 0 50px;
+
+        > h1 {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            height: 80px;
+            line-height: 80px;
+            width: 400px;
+            margin: 0 0 0 -200px;
+            font-size: 2.6rem;
+            z-index: 20;
+        }
+    }
+}
+
+section {
+    margin: 3em 0;
+    @include clearfix;
+
+    &:nth-of-type(1) h2::before {
+        content: '1. ';
+    }
+
+    &:nth-of-type(2) h2::before {
+        content: '2. ';
+    }
+
+    &:nth-of-type(3) h2::before {
+        content: '3. ';
+    }
+
+    &:nth-of-type(4) h2::before {
+        content: '4. ';
+    }
+
+    &:nth-of-type(5) h2::before {
+        content: '5. ';
+    }
+
+    &:nth-of-type(6) h2::before {
+        content: '6. ';
+    }
+
+    &:nth-of-type(7) h2::before {
+        content: '7. ';
+    }
+
+    @include MQ(S) {
+        margin: 3em 0 5em;
+    }
+
+    @include MQ(L) {
+        @include column(.48);
+        margin: 0 4% 4em 0;
+
+        &:nth-of-type(2n) {
+            margin-right: 0;
+        }
+    }
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.cd-logo {
+    display: inline-block;
+    height: 100%;
+    position: relative;
+
+    img {
+        position: absolute;
+        display: block;
+        top: 50%;
+        left: 50%;
+        @include transform(translateX(-50%) translateY(-50%));
+    }
+
+}
+
+section {
+    margin: 3em 0;
+
+    &:nth-of-type(1) h2::before {
+        content: '1. ';
+    }
+
+    &:nth-of-type(2) h2::before {
+        content: '2. ';
+    }
+
+    &:nth-of-type(3) h2::before {
+        content: '3. ';
+    }
+
+    &:nth-of-type(4) h2::before {
+        content: '4. ';
+    }
+
+    &:nth-of-type(5) h2::before {
+        content: '5. ';
+    }
+
+    &:nth-of-type(6) h2::before {
+        content: '6. ';
+    }
+
+}
+
+/* xBranding section - basic style */
+
+.cd-branding {
+
+    .cd-box {
+        margin-bottom: 1em;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+
+    ul:last-of-type {
+        padding-top: .6em;
+
+        li {
+            display: inline-block;
+            margin-right: 1em;
+        }
+
+        li:nth-of-type(1) img {
+            width: 90px;
+            height: 90px;
+            border-radius: 1em;
+        }
+
+        li:nth-of-type(2) img {
+            width: 60px;
+            height: 60px;
+            border-radius: .6em;
+        }
+
+        li:nth-of-type(3) img {
+            width: 32px;
+            height: 32px;
+            border-radius: .4em;
+        }
+
+        li:nth-of-type(4) img {
+            width: 16px;
+            height: 16px;
+            border-radius: .2em;
+        }
+    }
+
+    @include MQ(S) {
+        .cd-box {
+            @include column(.49);
+            margin: 0 2% 2em 0;
+
+            &:nth-of-type(2n) {
+                margin-right: 0;
+            }
+        }
+
+        ul:last-of-type {
+            clear: left;
+
+            li {
+                margin-right: 3em;
+            }
+        }
+    }
+}
+
+/* xColor section - basic style */
+
+.cd-colors {
+
+    li {
+        text-align: center;
+        @include column(.48);
+        margin: 0 4% 1em 0;
+
+        &:nth-of-type(2n) {
+            margin-right: 0;
+        }
+    }
+
+    .cd-color-swatch {
+        position: relative;
+        width: 100%;
+        padding: 50% 0;
+
+        &::before, &::after {
+            /* lighter and darker color shades of the same swatch */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 50%;
+            height: 20%;
+        }
+
+        &::before {
+            left: 0;
+        }
+
+        &::after {
+            right: 0;
+        }
+    }
+
+    b {
+        display: block;
+        padding: .6em 0;
+    }
+
+    li:nth-of-type(1) .cd-color-swatch {
+        background: $color-1;
+
+        &::before {
+            background: lighten($color-1, 5%);
+        }
+
+        &::after {
+            background: darken($color-1, 5%);
+        }
+    }
+
+    li:nth-of-type(2) .cd-color-swatch {
+        background: $color-2;
+
+        &::before {
+            background: lighten($color-2, 5%);
+        }
+
+        &::after {
+            background: darken($color-2, 5%);
+        }
+    }
+
+    li:nth-of-type(3) .cd-color-swatch {
+        background: $color-3;
+
+        &::before {
+            background: lighten($color-3, 5%);
+        }
+
+        &::after {
+            background: darken($color-3, 5%);
+        }
+    }
+
+    li:nth-of-type(4) .cd-color-swatch {
+        background: $color-4;
+
+        &::before {
+            background: lighten($color-4, 5%);
+        }
+
+        &::after {
+            background: darken($color-4, 5%);
+        }
+    }
+
+    li:nth-of-type(5) .cd-color-swatch {
+        background: $color-5;
+
+        &::before {
+            background: lighten($color-5, 5%);
+        }
+
+        &::after {
+            background: darken($color-5, 5%);
+        }
+    }
+
+    @include MQ(S) {
+        li {
+            @include column(.19);
+            margin: 0 1.25% 1em 0;
+
+            &:nth-of-type(2n) {
+                margin-right: 1.25%;
+            }
+
+            &:nth-of-type(5n) {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.cd-typography .cd-box,
+.cd-buttons .cd-box,
+.cd-icons .cd-box,
+.cd-form .cd-box {
+    padding: 1em;
+
+    @include MQ(S) {
+        .cd-box {
+            padding: 2em;
+        }
+    }
+}
+
+/* xTypography section - basic style */
+
+.cd-typography {
+
+    h1::before {
+        content: 'Aa - ';
+        color: $color-1;
+    }
+}
+
+.cd-buttons {
+    .cd-box:first-of-type {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .cd-box:last-of-type {
+        margin-top: -1px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    button {
+        margin: .4em;
+    }
+
+    @include MQ(M) {
+        button {
+            margin: 1em;
+        }
+    }
+}
+
+/* xIcons section - basic style */
+
+.cd-icons {
+    li {
+        display: inline-block;
+        background-position: center center;
+        background-repeat: no-repeat;
+        margin: 1em;
+        font-size: 1.5rem;
+    }
+}
+
+/* xForm section - basic style */
+
+.cd-form {
+    input[type=text],
+    .cd-input-wrapper {
+        margin: 1em;
+    }
+
+    .cd-input-wrapper {
+        position: relative;
+        display: inline-block;
+    }
+
+    select::-ms-expand {
+      display: none;
+    }
+}
+
+@-moz-document url-prefix(){
+    /* hide custom arrow on Firefox */
+    .cd-select::after {
+        display: none;
+    }
+}
+
+.no-csstransitions .cd-select::after {
+    display: none;
+}
+
+/* --------------------------------
+
+xPatterns
+
+-------------------------------- */
+
+.cd-box {
+    /* this is the container of various design elements - i.e. the 2 logo of the branding section */
+    border: 1px solid $gray-200;
+    border-radius: 3px;
+    background: $white;
+    box-shadow: 0 1px 1px rgba(#000, .05);
+    padding: 6px;
+}
