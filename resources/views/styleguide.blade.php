@@ -131,7 +131,14 @@
     <h2>Component: building_card</h2>
 
     <div class="cd-box">
-        @include('components.building-card', ['building' => factory(App\Models\Building::class)->make() ])
+        @php
+            $building = App\Models\Building::inRandomOrder()->first();
+            if (empty($building)) {
+                $building = factory(App\Models\Building::class)->make();
+            }
+        @endphp
+
+        @include('components.building-card', ['building' => $building ])
     </div>
 </section>
 
