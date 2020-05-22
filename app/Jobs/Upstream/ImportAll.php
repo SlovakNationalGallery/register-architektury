@@ -89,8 +89,11 @@ class ImportAll implements ShouldQueue
                 'Názov dokumentu AS title',
                 'Autor dokumentu AS author',
                 'Rok AS created_date',
-                'Zdroj originálu AS source'
-            )->get();
+                'Cesta AS source'
+            )
+            ->where('Cesta', '!=', '')
+            ->whereNotNull('Cesta')
+            ->get();
 
         $this->inTransaction(function() use ($architects, $buildings, $images) {
             // Delete objects no longer present in source
