@@ -134,11 +134,15 @@
         @php
             $building = App\Models\Building::inRandomOrder()->first();
             if (empty($building)) {
-                $building = factory(App\Models\Building::class)->make();
+                $building = factory(App\Models\Building::class)->state('rich')->make();
             }
         @endphp
 
         @include('components.building-card', ['building' => $building ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.building-card', ['building' => $building ])
     </div>
 </section>
 

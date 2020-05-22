@@ -7,16 +7,22 @@ use Faker\Generator as Faker;
 use Illuminate\Support\Str;
 
 $factory->define(App\Models\Building::class, function (Faker $faker) {
-	
-	$from_year = $faker->numberBetween(1920,1980);
-	$to_year = $from_year + $faker->numberBetween(1,4);
+    return [
+    	'source_id' => $faker->numberBetween(1,10000),
+    ];
+});
 
-	$architect_names_length = $faker->numberBetween(1,4);
-	$architect_names = [];
+$factory->state(App\Models\Building::class, 'rich', function ($faker) {
 
-	for ($i=0; $i < $architect_names_length; $i++) { 
-		$architect_names[] = $faker->name;
-	}
+    $from_year = $faker->numberBetween(1920,1980);
+    $to_year = $from_year + $faker->numberBetween(1,4);
+
+    $architect_names_length = $faker->numberBetween(1,4);
+    $architect_names = [];
+
+    for ($i=0; $i < $architect_names_length; $i++) { 
+    	$architect_names[] = $faker->name;
+    }
 
     return [
         'title' => Str::title($faker->words($nb = $faker->numberBetween(2,8), $asText = true)),
@@ -25,5 +31,6 @@ $factory->define(App\Models\Building::class, function (Faker $faker) {
         'location_city' => $faker->city,
         'location_street' => $faker->streetAddress,
         'project_duration_dates' => "$from_year - $to_year",
+
     ];
 });
