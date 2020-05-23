@@ -14,17 +14,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function (Request $request) {
-    $search = $request->input('search');
-    $buildings = (new \App\Models\Building)->newQuery();
+Route::group(['prefix' => LaravelLocalization::setLocale()], function()
+{
+	Route::get('/', function (Request $request) {
+	    $search = $request->input('search');
+	    $buildings = (new \App\Models\Building)->newQuery();
 
-    if (!empty($search)) {
-    	$buildings = \App\Models\Building::search($search);
-    }
+	    if (!empty($search)) {
+	    	$buildings = \App\Models\Building::search($search);
+	    }
 
-    $buildings = $buildings->paginate(12);
-    return view('welcome', compact('buildings'));
+	    $buildings = $buildings->paginate(12);
+	    return view('welcome', compact('buildings'));
+	});
 });
-
 
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
