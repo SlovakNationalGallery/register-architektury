@@ -13,9 +13,7 @@
             </form>
         </div>
         <div class="col-md-4 py-3 border border-dark text-center">
-            <a href="#" class="mx-1 text-dark ls-3">SK</a>
-            /
-            <a href="#" class="mx-1 text-dark ls-3">EN</a>
+            @include('components.langswitch')
         </div>
     </div>
     <div class="row no-gutters">
