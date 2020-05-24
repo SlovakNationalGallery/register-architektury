@@ -52,6 +52,9 @@
         "classmap": [
             "database/seeds",
             "database/factories"
+        ],
+        "files": [
+            "app/Helpers/i18n.php"
         ]
     },
     "autoload-dev": {

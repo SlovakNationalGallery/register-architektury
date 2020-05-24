@@ -16,6 +16,10 @@
 
     <title>@yield('page_title', __('app.title'))</title>
 
+    @include('components.hreflangs', [
+      'localizedURLs' => getLocalizedURLArray(),
+    ])
+
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     @stack('styles')
   </head>
