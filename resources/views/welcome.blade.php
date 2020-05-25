@@ -10,7 +10,7 @@
         <div class="col-md-12 border border-dark p-3">
             <div class="row no-gutters">
                 @foreach ($buildings as $i=>$building)
-                    <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch">
                         @include('components.building-card', ['building' => $building])
                     </div>
                 @endforeach
