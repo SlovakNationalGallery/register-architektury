@@ -128,7 +128,7 @@
 </section>
 
 <section id="building-card" class="cd-building-card">
-    <h2>Component: building_card</h2>
+    <h2>Component: building-card</h2>
 
     <div class="cd-box">
         @php
@@ -143,6 +143,18 @@
 
     <div class="cd-box code lang-php hljs xml">
         @@include('components.building-card', ['building' => $building ])
+    </div>
+</section>
+
+<section id="header-card" class="cd-header-card">
+    <h2>Component: header</h2>
+
+    <div class="cd-box">
+        @include('components.header')
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.header')
     </div>
 </section>
 
