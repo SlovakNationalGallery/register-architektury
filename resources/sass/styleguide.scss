@@ -58,6 +58,9 @@ $color-3: $success;
 $color-4: $info;
 $color-5: $warning;
 
+body {
+    counter-reset: section-number;    
+}
 
 main {
     width: 90%;
@@ -95,32 +98,9 @@ section {
     margin: 3em 0;
     @include clearfix;
 
-    &:nth-of-type(1) h2::before {
-        content: '1. ';
-    }
-
-    &:nth-of-type(2) h2::before {
-        content: '2. ';
-    }
-
-    &:nth-of-type(3) h2::before {
-        content: '3. ';
-    }
-
-    &:nth-of-type(4) h2::before {
-        content: '4. ';
-    }
-
-    &:nth-of-type(5) h2::before {
-        content: '5. ';
-    }
-
-    &:nth-of-type(6) h2::before {
-        content: '6. ';
-    }
-
-    &:nth-of-type(7) h2::before {
-        content: '7. ';
+    h2::before {
+       counter-increment: section-number;
+       content: counter(section-number) ". ";
     }
 
     @include MQ(S) {
@@ -152,35 +132,6 @@ ol, ul {
         top: 50%;
         left: 50%;
         @include transform(translateX(-50%) translateY(-50%));
-    }
-
-}
-
-section {
-    margin: 3em 0;
-
-    &:nth-of-type(1) h2::before {
-        content: '1. ';
-    }
-
-    &:nth-of-type(2) h2::before {
-        content: '2. ';
-    }
-
-    &:nth-of-type(3) h2::before {
-        content: '3. ';
-    }
-
-    &:nth-of-type(4) h2::before {
-        content: '4. ';
-    }
-
-    &:nth-of-type(5) h2::before {
-        content: '5. ';
-    }
-
-    &:nth-of-type(6) h2::before {
-        content: '6. ';
     }
 
 }

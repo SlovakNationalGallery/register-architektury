@@ -12,9 +12,13 @@
     <meta property="og:author" content="http://lab.sng.sk/" />
     <meta property="og:url" content="{{ url()->current() }}" />
     <meta property="og:image" content="@yield('og_image', 'TODO')" />
-    <meta property="og:site_name" content="Register architektúry" />
+    <meta property="og:site_name" content="{{ __('app.title') }}" />
 
     <title>@yield('page_title', __('app.title'))</title>
+
+    @include('components.hreflangs', [
+      'localizedURLs' => getLocalizedURLArray(),
+    ])
 
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     @stack('styles')
@@ -29,7 +33,7 @@
         <footer class="footer mt-auto py-3 border-top border-dark">
             <div class="container-fluid">
                 <span class="ls-2">
-                    Register modernej architektúry <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline text-dark" target="_blank">Oddelenia architektúry</a> Historického ústavu <a href="https://www.sav.sk/" class="link-underline text-dark" target="_blank">Slovenskej akadémie vied</a>.
+                    {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline text-dark" target="_blank">{{ __('app.oa') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline text-dark" target="_blank">{{ __('app.sav') }}</a>.
                 </span>
             </div>
         </footer>
