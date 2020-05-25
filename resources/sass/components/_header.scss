@@ -1,0 +1,6 @@
+.border-bl { 
+	border-bottom: $border-width solid $border-color; 
+	&:not(:first-child) {
+	  border-left: $border-width solid $border-color; 
+	}
+}
