@@ -1,12 +1,12 @@
 a.nav-link {
-    color: $dark;
+    color: $black;
     background-color: transparent;
     -webkit-transition: background .2s ease-in-out;
     -moz-transition: background .2s ease-in-out;
     transition: background .2s ease-in-out;
 
     &:hover {
-        color: $dark;
+        color: $black;
         background-color: $gray-200;
     }
 
