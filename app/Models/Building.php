@@ -138,6 +138,11 @@ class Building extends Model
         return str_slug($this->title);
     }
 
+    public function getPreviewImgAttribute()
+    {
+        return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
+    }
+
     public function toSearchableArray()
     {
         return $this->toSearchableArrayWithTranslations();

@@ -1,3 +1,5 @@
+h2, .h2 { font-weight: $font-weight-medium; }
+
 // Letter Spacing Utilities
 .ls-1 {
 	letter-spacing: $letter-spacing-1;
@@ -10,3 +12,4 @@
 .ls-3 {
 	letter-spacing: $letter-spacing-3;
 }
+
