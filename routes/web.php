@@ -24,7 +24,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 	    	$buildings = \App\Models\Building::search($search);
 	    }
 
-	    $buildings = $buildings->paginate(12);
+	    $buildings = $buildings->paginate(20);
 	    return view('welcome', compact('buildings'));
 	});
 });

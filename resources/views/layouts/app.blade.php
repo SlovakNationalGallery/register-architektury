@@ -33,7 +33,7 @@
         <footer class="footer mt-auto py-3 border-top border-dark">
             <div class="container-fluid">
                 <span class="ls-2">
-                    {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline text-dark" target="_blank">{{ __('app.oa') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline text-dark" target="_blank">{{ __('app.sav') }}</a>.
+                    {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>.
                 </span>
             </div>
         </footer>

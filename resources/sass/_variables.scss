@@ -1,8 +1,14 @@
 
-// Colors
+// Color system
 $gray-200: #EBEAEA;
 $gray-800: #343a40;
+$gray-600: #707070;
 $black:    #000;
+$blue:     #009DFF;
+$orange:   #FF6002;
+$green:    #189A01;
+
+$dark: $gray-600;
 
 // Options
 $enable-rounded: false;
@@ -27,9 +33,12 @@ $h1-font-size: $font-size-lg;
 $h2-font-size: $font-size-base;
 $h3-font-size: $font-size-base;
 
+// Body
+$body-color:                $black;
+
 // Links
-$link-color:                              $gray-800;
-$link-hover-color:                        $black;
+$link-color:                              $black;
+$link-hover-color:                        $dark;
 
 // Forms
 $input-box-shadow:                      none;
