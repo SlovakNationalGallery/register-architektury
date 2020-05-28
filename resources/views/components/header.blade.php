@@ -4,7 +4,7 @@
             <h1 class="ls-2 my-auto">{{ __('header.title') }}</h1>
         </div>
         <div class="col-md-4 border-bl text-center d-flex">
-            <form class="px-3 my-auto w-100">
+            <form class="px-3 my-auto w-100" action="/">
                 <input type="text" name="search" class="form-control form-control-sm" value="{{ request('search') }}">
             </form>
         </div>
