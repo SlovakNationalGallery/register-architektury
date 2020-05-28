@@ -1,4 +1,4 @@
-<div class="card m-3 border-dark">
+<div class="card m-3 border">
     <div class="card-body ls-1 pb-1">
         <img src="https://picsum.photos/500/300?grayscale&random={{ $building->id }}" class="card-img-top mb-4" alt="...">
 
