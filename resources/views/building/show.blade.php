@@ -1,9 +1,24 @@
 @extends('layouts.app')
-@section('title', __('app.title'))
+@section('title', $building->title)
 
 @section('content')
 
 @include('components.header')
+
+<div class="container-fluid py-3 px-3 bg-light border-bottom" style="min-height: 350px"> 
+  <div class="row">
+      	<div class="col-sm-8">
+	        <div class="tags">
+	            @foreach ($building->tags as $tag)
+	            <a class="btn btn-outline-dark btn-sm mb-2 bg-white" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
+	            @endforeach
+	        </div>
+	    </div>
+    	<div class="col-sm-4 text-right">
+        	<button class="btn btn-outline-dark btn-lg mb-2 bg-white">MAPA</button>
+      	</div>
+	</div>
+</div>
 
 <div class="container-fluid py-5 px-3">	
     <div class="row">

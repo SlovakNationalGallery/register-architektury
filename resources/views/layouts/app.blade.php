@@ -14,7 +14,14 @@
     <meta property="og:image" content="@yield('og_image', 'TODO')" />
     <meta property="og:site_name" content="{{ __('app.title') }}" />
 
-    <title>@yield('page_title', __('app.title'))</title>
+    <title>
+        @hasSection('title')
+           @yield('title') | {{__('app.title')}}
+        @else
+            {{__('app.title')}}
+        @endif
+    </title>
+
 
     @include('components.hreflangs', [
       'localizedURLs' => getLocalizedURLArray(),
