@@ -37,18 +37,24 @@
                   <b>{{ __('building.architects') }}</b><br>
                   {{ $building->architect_names }}
               </li>
+              @if (!empty($building->builder_authority))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.builders') }}</b><br>
                   {{ $building->builder_authority }}
               </li>
+              @endif
+              @if (!empty($building->project_competition_dates))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.competition_date') }}</b><br>
-                  {{ $building->competition_date }}
+                  {{ $building->project_competition_dates }}
               </li>
+              @endif
+              @if (!empty($building->project_duration_dates))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.project_date') }}</b><br>
-                  {{ $building->project_duration_dates }}
+                  {!! implode('<br>', $building->project_dates) !!}
               </li>
+              @endif
             </ul>
         </div>
 

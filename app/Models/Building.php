@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Str;
 
 class Building extends Model
 {
@@ -141,6 +142,24 @@ class Building extends Model
     public function getPreviewImgAttribute()
     {
         return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
+    }
+
+    public function getProjectDatesAttribute()
+    {
+        return explode(';', $this->project_duration_dates);
+    }
+
+    public function getProjectCompetitionDatesAttribute()
+    {   
+        $start_dates = explode(';', $this->project_start_dates);
+        foreach ($start_dates as $date) {
+            if (Str::contains($date, 'súťaž:')) {
+                return (string)Str::of($date)->replace('súťaž:', '')->trim();
+            } elseif (Str::contains($date, 'súťaž')) {
+                return (string)Str::of($date)->replace('súťaž', '')->trim();
+            }
+        }
+        return null;
     }
 
     public function toSearchableArray()
