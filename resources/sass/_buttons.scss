@@ -1,0 +1,9 @@
+.btn-outline-dark {
+    background-color: $white;
+    color: $black;
+
+    &:hover {
+        color: $black;
+        background-color: $gray-200;
+    }
+}

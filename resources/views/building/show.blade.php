@@ -10,12 +10,12 @@
       	<div class="col-sm-8">
 	        <div class="tags">
 	            @foreach ($building->tags as $tag)
-	            <a class="btn btn-outline-dark btn-sm mb-2 bg-white" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
+	            <a class="btn btn-outline-dark btn-sm mb-2" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
 	            @endforeach
 	        </div>
 	    </div>
     	<div class="col-sm-4 text-right">
-        	<button class="btn btn-outline-dark btn-lg mb-2 bg-white">MAPA</button>
+        	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
       	</div>
 	</div>
 </div>
