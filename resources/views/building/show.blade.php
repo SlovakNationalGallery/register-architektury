@@ -7,12 +7,8 @@
 
 <div class="container-fluid py-3 px-3 bg-light border-bottom" style="min-height: 350px"> 
   <div class="row">
-      	<div class="col-sm-8">
-	        <div class="tags">
-	            @foreach ($building->tags as $tag)
-	            <a class="btn btn-outline-dark btn-sm mb-2" href="./?search={{ $tag }}" role="button">{{ $tag }}</a>
-	            @endforeach
-	        </div>
+      <div class="col-sm-8">
+	        @include('components.tags', ['tags' => $building->tags])
 	    </div>
     	<div class="col-sm-4 text-right">
         	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
