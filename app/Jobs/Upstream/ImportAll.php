@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -106,8 +107,14 @@ class ImportAll implements ShouldQueue
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
                     $row = $this->trimRow($row);
+
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+
+                    $row->project_start_dates = $this->sanitizeDates($row->project_start_dates);
+
+                    $row->project_duration_dates = $this->sanitizeDates($row->project_duration_dates);
+
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -208,5 +215,9 @@ class ImportAll implements ShouldQueue
             if (empty($value)) return $value;
             return trim($value);
         }, (array) $row);
+    }
+
+    private function sanitizeDates($dates) {
+        return (empty($dates)) ? null : (string)Str::of($dates)->replace('–', '-')->replace(',', ';')->replace(' ;', ';');
     }
 }
