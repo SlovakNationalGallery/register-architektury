@@ -52,6 +52,10 @@ class Architect extends Model
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd'
             ],
+            // @readme: https://www.elastic.co/blog/numeric-and-date-ranges-in-elasticsearch-just-another-brick-in-the-wall
+            'active_years' => [
+                'type' => 'integer_range',
+            ],
             'bio' => [
                 'type' => 'text',
                 'fields' => [
@@ -82,7 +86,7 @@ class Architect extends Model
         $end_dates = $this->buildings()->whereNotNull('project_start_dates')->max('project_start_dates');
         $end_year = $this->parseProjectYear($end_dates, $last = true);
 
-        return [$start_year, $end_year];
+        return (!empty($start_year) && !empty($end_year)) ? [$start_year, $end_year] : null;
     }
 
     private function parseProjectYear($dates, $last = false)
@@ -96,5 +100,26 @@ class Architect extends Model
         } 
         return (string)$date->before('-')->trim();
 
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $active_years = $this->active_years;
+        if (!empty($active_years)) {
+            $active_years = asort($active_years); // @todo: remove after fix min/max date
+            $array['active_years'] = [
+                'lte' => $active_years[0],
+                'gte' => $active_years[1],
+            ];            
+        }
+
+        return $array;
     }
 }
