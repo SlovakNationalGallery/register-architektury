@@ -5,6 +5,7 @@ namespace App\Jobs\Upstream;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\Image;
+use App\Models\BuildingFunction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -55,6 +56,7 @@ class ImportAll implements ShouldQueue
                 'GPS AS location_gps',
                 'Projekt AS project_start_dates',
                 'Realizácia AS project_duration_dates',
+                'Súčasná funkcia AS current_function_id',
                 'Roky.Rok0 AS decade',
                 'Stav.Stav AS status',
                 'Štýlová charkteristika AS style',
@@ -87,8 +89,15 @@ class ImportAll implements ShouldQueue
                 'Zdroj originálu AS source'
             )->get();
 
-        $this->inTransaction(function() use ($architects, $buildings, $images) {
+        $functions = $this->db->table('Funkcia')
+            ->select(
+                'Identifikácia AS id',
+                'Pole1 AS name'
+            )->get();
+
+        $this->inTransaction(function() use ($architects, $buildings, $images, $functions) {
             // Delete objects no longer present in source
+            BuildingFunction::whereNotIn('id', Arr::pluck($functions, 'id'))->delete();
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
             Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
             Building::whereNotIn('source_id', Arr::pluck($buildings, 'source_id'))->delete();
@@ -133,6 +142,16 @@ class ImportAll implements ShouldQueue
 
                     Image::updateOrCreate(
                         ['source_id' => $row->source_id],
+                        (array) $row
+                    );
+                }
+            });
+
+            $this->log->info('Processing ' . count($functions) . ' functions...');
+            BuildingFunction::unguarded(function() use ($functions) {
+                foreach($functions as $row) {
+                    BuildingFunction::updateOrCreate(
+                        ['id' => $row->id],
                         (array) $row
                     );
                 }

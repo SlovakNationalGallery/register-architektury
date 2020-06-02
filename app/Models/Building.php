@@ -118,6 +118,11 @@ class Building extends Model
         return $this->hasMany('App\Models\Image');
     }
 
+    public function current_function()
+    {
+        return $this->belongsTo('App\Models\BuildingFunction', 'current_function_id');
+    }
+
     public function getTagsAttribute()
     {
         $tags = [];
