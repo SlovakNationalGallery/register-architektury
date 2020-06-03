@@ -25,10 +25,12 @@
             </h2>
 
             <ul class="list-group list-group-flush border-top border-bottom mb-4">
+              @if (!empty($building->current_function))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.current_function') }}</b><br>
-                  {{ $building->current_function }}
+                  {{ $building->current_function->name }}
               </li>
+              @endif
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.address') }}</b><br>
                   {{ $building->location_street }}, {{ $building->location_city }}

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'current_function' => 'Súčasné využitie',
+    'current_function' => 'súčasná funkcia',
     'address' => 'adresa',
     'architects' => 'architekti',
     'builders' => 'stavitelia',
