@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38"> 
+<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38" id="map"> 
     <div class="row">
     	<div class="col-sm-4 order-sm-2 text-sm-right">
         	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
