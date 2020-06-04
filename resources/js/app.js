@@ -44,7 +44,7 @@ $(document).ready(function(){
 			$('#map-container').addClass('vh-38');
 			$('#map').removeClass('hide').fadeIn(300, function(){
 				if(!map_initialised){
-					initMapApp();
+					initMap();
 				}
 				jQuery(window).trigger('resize');
 			});
@@ -53,7 +53,7 @@ $(document).ready(function(){
 		return false;
 	});
 
-	if($('#map').length){
+	if($('#map').length && !$('#map').hasClass('hide')){
 		initMap();
 	}
 });

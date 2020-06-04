@@ -19,6 +19,8 @@ class BuildingController extends Controller
     		return redirect($building->url);
     	}
 
-    	return view('building.show', ['building' => $building]);
+    	return view('building.show', [
+            'building' => $building
+        ]);
     }
 }
