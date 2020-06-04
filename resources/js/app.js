@@ -4,7 +4,11 @@ const mapboxgl = require('mapbox-gl');
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibGFiLXNuZyIsImEiOiJja2F6YWVoaHYwMnhkMnJtbmY0eWVmeW81In0.6fqLCnBSxXWFdJ2RfaDJCQ';
 
+var map_initialised = false;
+
 function initMap() {
+	map_initialised = true;
+
 	const map_container = document.querySelector('#map');
 	var location = JSON.parse(map_container.dataset.location);
 
@@ -23,19 +27,23 @@ function initMap() {
 
 $(document).ready(function(){
 	$('#map-toggle').click(function(){
+
 		if(!$('#map').length){
 			return false;
 		}
+
 		if(!$('#map').hasClass('hide')){
 			$('#map').fadeOut(300,function(){
 				$('#map').addClass('hide');
+				$('#map-container').removeClass('vh-38');
 				jQuery(window).trigger('resize');
 			});
-			$('#menu-map-toggle').closest('li').removeClass('active');
+			$('#map-toggle').removeClass('active');
 		}else{
-			$('#menu-map-toggle').closest('li').addClass('active');
+			$('#map-toggle').addClass('active');
+			$('#map-container').addClass('vh-38');
 			$('#map').removeClass('hide').fadeIn(300, function(){
-				if(!mapAppInitialised){
+				if(!map_initialised){
 					initMapApp();
 				}
 				jQuery(window).trigger('resize');
