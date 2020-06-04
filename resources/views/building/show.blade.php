@@ -5,12 +5,12 @@
 
 @include('components.header')
 
-<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38" id="map"> 
+<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38" id="map" data-location="{{ $building->lng_lat }}" data-location="" data-center="" data-zoom=""> 
     <div class="row">
-    	<div class="col-sm-4 order-sm-2 text-sm-right">
-        	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
-     	</div>
-        <div class="col-sm-8 order-sm-1">
+    	  <div class="col-sm-4 order-sm-2 text-sm-right z-index-1">
+        	  <button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
+     	  </div>
+        <div class="col-sm-8 order-sm-1 z-index-1">
             @include('components.tags', ['tags' => $building->tags])
         </div>
 	</div>

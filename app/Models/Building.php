@@ -162,6 +162,18 @@ class Building extends Model
         return null;
     }
 
+    public function getLngLatAttribute()
+    {
+        if (empty($this->location_gps)) {
+            return null;
+        }
+
+        $gps = explode(',', $this->location_gps);
+        $gps = array_reverse($gps);
+
+        return json_encode($gps);
+    }
+
     public function toSearchableArray()
     {
         return $this->toSearchableArrayWithTranslations();
