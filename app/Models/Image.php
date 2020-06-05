@@ -13,9 +13,21 @@ class Image extends Model implements HasMedia
     use CrudTrait;
     use InteractsWithMedia;
 
+    protected $with = ['media'];
+
     public function building()
     {
         return $this->belongsTo('App\Models\Building');
+    }
+
+    public function scopeProcessed($query)
+    {
+        return $query->has('media');
+    }
+
+    public function scopeUnprocessed($query)
+    {
+        return $query->doesnthave('media');
     }
 
     public function registerMediaCollections(): void

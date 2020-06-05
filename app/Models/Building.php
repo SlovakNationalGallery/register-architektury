@@ -109,21 +109,21 @@ class Building extends Model
         ]
     ];
 
-    protected $with = ['images'];
+    protected $with = ['processedImages'];
 
     public function architects()
     {
         return $this->belongsToMany('App\Models\Architect');
     }
 
-    public function images()
+    public function processedImages()
     {
-        return $this->hasMany('App\Models\Image');
+        return $this->hasMany('App\Models\Image')->processed();
     }
 
     public function getCoverImageAttribute()
     {
-        return $this->images()->first() ?? null;
+        return $this->processedImages->first() ?? null;
     }
 
     public function getTagsAttribute()
