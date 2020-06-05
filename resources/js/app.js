@@ -18,8 +18,11 @@ function initMap() {
 		center: location,
 		zoom: 14
 	});
+
+	var el = document.createElement('div');
+	 el.className = 'marker';
 	 
-	const marker = new mapboxgl.Marker()
+	const marker = new mapboxgl.Marker(el)
 		.setLngLat(location)
 		.addTo(map);
 }
