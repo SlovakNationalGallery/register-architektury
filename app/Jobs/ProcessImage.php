@@ -18,6 +18,8 @@ class ProcessImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $image;
+
     /**
      * Create a new job instance.
      *
