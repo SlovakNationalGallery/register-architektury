@@ -24,4 +24,10 @@ class Image extends Model implements HasMedia
             ->addMediaCollection('default')
             ->singleFile();
     }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+              ->width(300);
+    }
 }
