@@ -86,6 +86,7 @@ class ImportAll implements ShouldQueue
         $images = $this->db->table('Obrazky')
             ->select(
                 'Identifikačné číslo AS source_id',
+                'Evidenčné číslo objektu AS building_source_id',
                 'Názov dokumentu AS title',
                 'Autor dokumentu AS author',
                 'Rok AS created_date',
@@ -137,7 +138,8 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($images) . ' images...');
             Image::unguarded(function() use ($images, $buildings) {
                 foreach($images as $row) {
-                    $building   = Building::firstWhere('source_id', $row->source_id);
+                    $building = Building::firstWhere('source_id', $row->building_source_id);
+
                     if (empty($building)) {
                         $this->log->warning('Skipping image ' . $row->source_id . ' referencing an unknown building');
                         continue;
@@ -146,7 +148,7 @@ class ImportAll implements ShouldQueue
 
                     Image::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        (array) $row
+                        Arr::except((array) $row, ['building_source_id']),
                     );
                 }
             });
