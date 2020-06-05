@@ -72,6 +72,10 @@ class ProcessImage implements ShouldQueue
             return $upstreamStorage->get($sourcePath->replaceFirst('//AA20/OddArch/AA20 dáta/',''));
         }
 
-        throw new Exception("Unrecognized source path {$this->image->source}");
+        if (Str::startsWith($sourcePath, 'S:/AA20 dáta/')) {
+            return $upstreamStorage->get($sourcePath->replaceFirst('S:/AA20 dáta/',''));
+        }
+
+        throw new Exception("Unrecognized source path {$this->image->source} for image ID {$this->image->id}");
     }
 }
