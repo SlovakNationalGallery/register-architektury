@@ -14,6 +14,7 @@ return [
     */
 
     'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'upstream' => env('UPSTREAM_DRIVER', 'upstream_local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,6 +47,19 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
+        ],
+
+        'upstream' => [
+            'driver' => 'ftp',
+            'host' => env('UPSTREAM_FTP_HOST'),
+            'username' => env('UPSTREAM_FTP_USERNAME'),
+            'password' => env('UPSTREAM_FTP_PASSWORD'),
+        ],
+
+        // Fallback upstream disk for developers
+        'upstream_local' => [
+            'driver' => 'local',
+            'root' => storage_path('upstream'),
         ],
 
         'public' => [
