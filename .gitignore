@@ -4,6 +4,7 @@
 /public/js
 /public/css
 /storage/*.key
+/storage/upstream
 /vendor
 .env
 .env.testing
