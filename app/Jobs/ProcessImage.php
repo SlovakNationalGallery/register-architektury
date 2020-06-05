@@ -42,6 +42,7 @@ class ProcessImage implements ShouldQueue
 
             $this->image
                 ->addMedia($jpegPath)
+                ->withResponsiveImages()
                 ->toMediaCollection();
 
         } finally {
