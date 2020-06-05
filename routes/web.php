@@ -33,3 +33,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 });
 
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
+
+Route::get('map/hide', function (Request $request) {
+    $request->session()->put('show_map', false);
+    return [
+    	'success' => true,
+    	'message' => 'map is hidden',
+    ];
+});
+
+Route::get('map/show', function (Request $request) {
+    $request->session()->put('show_map', true);
+    return [
+    	'success' => true,
+    	'message' => 'map is shown',
+    ];
+});

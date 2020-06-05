@@ -33,6 +33,7 @@ $(document).ready(function(){
 		}
 
 		if(!$('#map').hasClass('hide')){
+			$.get("/map/hide");
 			$('#map').fadeOut(300,function(){
 				$('#map').addClass('hide');
 				$('#map-container').removeClass('vh-38');
@@ -40,6 +41,7 @@ $(document).ready(function(){
 			});
 			$('#map-toggle').removeClass('active');
 		}else{
+			$.get("/map/show");
 			$('#map-toggle').addClass('active');
 			$('#map-container').addClass('vh-38');
 			$('#map').removeClass('hide').fadeIn(300, function(){
