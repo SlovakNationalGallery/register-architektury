@@ -32,14 +32,14 @@ class Image extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this
-            ->addMediaCollection('default')
+        $this->addMediaCollection('default')
             ->singleFile();
     }
 
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-              ->width(300);
+            ->width(300)
+            ->nonQueued();
     }
 }
