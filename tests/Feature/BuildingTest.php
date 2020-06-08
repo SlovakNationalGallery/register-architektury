@@ -8,12 +8,13 @@ use Tests\TestCase;
 
 class BuildingTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function testDetailUrl()
     {
         $building = factory(\App\Models\Building::class)->create();
         $url = route('building.detail', [$building->id, $building->slug]);
         $response = $this->get($url);
-
         $response->assertStatus(200);
     }
 
