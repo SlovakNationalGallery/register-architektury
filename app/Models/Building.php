@@ -129,9 +129,7 @@ class Building extends Model
 
     public function getUrlAttribute()
     {
-        $url = route('building.detail', [$this->id, $this->slug]); // @todo: id or source_id?
-        return $url;
-        // return \LaravelLocalization::getNonLocalizedURL($url);
+        return route('building.detail', [$this->id, $this->slug]);
     }
 
     public function getSlugAttribute()
