@@ -19,6 +19,7 @@ class Building extends Model
     public $translatable = [
         'title',
         'description',
+        'current_function',
     ];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
@@ -118,11 +119,6 @@ class Building extends Model
         return $this->hasMany('App\Models\Image');
     }
 
-    public function current_function()
-    {
-        return $this->belongsTo('App\Models\BuildingFunction', 'current_function_id');
-    }
-
     public function getTagsAttribute()
     {
         $tags = [];
@@ -155,7 +151,7 @@ class Building extends Model
     }
 
     public function getProjectCompetitionDatesAttribute()
-    {   
+    {
         $start_dates = explode(';', $this->project_start_dates);
         foreach ($start_dates as $date) {
             if (Str::contains($date, 'súťaž:')) {

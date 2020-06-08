@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38"> 
+<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38">
     <div class="row">
     	<div class="col-sm-4 order-sm-2 text-sm-right">
         	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
@@ -16,7 +16,7 @@
 	</div>
 </div>
 
-<div class="container-fluid py-5 px-3">	
+<div class="container-fluid py-5 px-3">
     <div class="row">
 
         <div class="col-md-4 order-md-2">
@@ -28,7 +28,7 @@
               @if (!empty($building->current_function))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.current_function') }}</b><br>
-                  {{ $building->current_function->name }}
+                  {{ $building->current_function }}
               </li>
               @endif
               <li class="list-group-item px-0 py-2">

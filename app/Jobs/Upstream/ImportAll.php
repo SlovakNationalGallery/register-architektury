@@ -43,6 +43,7 @@ class ImportAll implements ShouldQueue
         $buildings = $this->db->table('Stavby')
             ->leftJoin('Stav', 'Stav.Identifikácia', '=', 'Stavby.Modalita')
             ->leftJoin('Roky', 'Roky.Identifikácia', '=', 'Stavby.Chronológia')
+            ->leftJoin('Funkcia', 'Funkcia.Identifikácia', '=', 'Stavby.Súčasná funkcia')
             ->select(
                 'Evid_č AS source_id',
                 'Pôvodný názov diela AS title',
@@ -57,11 +58,11 @@ class ImportAll implements ShouldQueue
                 'GPS AS location_gps',
                 'Projekt AS project_start_dates',
                 'Realizácia AS project_duration_dates',
-                'Súčasná funkcia AS current_function_id',
+                'Funkcia.Pole1 AS current_function',
                 'Roky.Rok0 AS decade',
                 'Stav.Stav AS status',
                 'Štýlová charkteristika AS style',
-                'Pole1 AS image_filename',
+                'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
                 'Opis AS description'
             )->get();
@@ -90,15 +91,8 @@ class ImportAll implements ShouldQueue
                 'Zdroj originálu AS source'
             )->get();
 
-        $functions = $this->db->table('Funkcia')
-            ->select(
-                'Identifikácia AS id',
-                'Pole1 AS name'
-            )->get();
-
-        $this->inTransaction(function() use ($architects, $buildings, $images, $functions) {
+        $this->inTransaction(function() use ($architects, $buildings, $images) {
             // Delete objects no longer present in source
-            BuildingFunction::whereNotIn('id', Arr::pluck($functions, 'id'))->delete();
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
             Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
             Building::whereNotIn('source_id', Arr::pluck($buildings, 'source_id'))->delete();
@@ -149,16 +143,6 @@ class ImportAll implements ShouldQueue
 
                     Image::updateOrCreate(
                         ['source_id' => $row->source_id],
-                        (array) $row
-                    );
-                }
-            });
-
-            $this->log->info('Processing ' . count($functions) . ' functions...');
-            BuildingFunction::unguarded(function() use ($functions) {
-                foreach($functions as $row) {
-                    BuildingFunction::updateOrCreate(
-                        ['id' => $row->id],
                         (array) $row
                     );
                 }
