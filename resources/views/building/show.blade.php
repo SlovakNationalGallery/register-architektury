@@ -69,13 +69,13 @@
             <h2 class="mb-3 ls-2">&nbsp;</h2>
             <div class="border-bottom border-top mt-2 py-2">
                 <p>
-                    {!! nl2br($building->description) !!}
+                    {!! nl2br($building->description_formated) !!}
                 </p>
                 <p>
                     {{ __('building.bibliography') }}:
                 </p>
                 <p>
-                    {!! nl2br($building->bibliography) !!}
+                    {!! nl2br($building->bibliography_formated) !!}
                 </p>
             </div>
         </div>

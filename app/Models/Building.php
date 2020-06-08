@@ -162,6 +162,16 @@ class Building extends Model
         return null;
     }
 
+    public function getDescriptionFormatedAttribute()
+    {
+        return nl2br($this->description);
+    }
+
+    public function getBibliographyFormatedAttribute()
+    {
+        return nl2br($this->bibliography);
+    }
+
     public function toSearchableArray()
     {
         return $this->toSearchableArrayWithTranslations();
