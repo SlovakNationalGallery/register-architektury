@@ -2,7 +2,7 @@
 
 return [
     'current_function' => 'type',
-    'address' => 'adress',
+    'address' => 'address',
     'architects' => 'architects',
     'builders' => 'builders',
     'competition_date' => 'competition',
