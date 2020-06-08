@@ -13,3 +13,6 @@
 1. `npm run dev`
 1. `php artisan serve`
 
+**Test** with
+1. `php artisan test --env=testing`
+
