@@ -80,10 +80,11 @@ class Architect extends Model
 
     public function getActiveYearsAttribute()
     {
-        $start_dates = $this->buildings()->whereNotNull('project_start_dates')->min('project_start_dates');
+        $project_dates = $this->buildings()->whereNotNull('project_start_dates')->select('project_start_dates')->get();
+        $start_dates = $project_dates->min('project_start_dates');
         $start_year = $this->parseProjectYear($start_dates);
-        
-        $end_dates = $this->buildings()->whereNotNull('project_start_dates')->max('project_start_dates');
+
+        $end_dates = $project_dates->max('project_start_dates');
         $end_year = $this->parseProjectYear($end_dates, $last = true);
 
         return (!empty($start_year) && !empty($end_year)) ? [$start_year, $end_year] : null;
@@ -97,7 +98,7 @@ class Architect extends Model
         $date = Str::of($date)->after(':');
         if ($last) {
             return (string)$date->after('-')->trim();
-        } 
+        }
         return (string)$date->before('-')->trim();
 
     }
@@ -117,7 +118,7 @@ class Architect extends Model
             $array['active_years'] = [
                 'lte' => $active_years[0],
                 'gte' => $active_years[1],
-            ];            
+            ];
         }
 
         return $array;
