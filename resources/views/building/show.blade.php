@@ -31,7 +31,7 @@
               </li>
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.address') }}</b><br>
-                  {{ $building->location_street }}, {{ $building->location_city }}
+                  {{ implode(', ', [$building->location_street, $building->location_city] }}
               </li>
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.architects') }}</b><br>
