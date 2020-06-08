@@ -62,7 +62,7 @@
             <p>
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
-            <img src="https://picsum.photos/500/300?grayscale&random={{ $building->id }}" class="card-img-top mb-4" alt="...">
+            <img src="{{ $building->preview_img }}" class="card-img-top mb-4" alt="...">
         </div>
 
         <div class="col-md-4 order-md-3">
