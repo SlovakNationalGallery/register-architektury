@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 $factory->define(App\Models\Building::class, function (Faker $faker) {
     return [
     	'source_id' => $faker->numberBetween(1,10000),
+        'title' => Str::title($faker->words($nb = $faker->numberBetween(2,8), $asText = true)),
     ];
 });
 
@@ -25,12 +26,10 @@ $factory->state(App\Models\Building::class, 'rich', function ($faker) {
     }
 
     return [
-        'title' => Str::title($faker->words($nb = $faker->numberBetween(2,8), $asText = true)),
         'description' => $faker->text($faker->numberBetween(300,500)),
         'architect_names' => $architect_names,
         'location_city' => $faker->city,
         'location_street' => $faker->streetAddress,
         'project_duration_dates' => "$from_year - $to_year",
-
     ];
 });
