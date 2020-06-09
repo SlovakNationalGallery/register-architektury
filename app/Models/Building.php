@@ -130,9 +130,7 @@ class Building extends Model
 
     public function getUrlAttribute()
     {
-        $url = route('building.detail', [$this->id, $this->slug]); // @todo: id or source_id?
-        return $url;
-        // return \LaravelLocalization::getNonLocalizedURL($url);
+        return route('building.detail', [$this->id, $this->slug]);
     }
 
     public function getSlugAttribute()
@@ -145,22 +143,14 @@ class Building extends Model
         return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
     }
 
-    public function getProjectDatesAttribute()
+    public function getProjectDurationDatesArrayAttribute()
     {
-        return explode(';', $this->project_duration_dates);
+        return $this->makeArray($this->project_duration_dates, ';');
     }
 
-    public function getProjectCompetitionDatesAttribute()
+    public function getProjectStartDatesArrayAttribute()
     {
-        $start_dates = explode(';', $this->project_start_dates);
-        foreach ($start_dates as $date) {
-            if (Str::contains($date, 'súťaž:')) {
-                return (string)Str::of($date)->replace('súťaž:', '')->trim();
-            } elseif (Str::contains($date, 'súťaž')) {
-                return (string)Str::of($date)->replace('súťaž', '')->trim();
-            }
-        }
-        return null;
+        return $this->makeArray($this->project_start_dates, ';');
     }
 
     public function toSearchableArray()

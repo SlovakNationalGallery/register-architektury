@@ -2,10 +2,10 @@
 
 return [
     'current_function' => 'type',
-    'address' => 'adress',
+    'address' => 'address',
     'architects' => 'architects',
     'builders' => 'builders',
-    'competition_date' => 'competition',
-    'project_date' => 'project',
+    'project_start_dates' => 'project',
+    'project_duration_dates' => 'realization',
     'bibliography' => 'Bibliography',
 ];

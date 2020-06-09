@@ -33,7 +33,7 @@
               @endif
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.address') }}</b><br>
-                  {{ $building->location_street }}, {{ $building->location_city }}
+                  {{ implode(', ', [$building->location_street, $building->location_city]) }}
               </li>
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.architects') }}</b><br>
@@ -45,16 +45,16 @@
                   {{ $building->builder_authority }}
               </li>
               @endif
-              @if (!empty($building->project_competition_dates))
+              @if (!empty($building->project_start_dates))
               <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.competition_date') }}</b><br>
-                  {{ $building->project_competition_dates }}
+                  <b>{{ __('building.project_start_dates') }}</b><br>
+                  {!! implode('<br>', $building->project_start_dates_array) !!}
               </li>
               @endif
               @if (!empty($building->project_duration_dates))
               <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.project_date') }}</b><br>
-                  {!! implode('<br>', $building->project_dates) !!}
+                  <b>{{ __('building.project_duration_dates') }}</b><br>
+                  {!! implode('<br>', $building->project_duration_dates_array) !!}
               </li>
               @endif
             </ul>
@@ -64,7 +64,7 @@
             <p>
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
-            <img src="https://picsum.photos/500/300?grayscale&random={{ $building->id }}" class="card-img-top mb-4" alt="...">
+            <img src="{{ $building->preview_img }}" class="card-img-top mb-4" alt="...">
         </div>
 
         <div class="col-md-4 order-md-3">
