@@ -14,7 +14,7 @@ class AddCurrentFunctionIntoBuildingsTable extends Migration
     public function up()
     {
         Schema::table('buildings', function ($table) {
-            $table->json('current_function')->after('status');
+            $table->json('current_function')->nullable()->after('status');
         });
     }
 
