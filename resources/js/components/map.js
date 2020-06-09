@@ -1,6 +1,7 @@
 const mapboxgl = require('mapbox-gl');
 
-mapboxgl.accessToken = 'pk.eyJ1IjoibGFiLXNuZyIsImEiOiJja2F6YWVoaHYwMnhkMnJtbmY0eWVmeW81In0.6fqLCnBSxXWFdJ2RfaDJCQ';
+mapboxgl.accessToken = process.env.MIX_MAPBOX_TOKEN;
+console.log(mapboxgl.accessToken);
 
 var map_initialised = false;
 
@@ -19,7 +20,7 @@ function initMap() {
 
 	var el = document.createElement('div');
 	 el.className = 'marker';
-	 
+
 	const marker = new mapboxgl.Marker(el)
 		.setLngLat(location)
 		.addTo(map);
