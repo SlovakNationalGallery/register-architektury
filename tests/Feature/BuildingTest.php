@@ -21,9 +21,8 @@ class BuildingTest extends TestCase
     public function testDetailUrlRedirectOnFakeSlug()
     {
         $building = factory(\App\Models\Building::class)->create();
-        $url = route('building.detail', [$building->id, 'fake-slug']);
-        $response = $this->get($url);
-
-        $response->assertStatus(302);
+        $fake_url = route('building.detail', [$building->id, 'fake-slug']);
+        $response = $this->get($fake_url);
+        $response->assertRedirect($building->url);
     }
 }
