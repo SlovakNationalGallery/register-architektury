@@ -46,13 +46,13 @@
               @if (!empty($building->project_start_dates))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.project_start_dates') }}</b><br>
-                  {!! $building->project_start_dates_formated !!}
+                  {!! implode('<br>', $building->project_start_dates_array) !!}
               </li>
               @endif
               @if (!empty($building->project_duration_dates))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.project_duration_dates') }}</b><br>
-                  {!! $building->project_duration_dates_formated !!}
+                  {!! implode('<br>', $building->project_duration_dates_array) !!}
               </li>
               @endif
             </ul>
@@ -69,13 +69,13 @@
             <h2 class="mb-3 ls-2">&nbsp;</h2>
             <div class="border-bottom border-top mt-2 py-2">
                 <p>
-                    {!! nl2br($building->description_formated) !!}
+                    {!! nl2br($building->description) !!}
                 </p>
                 <p>
                     {{ __('building.bibliography') }}:
                 </p>
                 <p>
-                    {!! nl2br($building->bibliography_formated) !!}
+                    {!! nl2br($building->bibliography) !!}
                 </p>
             </div>
         </div>

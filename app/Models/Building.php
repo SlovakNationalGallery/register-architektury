@@ -142,26 +142,14 @@ class Building extends Model
         return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
     }
 
-    public function getProjectDurationDatesFormatedAttribute()
+    public function getProjectDurationDatesArrayAttribute()
     {
-        $dates = $this->makeArray($this->project_duration_dates, ';');
-        return implode('<br>', $dates);
+        return $this->makeArray($this->project_duration_dates, ';');
     }
 
-    public function getProjectStartDatesFormatedAttribute()
+    public function getProjectStartDatesArrayAttribute()
     {
-        $dates = $this->makeArray($this->project_start_dates, ';');
-        return implode('<br>', $dates);
-    }
-
-    public function getDescriptionFormatedAttribute()
-    {
-        return nl2br($this->description);
-    }
-
-    public function getBibliographyFormatedAttribute()
-    {
-        return nl2br($this->bibliography);
+        return $this->makeArray($this->project_start_dates, ';');
     }
 
     public function toSearchableArray()
