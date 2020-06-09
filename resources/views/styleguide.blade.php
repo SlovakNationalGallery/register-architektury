@@ -158,6 +158,18 @@
     </div>
 </section>
 
+<section id="header-card" class="cd-header-card">
+    <h2>Component: tags</h2>
+
+    <div class="cd-box">
+        @include('components.tags', ['tags' => $building->tags ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.tags', ['tags' => $building->tags ])
+    </div>
+</section>
+
 </main>
 @stop
 

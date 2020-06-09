@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Str;
 
 class Building extends Model
 {
@@ -124,6 +125,31 @@ class Building extends Model
         $tags[] = $this->location_city;
         $tags[] = $this->project_duration_dates;
         return $tags;
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('building.detail', [$this->id, $this->slug]);
+    }
+
+    public function getSlugAttribute()
+    {
+        return str_slug($this->title);
+    }
+
+    public function getPreviewImgAttribute()
+    {
+        return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
+    }
+
+    public function getProjectDurationDatesArrayAttribute()
+    {
+        return $this->makeArray($this->project_duration_dates, ';');
+    }
+
+    public function getProjectStartDatesArrayAttribute()
+    {
+        return $this->makeArray($this->project_start_dates, ';');
     }
 
     public function toSearchableArray()

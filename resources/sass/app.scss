@@ -8,10 +8,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-@import 'typography';
+@import 'type';
 @import 'forms';
+@import 'buttons';
 @import 'nav';
 @import 'links';
+@import 'sizing';
 
 // Components
 @import 'components/langswitch';

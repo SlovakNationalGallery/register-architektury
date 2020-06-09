@@ -30,8 +30,10 @@ $letter-spacing-3: 0.08rem;
 
 $headings-font-weight: 400;
 $h1-font-size: $font-size-lg;
-$h2-font-size: $font-size-base;
+$h2-font-size: $font-size-lg;
 $h3-font-size: $font-size-base;
+
+$font-weight-medium: 500;
 
 // Body
 $body-color:                $black;
@@ -39,6 +41,9 @@ $body-color:                $black;
 // Links
 $link-color:                              $black;
 $link-hover-color:                        $dark;
+
+// Components
+$border-color:                $dark;
 
 // Forms
 $input-box-shadow:                      none;
@@ -48,3 +53,6 @@ $input-border-radius-lg:                none;
 $input-border-radius-sm:                none;
 $input-border-color:                    #000;
 $input-border-width:                    1px;
+
+// List group
+$list-group-border-color: $dark;

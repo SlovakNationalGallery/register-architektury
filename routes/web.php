@@ -27,6 +27,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 	    $buildings = $buildings->paginate(20);
 	    return view('welcome', compact('buildings'));
 	});
+
+	Route::get('objekt/{id}-{slug}', 'BuildingController@show')->name('building.detail');
+
 });
 
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
