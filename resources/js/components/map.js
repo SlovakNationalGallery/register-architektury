@@ -1,7 +1,6 @@
 const mapboxgl = require('mapbox-gl');
 
 mapboxgl.accessToken = process.env.MIX_MAPBOX_TOKEN;
-console.log(mapboxgl.accessToken);
 
 var map_initialised = false;
 
@@ -35,7 +34,7 @@ $(document).ready(function(){
 		}
 
 		if(!$('#map').hasClass('hide')) {
-			$.get("/map/hide");
+			$.post("/map/hide");
 			$('#map').fadeOut(300, function(){
 				$('#map').addClass('hide');
 				$('#map-container').removeClass('vh-38');
@@ -43,7 +42,7 @@ $(document).ready(function(){
 			});
 			$('#map-toggle').removeClass('active');
 		} else {
-			$.get("/map/show");
+			$.post("/map/show");
 			$('#map-toggle').addClass('active');
 			$('#map-container').addClass('vh-38');
 			$('#map').removeClass('hide').fadeIn(300, function(){
