@@ -150,7 +150,7 @@ class Building extends Model
     }
 
     public function getProjectCompetitionDatesAttribute()
-    {   
+    {
         $start_dates = explode(';', $this->project_start_dates);
         foreach ($start_dates as $date) {
             if (Str::contains($date, 'súťaž:')) {
@@ -169,9 +169,7 @@ class Building extends Model
         }
 
         $gps = explode(',', $this->location_gps);
-        $gps = array_reverse($gps);
-
-        return json_encode($gps);
+        return array_reverse($gps);
     }
 
     public function toSearchableArray()
