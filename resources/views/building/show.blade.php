@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38"> 
+<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38">
     <div class="row">
     	<div class="col-sm-4 order-sm-2 text-sm-right">
         	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
@@ -16,7 +16,7 @@
 	</div>
 </div>
 
-<div class="container-fluid py-5 px-3">	
+<div class="container-fluid py-5 px-3">
     <div class="row">
 
         <div class="col-md-4 order-md-2">
@@ -43,16 +43,16 @@
                   {{ $building->builder_authority }}
               </li>
               @endif
-              @if (!empty($building->project_competition_dates))
+              @if (!empty($building->project_start_dates))
               <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.competition_date') }}</b><br>
-                  {{ $building->project_competition_dates }}
+                  <b>{{ __('building.project_start_dates') }}</b><br>
+                  {!! $building->project_start_dates_formated !!}
               </li>
               @endif
               @if (!empty($building->project_duration_dates))
               <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.project_date') }}</b><br>
-                  {!! implode('<br>', $building->project_dates) !!}
+                  <b>{{ __('building.project_duration_dates') }}</b><br>
+                  {!! $building->project_duration_dates_formated !!}
               </li>
               @endif
             </ul>

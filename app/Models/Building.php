@@ -142,22 +142,16 @@ class Building extends Model
         return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
     }
 
-    public function getProjectDatesAttribute()
+    public function getProjectDurationDatesFormatedAttribute()
     {
-        return explode(';', $this->project_duration_dates);
+        $dates = $this->makeArray($this->project_duration_dates, ';');
+        return implode('<br>', $dates);
     }
 
-    public function getProjectCompetitionDatesAttribute()
-    {   
-        $start_dates = explode(';', $this->project_start_dates);
-        foreach ($start_dates as $date) {
-            if (Str::contains($date, 'súťaž:')) {
-                return (string)Str::of($date)->replace('súťaž:', '')->trim();
-            } elseif (Str::contains($date, 'súťaž')) {
-                return (string)Str::of($date)->replace('súťaž', '')->trim();
-            }
-        }
-        return null;
+    public function getProjectStartDatesFormatedAttribute()
+    {
+        $dates = $this->makeArray($this->project_start_dates, ';');
+        return implode('<br>', $dates);
     }
 
     public function getDescriptionFormatedAttribute()

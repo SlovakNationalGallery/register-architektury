@@ -5,7 +5,7 @@ return [
     'address' => 'adresa',
     'architects' => 'architekti',
     'builders' => 'stavitelia',
-    'competition_date' => 'súťaž',
-    'project_date' => 'projekt',
+    'project_start_dates' => 'projekt',
+    'project_duration_dates' => 'realizácia',
     'bibliography' => 'Literatúra',
 ];
