@@ -109,6 +109,9 @@ class ImportAll implements ShouldQueue
 
                     $row->project_duration_dates = $this->sanitizeDates($row->project_duration_dates);
 
+                    $row->active_from = $row->decade;
+                    $row->active_to = $row->decade + 9;
+
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
