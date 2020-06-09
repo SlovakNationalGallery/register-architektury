@@ -202,6 +202,6 @@ class ImportAll implements ShouldQueue
     }
 
     private function sanitizeDates($dates) {
-        return (empty($dates)) ? null : (string)Str::of($dates)->replace('–', '-')->replace(',', ';')->replace(' ;', ';');
+        return (empty($dates)) ? null : (string)Str::of($dates)->replace('–', '-')->replace(' ;', ';');
     }
 }
