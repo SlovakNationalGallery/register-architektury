@@ -7,7 +7,6 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\Translatable\HasTranslations;
-use Illuminate\Support\Str;
 
 class Building extends Model
 {
@@ -121,9 +120,9 @@ class Building extends Model
         return $this->hasMany('App\Models\Image')->processed();
     }
 
-    public function getCoverImageAttribute()
+    public function getCoverImageTagAttribute()
     {
-        return $this->processedImages->first() ?? null;
+        return $this->processedImages->first()->getFirstMedia()->img();
     }
 
     public function getTagsAttribute()
@@ -143,11 +142,6 @@ class Building extends Model
     public function getSlugAttribute()
     {
         return str_slug($this->title);
-    }
-
-    public function getPreviewImgAttribute()
-    {
-        return 'https://picsum.photos/500/300?grayscale&random=' . $this->id;
     }
 
     public function getProjectDurationDatesArrayAttribute()

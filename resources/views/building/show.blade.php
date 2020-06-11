@@ -59,7 +59,9 @@
             <p>
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
-            <img src="{{ $building->preview_img }}" class="card-img-top mb-4" alt="...">
+            @if($building->processedImages->isNotEmpty())
+            {{ $building->cover_image_tag->attributes(['class' => 'card-img-top mb-4']) }}
+            @endif
         </div>
 
         <div class="col-md-4 order-md-3">
