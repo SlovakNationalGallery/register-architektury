@@ -1,9 +1,8 @@
 <div class="card m-3 border">
     <div class="card-body ls-1 pb-1">
         @if($building->processedImages->isNotEmpty())
-        {{ $building->cover_image->getFirstMedia()->img('thumb')->attributes(['class' => 'card-img-top mb-4']) }}
+        {{ $building->cover_image_tag->attributes(['class' => 'card-img-top mb-4']) }}
         @endif
-
         @include('components.tags', ['tags' => $building->tags])
 
     </div>
