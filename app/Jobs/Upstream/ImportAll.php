@@ -22,6 +22,8 @@ class ImportAll implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $logChannel;
+
     /**
      * Create a new job instance.
      *
@@ -29,8 +31,7 @@ class ImportAll implements ShouldQueue
      */
     public function __construct($logChannel= 'default')
     {
-        $this->db = DB::connection('upstream');
-        $this->log = Log::channel($logChannel);
+        $this->logChannel = $logChannel;
     }
 
     /**
@@ -40,6 +41,9 @@ class ImportAll implements ShouldQueue
      */
     public function handle()
     {
+        $this->db = DB::connection('upstream');
+        $this->log = Log::channel($this->logChannel);
+
         $this->log->info('Fetching data');
         $buildings = $this->db->table('Stavby')
             ->leftJoin('Stav', 'Stav.Identifikácia', '=', 'Stavby.Modalita')
