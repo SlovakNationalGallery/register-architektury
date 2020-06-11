@@ -20,13 +20,10 @@
     </ul>
 
     <ul>
-        {{-- @TODO --}}
-        <li><img src="/favicon.ico" alt="Current favicon"></li>
-        {{--
         <li><img src="/apple-touch-icon.png" alt="Touch Icon 1"></li>
         <li><img src="/favicon-32x32.png" alt="Favicon 1"></li>
         <li><img src="/favicon-16x16.png" alt="Favicon 2"></li>
-         --}}
+        <li><img src="/favicon.ico" alt="Current favicon"></li>
     </ul>
 </section>
 
