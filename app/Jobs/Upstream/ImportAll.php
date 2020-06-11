@@ -90,7 +90,8 @@ class ImportAll implements ShouldQueue
                 'Názov dokumentu AS title',
                 'Autor dokumentu AS author',
                 'Rok AS created_date',
-                'Cesta AS source'
+                'Zdroj originálu AS source',
+                'Cesta AS path'
             )
             ->where('Cesta', '!=', '')
             ->whereNotNull('Cesta')
