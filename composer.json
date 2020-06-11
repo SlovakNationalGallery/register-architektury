@@ -71,7 +71,7 @@
         "post-install-cmd": [
             "@php artisan backpack:install",
             "@php artisan elfinder:publish",
-            "@php artisan horizon:install"
+            "@php artisan horizon:publish"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
