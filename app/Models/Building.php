@@ -19,6 +19,7 @@ class Building extends Model
     public $translatable = [
         'title',
         'description',
+        'current_function',
     ];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
@@ -123,7 +124,7 @@ class Building extends Model
         $tags = [];
         $tags = $this->makeArray($this->architect_names);
         $tags[] = $this->location_city;
-        $tags[] = $this->project_duration_dates;
+        $tags[] = $this->years_span;
         return $tags;
     }
 
@@ -150,6 +151,22 @@ class Building extends Model
     public function getProjectStartDatesArrayAttribute()
     {
         return $this->makeArray($this->project_start_dates, ';');
+    }
+
+    public function getYearFromAttribute()
+    {
+        return $this->decade;
+    }
+
+    public function getYearToAttribute()
+    {
+        return $this->decade + 9;
+    }
+
+    public function getYearsSpanAttribute()
+    {
+        return $this->year_from . ' - ' . $this->year_to;
+
     }
 
     public function getLngLatAttribute()

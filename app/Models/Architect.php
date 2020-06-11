@@ -5,6 +5,7 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
+use Illuminate\Support\Str;
 
 class Architect extends Model
 {
@@ -16,6 +17,8 @@ class Architect extends Model
     protected $searchRules = [
         //
     ];
+
+    protected $searchableWith = ['buildings'];
 
     protected $mapping = [
         'properties' => [
@@ -51,6 +54,10 @@ class Architect extends Model
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd'
             ],
+            // @readme: https://www.elastic.co/blog/numeric-and-date-ranges-in-elasticsearch-just-another-brick-in-the-wall
+            'active_years' => [
+                'type' => 'integer_range',
+            ],
             'bio' => [
                 'type' => 'text',
                 'fields' => [
@@ -71,5 +78,32 @@ class Architect extends Model
     public function buildings()
     {
         return $this->belongsToMany('App\Models\Building');
+    }
+
+    public function getActiveFromAttribute()
+    {
+        return $this->buildings->min('year_from');
+    }
+
+    public function getActiveToAttribute()
+    {
+        return $this->buildings->max('year_to');
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array
+     */
+    public function toSearchableArray()
+    {
+        $array = $this->toArray();
+
+        $array['active_years'] = [
+            'gte' => $this->active_from,
+            'lte' => $this->active_to,
+        ];
+
+        return $array;
     }
 }

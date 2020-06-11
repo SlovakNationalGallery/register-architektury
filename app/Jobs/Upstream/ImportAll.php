@@ -6,12 +6,14 @@ use App\Jobs\ReindexAll;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\Image;
+use App\Models\BuildingFunction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -42,6 +44,7 @@ class ImportAll implements ShouldQueue
         $buildings = $this->db->table('Stavby')
             ->leftJoin('Stav', 'Stav.Identifikácia', '=', 'Stavby.Modalita')
             ->leftJoin('Roky', 'Roky.Identifikácia', '=', 'Stavby.Chronológia')
+            ->leftJoin('Funkcia', 'Funkcia.Identifikácia', '=', 'Stavby.Súčasná funkcia')
             ->select(
                 'Evid_č AS source_id',
                 'Pôvodný názov diela AS title',
@@ -56,10 +59,11 @@ class ImportAll implements ShouldQueue
                 'GPS AS location_gps',
                 'Projekt AS project_start_dates',
                 'Realizácia AS project_duration_dates',
+                'Funkcia.Pole1 AS current_function',
                 'Roky.Rok0 AS decade',
                 'Stav.Stav AS status',
                 'Štýlová charkteristika AS style',
-                'Pole1 AS image_filename',
+                'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
                 'Opis AS description'
             )->get();
@@ -98,8 +102,13 @@ class ImportAll implements ShouldQueue
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
                     $row = $this->trimRow($row);
+
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+
+                    $row->project_start_dates = $this->sanitizeDates($row->project_start_dates);
+
+                    $row->project_duration_dates = $this->sanitizeDates($row->project_duration_dates);
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -190,5 +199,9 @@ class ImportAll implements ShouldQueue
             if (empty($value)) return $value;
             return trim($value);
         }, (array) $row);
+    }
+
+    private function sanitizeDates($dates) {
+        return (empty($dates)) ? null : (string)Str::of($dates)->replace('–', '-')->replace(' ;', ';');
     }
 }
