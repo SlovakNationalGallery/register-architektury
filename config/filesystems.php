@@ -54,7 +54,7 @@ return [
             'host' => env('UPSTREAM_FTP_HOST'),
             'username' => env('UPSTREAM_FTP_USERNAME'),
             'password' => env('UPSTREAM_FTP_PASSWORD'),
-            'port' => env('UPSTREAM_FTP_PASSWORD', 21),
+            'port' => env('UPSTREAM_FTP_PORT', 21),
             'ssl' => true,
         ],
 
