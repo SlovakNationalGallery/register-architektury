@@ -1,6 +1,6 @@
 <div class="card m-3 border">
     <div class="card-body ls-1 pb-1">
-        @if($building->cover_image->hasMedia())
+        @if($building->processedImages->isNotEmpty())
         {{ $building->cover_image->getFirstMedia()->img('thumb')->attributes(['class' => 'card-img-top mb-4']) }}
         @endif
 
