@@ -18,6 +18,8 @@ class Architect extends Model
         //
     ];
 
+    protected $searchableWith = ['buildings'];
+
     protected $mapping = [
         'properties' => [
             'first_name' => [
@@ -78,25 +80,14 @@ class Architect extends Model
         return $this->belongsToMany('App\Models\Building');
     }
 
-    public function getActiveYearsAttribute()
+    public function getActiveFromAttribute()
     {
-        $buildings = $this->buildings;
-        $start_year = $buildings->min('year_from');
-        $end_year = $buildings->max('year_to');
-        return (!empty($start_year) && !empty($end_year)) ? [$start_year, $end_year] : null;
+        return $this->buildings->min('year_from');
     }
 
-    private function parseProjectYear($dates, $last = false)
+    public function getActiveToAttribute()
     {
-        $dates = explode(';', $dates);
-        $date = reset($dates);
-
-        $date = Str::of($date)->after(':');
-        if ($last) {
-            return (string)$date->after('-')->trim();
-        }
-        return (string)$date->before('-')->trim();
-
+        return $this->buildings->max('year_to');
     }
 
     /**
@@ -108,14 +99,10 @@ class Architect extends Model
     {
         $array = $this->toArray();
 
-        $active_years = $this->active_years;
-        if (!empty($active_years)) {
-            $active_years = asort($active_years); // @todo: remove after fix min/max date
-            $array['active_years'] = [
-                'lte' => $active_years[0],
-                'gte' => $active_years[1],
-            ];
-        }
+        $array['active_years'] = [
+            'gte' => $this->active_from,
+            'lte' => $this->active_to,
+        ];
 
         return $array;
     }
