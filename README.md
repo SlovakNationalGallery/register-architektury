@@ -1,12 +1,13 @@
 # Register architektúry
 
-### Development
+## Development
+
 **Set up** with
 1. `composer install`
 1. `npm install`
 1. `php artisan storage:link`
 
-**Set up** (or update) elastic with
+**Migrate or create** Elastic indexes with
 1. `php artisan regarch:elastic:migrate`
 
 **Start** with
@@ -16,3 +17,9 @@
 **Test** with
 1. `php artisan test --env=testing`
 
+### Developing on Windows
+If you're developing on **Windows**, you will get an error at `composer install` stage about **pcntl** extension missing (required by Horizon). As of today, this extension is not available for Windows, so you'll have to do
+
+```
+composer install --ignore-platform-reqs
+```
