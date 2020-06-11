@@ -80,9 +80,9 @@ class Architect extends Model
 
     public function getActiveYearsAttribute()
     {
-        $project_dates = $this->buildings()->whereNotNull('active_from')->select('active_from', 'active_to')->get();
-        $start_year = $project_dates->min('active_from');
-        $end_year = $project_dates->max('active_to');
+        $buildings = $this->buildings;
+        $start_year = $buildings->min('year_from');
+        $end_year = $buildings->max('year_to');
         return (!empty($start_year) && !empty($end_year)) ? [$start_year, $end_year] : null;
     }
 
