@@ -152,6 +152,16 @@ class Building extends Model
         return $this->makeArray($this->project_start_dates, ';');
     }
 
+    public function getLngLatAttribute()
+    {
+        if (empty($this->location_gps)) {
+            return null;
+        }
+
+        $gps = explode(',', $this->location_gps);
+        return array_reverse($gps);
+    }
+
     public function toSearchableArray()
     {
         return $this->toSearchableArrayWithTranslations();

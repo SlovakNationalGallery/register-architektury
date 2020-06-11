@@ -1,0 +1,22 @@
+.marker {
+  background-color: $black;
+  border: 1px $dark solid;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#map-toggle {
+	box-shadow: 0 0 6px $orange;
+
+	&.active {
+		color: $black;
+		background-color: $white;
+		box-shadow: 0 0 6px $green;
+		&:hover {
+			color: $black;
+			background-color: $gray-200;
+		}
+	}
+}

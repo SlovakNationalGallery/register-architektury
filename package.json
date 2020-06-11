@@ -23,6 +23,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "mapbox-gl": "^1.10.1",
         "@babel/compat-data": "^7.10.1",
         "@babel/core": "^7.10.2",
         "@babel/preset-env": "^7.10.2"

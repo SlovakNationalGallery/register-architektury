@@ -5,16 +5,11 @@
 
 @include('components.header')
 
-<div class="container-fluid py-3 px-3 bg-light border-bottom vh-38">
-    <div class="row">
-    	<div class="col-sm-4 order-sm-2 text-sm-right">
-        	<button class="btn btn-outline-dark btn-lg mb-2">MAPA</button>
-     	</div>
-        <div class="col-sm-8 order-sm-1">
-            @include('components.tags', ['tags' => $building->tags])
-        </div>
-	</div>
-</div>
+@include('components.map', [
+    'location' => $building->lng_lat,
+    'tags' => $building->tags,
+    'show_map' => session('show_map', true),
+])
 
 <div class="container-fluid py-5 px-3">
     <div class="row">
