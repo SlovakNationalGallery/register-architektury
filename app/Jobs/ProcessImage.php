@@ -54,7 +54,7 @@ class ProcessImage implements ShouldQueue
 
     private function convertToJpeg($destinationPath)
     {
-        $jpegPath = pathinfo($destinationPath, PATHINFO_DIRNAME).'/'.pathinfo($this->image->source, PATHINFO_FILENAME).'.jpg';
+        $jpegPath = pathinfo($destinationPath, PATHINFO_DIRNAME).'/'.pathinfo($this->image->path, PATHINFO_FILENAME).'.jpg';
 
         $jpegImage = new Imagick();
         $jpegImage->readImageBlob($this->getContent());
@@ -67,7 +67,7 @@ class ProcessImage implements ShouldQueue
 
     private function getContent()
     {
-        $sourcePath = Str::of($this->image->source)->replace('\\', '/');
+        $sourcePath = Str::of($this->image->path)->replace('\\', '/');
         $upstreamStorage = Storage::disk(Config('filesystems.upstream'));
 
         if (Str::startsWith($sourcePath, '//AA20/OddArch/AA20 dáta/')) {
@@ -78,6 +78,6 @@ class ProcessImage implements ShouldQueue
             return $upstreamStorage->get($sourcePath->replaceFirst('S:/AA20 dáta/',''));
         }
 
-        throw new Exception("Unrecognized source path {$this->image->source} for image ID {$this->image->id}");
+        throw new Exception("Unrecognized source path {$this->image->path} for image ID {$this->image->id}");
     }
 }
