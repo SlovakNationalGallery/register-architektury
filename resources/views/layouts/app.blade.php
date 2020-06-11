@@ -24,6 +24,7 @@
     </title>
 
 
+    @include('components.favicons')
     @include('components.hreflangs', [
       'localizedURLs' => getLocalizedURLArray(),
     ])
