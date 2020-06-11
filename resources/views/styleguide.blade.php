@@ -170,6 +170,26 @@
     </div>
 </section>
 
+<section id="header-card" class="cd-header-card">
+    <h2>Component: map</h2>
+
+    <div class="cd-box">
+        @include('components.map', [
+            'location' => $building->lng_lat,
+            'tags' => $building->tags,
+            'show_map' => session('show_map', true),
+        ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.map', [
+            'location' => $building->lng_lat,
+            'tags' => $building->tags,
+            'show_map' => session('show_map', true),
+        ])
+    </div>
+</section>
+
 </main>
 @stop
 

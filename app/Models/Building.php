@@ -166,6 +166,17 @@ class Building extends Model
     public function getYearsSpanAttribute()
     {
         return $this->year_from . ' - ' . $this->year_to;
+
+    }
+
+    public function getLngLatAttribute()
+    {
+        if (empty($this->location_gps)) {
+            return null;
+        }
+
+        $gps = explode(',', $this->location_gps);
+        return array_reverse($gps);
     }
 
     public function toSearchableArray()

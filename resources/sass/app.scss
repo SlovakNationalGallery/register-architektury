@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
 
+// used NPM modules
+@import '~mapbox-gl/src/css/mapbox-gl.css';
+
 // Variables
 @import 'variables';
 
@@ -14,7 +17,9 @@
 @import 'nav';
 @import 'links';
 @import 'sizing';
+@import 'position';
 
 // Components
 @import 'components/langswitch';
 @import 'components/header';
+@import 'components/map';
