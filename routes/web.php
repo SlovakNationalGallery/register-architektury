@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,16 +37,10 @@ Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
 
 Route::post('map/hide', function (Request $request) {
     $request->session()->put('show_map', false);
-    return [
-    	'success' => true,
-    	'message' => 'map is hidden',
-    ];
+    return response(null, Response::HTTP_OK);
 });
 
 Route::post('map/show', function (Request $request) {
     $request->session()->put('show_map', true);
-    return [
-    	'success' => true,
-    	'message' => 'map is shown',
-    ];
+    return response(null, Response::HTTP_OK);
 });
