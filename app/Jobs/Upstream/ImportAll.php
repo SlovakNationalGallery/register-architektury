@@ -7,7 +7,6 @@ use App\Jobs\ProcessImage;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\Image;
-use App\Models\BuildingFunction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,6 +22,8 @@ class ImportAll implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $logChannel;
+    protected $db;
+    protected $log;
 
     /**
      * Create a new job instance.
