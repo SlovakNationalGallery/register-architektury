@@ -40,7 +40,7 @@ class ProcessImage implements ShouldQueue
         $jpegDirectory = (new TemporaryDirectory())->create();
 
         try {
-            $jpegPath = $this->convertToJpeg($jpegDirectory->path());
+            $jpegPath = $this->convertToJpeg($jpegDirectory);
 
             $this->image
                 ->addMedia($jpegPath)
@@ -52,9 +52,9 @@ class ProcessImage implements ShouldQueue
         }
     }
 
-    private function convertToJpeg($destinationPath)
+    private function convertToJpeg(TemporaryDirectory $destinationDirectory)
     {
-        $jpegPath = pathinfo($destinationPath, PATHINFO_DIRNAME).'/'.pathinfo($this->image->path, PATHINFO_FILENAME).'.jpg';
+        $jpegPath = $destinationDirectory->path("{$this->image->id}.jpg");
 
         $jpegImage = new Imagick();
         $jpegImage->readImageBlob($this->getContent());
