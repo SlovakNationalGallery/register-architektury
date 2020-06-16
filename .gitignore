@@ -4,8 +4,10 @@
 /public/js
 /public/css
 /public/vendor/horizon
+/resources/views/vendor/backpack
 /storage/*.key
 /storage/upstream
+/storage/media-library
 /vendor
 .env
 .env.testing
