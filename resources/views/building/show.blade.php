@@ -80,4 +80,21 @@
         </div>
     </div>
 </div>
+{{-- related --}}
+<div class="container-fluid p-0 border-top">
+    <div class="row no-gutters">
+        <div class="col-md-12 p-3">
+          {{ __('building.related') }} …
+        </div>
+        <div class="col-md-12 p-3">
+            <div class="row no-gutters">
+                @foreach ($related_buildings as $i=>$building)
+                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch">
+                        @include('components.building-card', ['building' => $building])
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

@@ -21,6 +21,8 @@ class Building extends Model
         'current_function',
     ];
 
+    protected $appends = ['tags'];
+
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
     protected $searchRules = [
@@ -105,6 +107,9 @@ class Building extends Model
             'location_gps' => [
                 'type' => 'geo_point',
             ],
+            'tags' => [
+                'type' => 'keyword',
+            ],
         ]
     ];
 
@@ -182,7 +187,9 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-        return $this->toSearchableArrayWithTranslations();
+        $array = $this->toSearchableArrayWithTranslations();
+        unset($array['processed_images']);
+        return $array;
     }
 
     private function makeArray($str, $delimiter = ',')

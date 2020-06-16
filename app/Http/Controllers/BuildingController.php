@@ -19,8 +19,36 @@ class BuildingController extends Controller
     		return redirect($building->url);
     	}
 
+        // $related_buildings = Building::searchRaw([
+        //     'query' => [
+        //         'more_like_this' => [
+        //             'fields' => ['tags'],
+        //             'like' => $building->tags,
+        //             'min_term_freq' => 1,
+        //             'min_doc_freq' => 1,
+        //         ]
+        //     ]
+        // ]);
+
+        $related_buildings = Building::search($building->tags)
+            ->rule(function($builder) {
+                return [
+                    'must' => [
+                        'more_like_this' => [
+                            'fields' => ['tags'],
+                            'like' => $builder->query,
+                            'min_term_freq' => 1,
+                            'min_doc_freq' => 1,
+                        ]
+                    ]
+                ];
+            })
+            ->take(8)
+            ->get();
+
     	return view('building.show', [
-            'building' => $building
+            'building' => $building,
+            'related_buildings' => $related_buildings,
         ]);
     }
 }
