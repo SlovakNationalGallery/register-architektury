@@ -90,6 +90,11 @@ class Architect extends Model
         return $this->buildings->max('year_to');
     }
 
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     /**
      * Get the indexable data array for the model.
      *

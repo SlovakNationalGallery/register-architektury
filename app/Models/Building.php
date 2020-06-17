@@ -132,8 +132,7 @@ class Building extends Model
 
     public function getTagsAttribute()
     {
-        $tags = [];
-        $tags = $this->makeArray($this->architect_names);
+        $tags = $this->architects->pluck('full_name')->all();
         $tags[] = $this->location_city;
         $tags[] = $this->years_span;
         return $tags;
