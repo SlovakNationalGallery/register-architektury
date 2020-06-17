@@ -187,9 +187,7 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-        $array = $this->toSearchableArrayWithTranslations();
-        unset($array['processed_images']);
-        return $array;
+        return Arr::except($this->toSearchableArrayWithTranslations(), ['processed_images']);
     }
 
     private function makeArray($str, $delimiter = ',')
