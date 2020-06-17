@@ -95,7 +95,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-md-12 p-3">
+        <div class="col-md-12 p-3 text-center">
             {{ $related_buildings->withQueryString()->links('components.load-more') }}
         </div>
     </div>
