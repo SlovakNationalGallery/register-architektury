@@ -4,12 +4,11 @@
 
     <div class="page-load-status">
       <p class="infinite-scroll-request">
-        <div class="spinner">
-          <div class="double-bounce1"></div>
-          <div class="double-bounce2"></div>
+        <div class="spinner-border text-dark" role="status">
+          <span class="sr-only">{{ __('app.loading') }}Loading...</span>
         </div>
       </p>
-      <p class="infinite-scroll-last">{!! trans('katalog.last_page') !!}</p>
+      <p class="infinite-scroll-last">{{ __('app.last_page') }}</p>
     </div>
 
     <div class="d-none">
@@ -26,7 +25,7 @@
     @if ($paginator->hasMorePages() )
     <a href="#" class="btn btn-outline-dark btn-big btn-with-icon text-uppercase mb-2 view-more-button">
       <i class="icon-chevron-down"></i>
-      {!!__('general.show_more')!!}
+      {!!__('app.load_more')!!}
     </a>
     @endif
 

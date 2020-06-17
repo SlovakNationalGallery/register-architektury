@@ -5,4 +5,7 @@ return [
     'oa' => 'Department of Architecture',
     'hu' => 'Institute of History',
     'sav' => 'Slovak Academy of Sciences',
+    'load_more' => 'Show more!',
+    'loading' => 'Loading...',
+    'last_page' => 'End of content',
 ];

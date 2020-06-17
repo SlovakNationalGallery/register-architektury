@@ -1,7 +1,7 @@
 const InfiniteScroll = require('infinite-scroll');
 
 $(document).ready(function(){
-	if($('.catalog').length >0 ) {
+	if($('.catalog').length > 0) {
 		var infScroll = new InfiniteScroll( '.catalog', {
 			loadOnScroll: false,
 			path: '.pagination__next',
