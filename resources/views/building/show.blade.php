@@ -87,7 +87,7 @@
             {{ __('building.related') }} …
         </div>
         <div class="col-md-12 p-3">
-            <div class="row no-gutters catalog">
+            <div class="row no-gutters items">
                 @foreach ($related_buildings as $i=>$building)
                     <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
                         @include('components.building-card', ['building' => $building])
@@ -96,7 +96,7 @@
             </div>
         </div>
         <div class="col-md-12 p-3 text-center">
-            {{ $related_buildings->withQueryString()->links('components.load-more') }}
+            {{ $related_buildings->withQueryString()->links() }}
         </div>
     </div>
 </div>
