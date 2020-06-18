@@ -10,6 +10,10 @@ a.nav-link {
         background-color: $gray-200;
     }
 
+    &.active {
+        background-color: $gray-200; // this is just temporary
+    }
+
     .main-nav & {
         @include font-size($font-size-base);
 

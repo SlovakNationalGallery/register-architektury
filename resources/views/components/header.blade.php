@@ -17,7 +17,7 @@
             <nav class="nav nav-justified main-nav">
                 <a class="nav-item py-3 ls-2 border-bl nav-link" href="#">{{ __('header.oa') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.architects') }}</a>
-                <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.objects') }}</a>
+                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ request()->routeIs('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
             </nav>
         </div>
