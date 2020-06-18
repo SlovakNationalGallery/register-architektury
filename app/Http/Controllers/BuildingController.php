@@ -30,6 +30,7 @@ class BuildingController extends Controller
                             ],
                             'min_term_freq' => 1,
                             'min_doc_freq' => 1,
+                            'minimum_should_match' => '35%'
                         ]
                     ]
                 ];

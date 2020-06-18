@@ -133,6 +133,13 @@
             if (empty($building)) {
                 $building = factory(App\Models\Building::class)->state('rich')->make();
             }
+
+            $buildings = App\Models\Building::inRandomOrder()->take(10)->get();
+            if (empty($building)) {
+                $buildings = factory(App\Models\Building::class)->state('rich')->make(10);
+            }
+            $perPage = 3;
+            $paginator = new Illuminate\Pagination\LengthAwarePaginator($buildings, count($buildings), $perPage, 1);
         @endphp
 
         @include('components.building-card', ['building' => $building ])
@@ -184,6 +191,26 @@
             'tags' => $building->tags,
             'show_map' => session('show_map', true),
         ])
+    </div>
+</section>
+
+<section id="header-card" class="cd-header-card">
+    <h2>Component: load-more</h2>
+
+    <div class="cd-box">
+        @include('components.load-more', [
+            'paginator' => $paginator
+        ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.load-more', [
+            'paginator' => $paginator
+        ])
+        <br>
+        // or simply
+        <br>
+        @{{ $buildings->links() }}
     </div>
 </section>
 

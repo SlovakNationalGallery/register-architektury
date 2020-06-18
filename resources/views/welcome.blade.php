@@ -5,12 +5,12 @@
 
 @include('components.header')
 
-<div class="container-fluid p-0">	
+<div class="container-fluid p-0">
     <div class="row no-gutters">
         <div class="col-md-12 p-3">
-            <div class="row no-gutters">
+            <div class="row no-gutters items">
                 @foreach ($buildings as $i=>$building)
-                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch">
+                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
                         @include('components.building-card', ['building' => $building])
                     </div>
                 @endforeach

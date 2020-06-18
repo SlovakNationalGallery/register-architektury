@@ -84,16 +84,19 @@
 <div class="container-fluid p-0 border-top">
     <div class="row no-gutters">
         <div class="col-md-12 p-3">
-          {{ __('building.related') }} …
+            {{ __('building.related') }} …
         </div>
         <div class="col-md-12 p-3">
-            <div class="row no-gutters">
+            <div class="row no-gutters items">
                 @foreach ($related_buildings as $i=>$building)
-                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch">
+                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
                         @include('components.building-card', ['building' => $building])
                     </div>
                 @endforeach
             </div>
+        </div>
+        <div class="col-md-12 p-3 text-center">
+            {{ $related_buildings->withQueryString()->links() }}
         </div>
     </div>
 </div>
