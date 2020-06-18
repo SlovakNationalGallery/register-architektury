@@ -7,6 +7,14 @@ use App\Models\Building;
 
 class BuildingController extends Controller
 {
+    public function index(Request $request)
+    {
+        $search = request()->filled('search') ? request()->input('search') : '*';
+        $buildings = \App\Models\Building::search($search);
+        $buildings = $buildings->paginate(20);
+        return view('building.index', compact('buildings'));
+    }
+
     public function show($id, $slug, Request $request)
     {
     	$building = Building::find($id);
