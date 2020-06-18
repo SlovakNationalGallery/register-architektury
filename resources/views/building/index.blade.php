@@ -7,6 +7,12 @@
 
 <div class="container-fluid p-0">
     <div class="row no-gutters">
+        <div class="col-md-6 p-3">[filters]</div>
+        <div class="col-md-6 p-3 text-right">
+            <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
+        </div>
+    </div>
+    <div class="row no-gutters">
         <div class="col-md-12 p-3">
             <div class="row no-gutters items">
                 @foreach ($buildings as $i=>$building)
