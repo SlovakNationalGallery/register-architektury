@@ -7,6 +7,7 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Arr;
 
 class Building extends Model
 {
@@ -113,7 +114,10 @@ class Building extends Model
         ]
     ];
 
-    protected $with = ['processedImages'];
+    protected $with = [
+        'processedImages',
+        'architects',
+    ];
 
     public function architects()
     {
@@ -186,7 +190,10 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-        return Arr::except($this->toSearchableArrayWithTranslations(), ['processed_images']);
+        return Arr::except($this->toSearchableArrayWithTranslations(), [
+            'processed_images',
+            'architects',
+        ]);
     }
 
     private function makeArray($str, $delimiter = ',')
