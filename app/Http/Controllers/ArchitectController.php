@@ -23,6 +23,7 @@ class ArchitectController extends Controller
 
         $architects = $architects
             ->orderBy('last_name.raw', 'asc')
+            ->with('buildings')
             ->paginate(12);
 
         return view('architects.index', compact('architects', 'first_letters'));
