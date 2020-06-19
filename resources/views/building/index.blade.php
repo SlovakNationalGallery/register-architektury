@@ -11,6 +11,32 @@
 
             {{-- filters --}}
             <div class="row no-gutters">
+                <div class="col-md p-3">
+                    <select name="select-this" class="border custom-select">
+                      <option value="0">ARCHITEKT</option>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="2">Option 3</option>
+                    </select>
+                </div>
+                <div class="col-md p-3">
+                    <select name="select-this" class="border custom-select">
+                      <option value="0">LOKALITA</option>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="2">Option 3</option>
+                    </select>
+                </div>
+                <div class="col-md p-3">
+                    <select name="select-this" class="border custom-select">
+                      <option value="0">FUNKCIA</option>
+                      <option value="1">Option 1</option>
+                      <option value="2">Option 2</option>
+                      <option value="2">Option 3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row no-gutters">
                 <div class="col-md-6 p-3">
                     @foreach (request('filters', []) as $filter)
                         <button class="btn btn-outline-dark btn-sm mb-2 btn-with-icon-right">
