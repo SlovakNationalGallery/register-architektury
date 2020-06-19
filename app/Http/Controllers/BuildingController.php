@@ -24,6 +24,10 @@ class BuildingController extends Controller
             }
         }
 
+        foreach (request()->input('filters', []) as $filter) {
+            $buildings->where('tags', $filter);
+        }
+
         $buildings = $buildings->paginate(20);
 
         return view('building.index', compact('buildings'));
