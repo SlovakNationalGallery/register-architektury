@@ -42,6 +42,7 @@ class Architect extends Model
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
                     ],
                     'folded' => [
                         'type' => 'text',
@@ -57,7 +58,6 @@ class Architect extends Model
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd'
             ],
-            // @readme: https://www.elastic.co/blog/numeric-and-date-ranges-in-elasticsearch-just-another-brick-in-the-wall
             'active_years' => [
                 'type' => 'integer_range',
             ],
@@ -77,6 +77,24 @@ class Architect extends Model
         ]
     ];
 
+    public static function searchFirstLetters()
+    {
+        $searchResult = Architect::searchRaw([
+            'size' => 0, // Return counts only
+            'aggs' => [
+                'first_letters' => [
+                    'terms' => [
+                        'field' => 'first_letter',
+                        'size' => 26
+                    ]
+                ]
+            ]
+        ]);
+
+        return collect($searchResult['aggregations']['first_letters']['buckets'])
+            ->map(fn ($bucket) => $bucket['key'])
+            ->sort();
+    }
 
     public function buildings()
     {
