@@ -10,6 +10,8 @@
         <div class="col-md-6 p-3">[filters]</div>
         <div class="col-md-6 p-3 text-right">
             <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
+            <a href="{{ route('building.index', ['sort_by' => 'oldest']) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>
+            <a href="{{ route('building.index', ['sort_by' => 'newest']) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
         </div>
     </div>
     <div class="row no-gutters">

@@ -22,7 +22,7 @@ class Building extends Model
         'current_function',
     ];
 
-    protected $appends = ['tags'];
+    protected $appends = ['tags', 'year_from'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
@@ -110,6 +110,9 @@ class Building extends Model
             ],
             'tags' => [
                 'type' => 'keyword',
+            ],
+            'year_from' => [
+                'type' => 'integer',
             ],
         ]
     ];

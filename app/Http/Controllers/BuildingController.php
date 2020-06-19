@@ -10,8 +10,22 @@ class BuildingController extends Controller
     public function index(Request $request)
     {
         $search = request()->filled('search') ? request()->input('search') : '*';
+
         $buildings = \App\Models\Building::search($search);
+
+        if (request()->filled('sort_by')) {
+            switch (request()->input('sort_by')) {
+                case 'newest':
+                    $buildings->orderBy('year_from', 'desc');
+                    break;
+                case 'oldest':
+                    $buildings->orderBy('year_from', 'asc');
+                    break;
+            }
+        }
+
         $buildings = $buildings->paginate(20);
+
         return view('building.index', compact('buildings'));
     }
 
