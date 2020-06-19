@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Architect;
+use Illuminate\Http\Request;
 
 class ArchitectController extends Controller
 {
@@ -11,10 +12,16 @@ class ArchitectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $first_letters = Architect::searchFirstLetters();
-        $architects = Architect::search('*')
+        $architects = Architect::search('*');
+
+        if ($request->input('first_letter')) {
+            $architects = $architects->where('first_letter', $request->input('first_letter'));
+        }
+
+        $architects = $architects
             ->orderBy('last_name.raw', 'asc')
             ->paginate(12);
 

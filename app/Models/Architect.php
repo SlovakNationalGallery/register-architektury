@@ -14,10 +14,6 @@ class Architect extends Model
 
     protected $indexConfigurator = \App\Elasticsearch\ArchitectsIndexConfigurator::class;
 
-    protected $searchRules = [
-        //
-    ];
-
     protected $searchableWith = ['buildings'];
 
     protected $mapping = [
@@ -85,7 +81,7 @@ class Architect extends Model
                 'first_letters' => [
                     'terms' => [
                         'field' => 'first_letter',
-                        'size' => 26
+                        'size' => 26 // A to Z
                     ]
                 ]
             ]

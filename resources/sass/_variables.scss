@@ -1,8 +1,10 @@
 
 // Color system
 $gray-200: #EBEAEA;
-$gray-800: #343a40;
+$gray-400: #CECECE;
 $gray-600: #707070;
+$gray-800: #343a40;
+
 $black:    #000;
 $blue:     #009DFF;
 $orange:   #FF6002;
@@ -56,3 +58,4 @@ $input-border-width:                    1px;
 
 // List group
 $list-group-border-color: $dark;
+$list-group-disabled-color: $gray-400;
