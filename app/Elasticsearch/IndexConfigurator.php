@@ -61,18 +61,16 @@ class IndexConfigurator extends BaseIndexConfigurator
             	        'asciifolding',
             	    ],
             	],
-            	// 'synonyms_analyzer' => [
-            	//     'type' => 'custom',
-            	//     'tokenizer' => 'standard',
-            	//     'filter' => [
-            	//         'lemmagen_filter',
-            	//         'lowercase',
-            	//         'synonyms_filter',
-            	//         'stopwords_filter',
-            	//         'asciifolding',
-            	//     ],
-            	// ],
-            ]    
+            ],
+            'normalizer' => [
+                'asciifolding_normalizer' => [
+                    'type' => 'custom',
+                    'filter' => [
+                            'lowercase',
+                            'asciifolding'
+                    ]
+                ]
+            ]
         ]
     ];
 }
