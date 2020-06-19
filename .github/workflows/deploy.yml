@@ -14,6 +14,12 @@ jobs:
           MYSQL_DATABASE: register_architektury_test
         ports:
           - 3306
+      elasticsearch:
+        image: slovaknationalgallery/elasticsearch-webumenia:7.3.1
+        env:
+          discovery.type: single-node
+        ports:
+          - 9200
     steps:
     - uses: actions/checkout@v1
     - name: Get Composer Cache Directory
@@ -43,6 +49,7 @@ jobs:
       env:
         APP_KEY: base64:HXaE/pTpPoSNdHFMl5SpgX2XKtdph3EjrdmvWFDKisE=
         DATABASE_URL: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/register_architektury_test
+        SCOUT_ELASTIC_HOST: 127.0.0.1:${{ job.services.elasticsearch.ports[9200] }}
 
   deploy:
     name: Deploy
