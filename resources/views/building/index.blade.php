@@ -7,7 +7,18 @@
 
 <div class="container-fluid p-0">
     <div class="row no-gutters">
-        <div class="col-md-6 p-3">[filters]</div>
+        <div class="col-md-6 p-3">
+            <button class="btn btn-outline-dark btn-sm mb-2 btn-with-icon-right">
+              Bratislava<span>&times;</span>
+            </button>
+            <button class="btn btn-outline-dark btn-sm mb-2 btn-with-icon-right">
+              Bauer Ladislav<span>&times;</span>
+            </button>
+            <button class="btn mb-2 btn-with-icon-right">
+              Zrušiť všetky filtre<span>&times;</span>
+            </button>
+
+        </div>
         <div class="col-md-6 p-3 text-right">
             <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
             <a href="{{ route('building.index', ['sort_by' => 'oldest']) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>

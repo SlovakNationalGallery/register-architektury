@@ -66,8 +66,9 @@
     <h2>Buttons</h2>
 
     <div class="cd-box">
-        <button class="btn btn-outline-dark">Normal</button>
+        <button class="btn btn-outline-dark">Outlined</button>
         <button class="btn btn-outline-dark btn-sm">Outlined sm</button>
+        <button class="btn btn-outline-dark btn-sm btn-with-icon-right">Outlined sm with right icon<span>&times;</span></button>
     </div>
 </section>
 
