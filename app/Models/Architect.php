@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use ScoutElastic\Searchable;
 use Illuminate\Support\Str;
+use ScoutElastic\Searchable;
 
 class Architect extends Model
 {
@@ -22,6 +22,9 @@ class Architect extends Model
 
     protected $mapping = [
         'properties' => [
+            'first_letter' => [
+                'type' => 'keyword',
+            ],
             'first_name' => [
                 'type' => 'text',
                 'fields' => [
@@ -92,7 +95,12 @@ class Architect extends Model
 
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return "{$this->last_name} {$this->first_name}";
+    }
+
+    public function getFirstLetterAttribute()
+    {
+        return (string) Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
     }
 
     /**
@@ -108,6 +116,8 @@ class Architect extends Model
             'gte' => $this->active_from,
             'lte' => $this->active_to,
         ];
+
+        $array['first_letter'] = $this->first_letter;
 
         return $array;
     }
