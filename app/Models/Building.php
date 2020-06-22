@@ -22,6 +22,13 @@ class Building extends Model
         'current_function',
     ];
 
+    public static $filterable = [
+        'architects' => 'architect_names.raw',
+        'locations' => 'location_city.raw',
+        'functions' => 'current_function.raw',
+    ];
+
+
     protected $appends = ['tags', 'year_from'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
@@ -90,6 +97,9 @@ class Building extends Model
             'architect_names' => [
                 'type' => 'text',
                 'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
                     'folded' => [
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
@@ -99,6 +109,9 @@ class Building extends Model
             'location_city' => [
                 'type' => 'text',
                 'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
                     'folded' => [
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
@@ -113,6 +126,15 @@ class Building extends Model
             ],
             'year_from' => [
                 'type' => 'integer',
+            ],
+            'current_function' => [
+                'type' => 'text',
+                'analyzer' => 'asciifolding_analyzer',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
+                ],
             ],
         ]
     ];
@@ -196,10 +218,14 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-        return Arr::except($this->toSearchableArrayWithTranslations(), [
+
+        $array = Arr::except($this->toSearchableArrayWithTranslations(), [
             'processed_images',
             'architects',
         ]);
+        $array['architect_names'] = $this->architects->pluck('full_name')->all();
+
+        return $array;
     }
 
     private function makeArray($str, $delimiter = ',')
@@ -216,5 +242,27 @@ class Building extends Model
         return array_filter($array, function ($value) {
             return $value !== "";
         });
+    }
+
+    public static function listValues($attribute, $search_query = [])
+    {
+        if (!isSet(self::$filterable[$attribute])) return false;
+        $max_bucket_size = 100;
+
+        $searchResult = Building::searchRaw([
+            'aggs' => [
+                $attribute => [
+                    'terms' => [
+                        'field' => self::$filterable[$attribute],
+                        'size' => $max_bucket_size,
+                    ]
+                ]
+            ]
+        ]);
+
+        return collect($searchResult['aggregations'][$attribute]['buckets'])
+            ->mapWithKeys(function ($bucket) {
+                return [$bucket['key'] => $bucket['doc_count']];
+            });
     }
 }

@@ -12,6 +12,9 @@ class BuildingController extends Controller
         $search = request()->filled('search') ? request()->input('search') : '*';
 
         $buildings = \App\Models\Building::search($search);
+        $architects = \App\Models\Building::listValues('architects');
+        $locations = \App\Models\Building::listValues('locations');
+        $functions = \App\Models\Building::listValues('functions');
 
         if (request()->filled('sort_by')) {
             switch (request()->input('sort_by')) {
@@ -30,7 +33,7 @@ class BuildingController extends Controller
 
         $buildings = $buildings->paginate(20);
 
-        return view('building.index', compact('buildings'));
+        return view('building.index', compact('buildings','architects','locations','functions'));
     }
 
     public function show($id, $slug, Request $request)

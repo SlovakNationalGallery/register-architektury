@@ -13,26 +13,26 @@
             <div class="row no-gutters">
                 <div class="col-md p-3">
                     <select name="select-this" class="border custom-select">
-                      <option value="0">ARCHITEKT</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="2">Option 3</option>
+                      <option value="">ARCHITEKT</option>
+                      @foreach ($architects as $architect=>$count)
+                          <option value="{{ $architect }}">{{ $architect }} ({{ $count }})</option>
+                      @endforeach
                     </select>
                 </div>
                 <div class="col-md p-3">
                     <select name="select-this" class="border custom-select">
-                      <option value="0">LOKALITA</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="2">Option 3</option>
+                      <option value="">LOKALITA</option>
+                      @foreach ($locations as $location=>$count)
+                          <option value="{{ $location }}">{{ $location }} ({{ $count }})</option>
+                      @endforeach
                     </select>
                 </div>
                 <div class="col-md p-3">
                     <select name="select-this" class="border custom-select">
-                      <option value="0">FUNKCIA</option>
-                      <option value="1">Option 1</option>
-                      <option value="2">Option 2</option>
-                      <option value="2">Option 3</option>
+                      <option value="">FUNKCIA</option>
+                      @foreach ($functions as $function=>$count)
+                          <option value="{{ $function }}">{{ $function }} ({{ $count }})</option>
+                      @endforeach
                     </select>
                 </div>
             </div>
