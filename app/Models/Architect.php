@@ -75,7 +75,7 @@ class Architect extends Model
 
     public static function searchFirstLetters()
     {
-        $searchResult = Architect::searchRaw([
+        $searchResult = self::searchRaw([
             'size' => 0, // Return counts only
             'aggs' => [
                 'first_letters' => [
