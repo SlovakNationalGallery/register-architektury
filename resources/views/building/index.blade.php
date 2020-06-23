@@ -12,43 +12,26 @@
             <form action="{{ route('building.index') }}">
                 <div class="row no-gutters">
                     <div class="col-md p-3">
-                        <select name="filters[]" class="border custom-select" data-placeholder="{{ trans('filters.architect') }}">
-                          <option value=""></option>
-                          @foreach ($architects as $architect=>$count)
-                              <option value="{{ $architect }}">{{ $architect }} ({{ $count }})</option>
-                          @endforeach
-                        </select>
+                        @include('components.custom-select', ['data' => $architects, 'label' => trans('filters.architect')])
                     </div>
                     <div class="col-md p-3">
-                        <select name="filters[]" class="border custom-select" data-placeholder="{{ trans('filters.location') }}">
-                          <option value=""></option>
-                          @foreach ($locations as $location=>$count)
-                              <option value="{{ $location }}">{{ $location }} ({{ $count }})</option>
-                          @endforeach
-                        </select>
+                        @include('components.custom-select', ['data' => $locations, 'label' => trans('filters.location')])
                     </div>
                     <div class="col-md p-3">
-                        <select name="filters[]" class="border custom-select" data-placeholder="{{ trans('filters.function') }}">
-                          <option value=""></option>
-                          @foreach ($functions as $function=>$count)
-                              <option value="{{ $function }}">{{ $function }} ({{ $count }})</option>
-                          @endforeach
-                        </select>
+                        @include('components.custom-select', ['data' => $functions, 'label' => trans('filters.function')])
                     </div>
                 </div>
+
                 <div class="row no-gutters">
                     <div class="col-md-6 p-3">
-
                         @foreach (request('filters', []) as $filter)
                             @include('components.active-filter', ['filter' => $filter])
                         @endforeach
-
                         @if (request('filters'))
                             <a href="{{ route('building.index') }}" class="btn mb-2 btn-with-icon-right">
                               {{ trans('filters.clear') }} <span>&times;</span>
                             </a>
                         @endif
-
                     </div>
                     <div class="col-md-6 p-3 text-right">
                         <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
