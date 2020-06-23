@@ -39,10 +39,10 @@
             <div class="row no-gutters">
                 <div class="col-md-6 p-3">
                     @foreach (request('filters', []) as $filter)
-                        <button class="btn btn-outline-dark btn-sm mb-2 btn-with-icon-right">
-                          {{ $filter }}<span>&times;</span>
-                        </button>
-                        <input type="hidden" name="filters[]" value="{{ $filter }}">
+                        <label class="btn btn-outline-dark btn-sm mb-2 btn-with-icon-right" for="filter-{{ Str::slug($filter) }}">
+                            {{ $filter }}<span>&times;</span>
+                            <input type="checkbox" name="filters[]" value="{{ $filter }}" id="filter-{{ Str::slug($filter) }}" checked="checked" class="d-none">
+                        </label>
                     @endforeach
                     @if (request('filters'))
                         <a href="{{ route('building.index') }}" class="btn mb-2 btn-with-icon-right">
