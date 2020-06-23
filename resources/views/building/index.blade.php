@@ -8,11 +8,11 @@
 <div class="container-fluid p-0">
     <div class="row no-gutters">
         <div class="col-md-12 p-3">
-
             {{-- filters --}}
+            <form action="{{ route('building.index') }}">
             <div class="row no-gutters">
                 <div class="col-md p-3">
-                    <select name="select-this" class="border custom-select">
+                    <select name="filters[]" class="border custom-select">
                       <option value="">ARCHITEKT</option>
                       @foreach ($architects as $architect=>$count)
                           <option value="{{ $architect }}">{{ $architect }} ({{ $count }})</option>
@@ -20,7 +20,7 @@
                     </select>
                 </div>
                 <div class="col-md p-3">
-                    <select name="select-this" class="border custom-select">
+                    <select name="filters[]" class="border custom-select">
                       <option value="">LOKALITA</option>
                       @foreach ($locations as $location=>$count)
                           <option value="{{ $location }}">{{ $location }} ({{ $count }})</option>
@@ -28,7 +28,7 @@
                     </select>
                 </div>
                 <div class="col-md p-3">
-                    <select name="select-this" class="border custom-select">
+                    <select name="filters[]" class="border custom-select">
                       <option value="">FUNKCIA</option>
                       @foreach ($functions as $function=>$count)
                           <option value="{{ $function }}">{{ $function }} ({{ $count }})</option>
@@ -36,6 +36,7 @@
                     </select>
                 </div>
             </div>
+            </form>
             <div class="row no-gutters">
                 <div class="col-md-6 p-3">
                     @foreach (request('filters', []) as $filter)
