@@ -13,11 +13,10 @@ $(document).ready(function(){
       return $state;
     };
 
-    $(".custom-select").select2({
+    $(".filter-select").select2({
       templateResult: formatState,
       templateSelection: formatState,
-      theme: "bootstrap4",
-      allowClear: true
+      theme: "bootstrap4"
     });
 
     $("#filters :input").change(function(e) {
