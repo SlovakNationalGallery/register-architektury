@@ -86,7 +86,8 @@ class ImportAll implements ShouldQueue
                'MiestoUmrtia.Mesto AS death_place',
                'Životopis AS bio',
                'diela AS building_source_ids'
-            )->get();
+            )->where('Web', 1)
+            ->get();
 
         $images = $this->db->table('Obrazky')
             ->select(

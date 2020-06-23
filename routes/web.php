@@ -32,6 +32,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::get('objekty', 'BuildingController@index')->name('building.index');
 	Route::get('objekt/{id}-{slug}', 'BuildingController@show')->name('building.detail');
 
+    Route::resource('architekti', 'ArchitectController')
+        ->names('architects')
+        ->parameter('architekti', 'architect');
 });
 
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');

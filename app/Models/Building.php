@@ -218,7 +218,6 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-
         $array = Arr::except($this->toSearchableArrayWithTranslations(), [
             'processed_images',
             'architects',

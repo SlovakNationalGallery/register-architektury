@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use ScoutElastic\Searchable;
 use Illuminate\Support\Str;
+use ScoutElastic\Searchable;
 
 class Architect extends Model
 {
@@ -14,14 +14,13 @@ class Architect extends Model
 
     protected $indexConfigurator = \App\Elasticsearch\ArchitectsIndexConfigurator::class;
 
-    protected $searchRules = [
-        //
-    ];
-
     protected $searchableWith = ['buildings'];
 
     protected $mapping = [
         'properties' => [
+            'first_letter' => [
+                'type' => 'keyword',
+            ],
             'first_name' => [
                 'type' => 'text',
                 'fields' => [
@@ -39,6 +38,7 @@ class Architect extends Model
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
                     ],
                     'folded' => [
                         'type' => 'text',
@@ -54,7 +54,6 @@ class Architect extends Model
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd'
             ],
-            // @readme: https://www.elastic.co/blog/numeric-and-date-ranges-in-elasticsearch-just-another-brick-in-the-wall
             'active_years' => [
                 'type' => 'integer_range',
             ],
@@ -74,6 +73,24 @@ class Architect extends Model
         ]
     ];
 
+    public static function searchFirstLetters()
+    {
+        $searchResult = self::searchRaw([
+            'size' => 0, // Return counts only
+            'aggs' => [
+                'first_letters' => [
+                    'terms' => [
+                        'field' => 'first_letter',
+                        'size' => 26 // A to Z
+                    ]
+                ]
+            ]
+        ]);
+
+        return collect($searchResult['aggregations']['first_letters']['buckets'])
+            ->map(fn ($bucket) => $bucket['key'])
+            ->sort();
+    }
 
     public function buildings()
     {
@@ -92,7 +109,12 @@ class Architect extends Model
 
     public function getFullNameAttribute()
     {
-        return "{$this->first_name} {$this->last_name}";
+        return "{$this->last_name} {$this->first_name}";
+    }
+
+    public function getFirstLetterAttribute()
+    {
+        return (string) Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
     }
 
     /**
@@ -108,6 +130,8 @@ class Architect extends Model
             'gte' => $this->active_from,
             'lte' => $this->active_to,
         ];
+
+        $array['first_letter'] = $this->first_letter;
 
         return $array;
     }
