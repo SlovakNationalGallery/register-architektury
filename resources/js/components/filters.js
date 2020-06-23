@@ -5,8 +5,8 @@ $(document).ready(function(){
       if (!state.id) {
          return state.text;
        }
-      var  option_text =  state.text.replace(/ *\([^)]*\) */g, "");
-      var  option_count =  state.text.match(/\((.*)\)/)[1];
+      var  option_text =  state.text.replace(/ *\[[^)]*\] */g, "");
+      var  option_count =  state.text.match(/\[(.*)\]/)[1];
       var $state = $(
           '<span>' + option_text + ' <span class="badge badge-pill badge-light">'+option_count+'</span></span>'
         );
