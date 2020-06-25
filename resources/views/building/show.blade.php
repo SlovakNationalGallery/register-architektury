@@ -44,7 +44,7 @@
               <li class="list-group-item px-0 py-2">
                 <b>{{ Str::lower($category) }}</b><br>
                 @foreach($dates as $date)
-                {{ $date->toString() }}<br>
+                {{ $date }}<br>
                 @endforeach
               </li>
               @endforeach
