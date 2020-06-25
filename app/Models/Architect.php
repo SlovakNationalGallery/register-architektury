@@ -117,6 +117,12 @@ class Architect extends Model
         return (string) Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('default')
+            ->singleFile();
+    }
+
     /**
      * Get the indexable data array for the model.
      *
