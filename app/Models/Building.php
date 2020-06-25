@@ -23,7 +23,7 @@ class Building extends Model
     ];
 
     public static $filterable = [
-        'architects' => 'architect_names.raw',
+        'architects' => 'architects',
         'locations' => 'location_city.raw',
         'functions' => 'current_function.raw',
     ];
@@ -120,6 +120,9 @@ class Building extends Model
             ],
             'location_gps' => [
                 'type' => 'geo_point',
+            ],
+            'architects' => [
+                'type' => 'keyword',
             ],
             'tags' => [
                 'type' => 'keyword',
@@ -222,7 +225,7 @@ class Building extends Model
             'processed_images',
             'architects',
         ]);
-        $array['architect_names'] = $this->architects->pluck('full_name')->all();
+        $array['architects'] = $this->architects->pluck('full_name')->all();
 
         return $array;
     }
