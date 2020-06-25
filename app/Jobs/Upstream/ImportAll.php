@@ -3,7 +3,7 @@
 namespace App\Jobs\Upstream;
 
 use App\Jobs\ReindexAll;
-use App\Jobs\ProcessImage;
+use App\Jobs\ProcessBuildingImage;
 use App\Models\Architect;
 use App\Models\Building;
 use App\Models\BuildingDate;
@@ -201,7 +201,7 @@ class ImportAll implements ShouldQueue
 
         $this->log->info('Enqueing image processing');
         Image::unprocessed()->get()->map(function ($image) {
-            ProcessImage::dispatch($image);
+            ProcessBuildingImage::dispatch($image);
         });
 
         $this->log->info('Enqueing search re-index');
