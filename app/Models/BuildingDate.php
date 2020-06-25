@@ -14,7 +14,7 @@ class BuildingDate extends Model
         'note',
     ];
 
-    public function toString()
+    public function __toString()
     {
         $result = "{$this->from}";
         if ($this->from != $this->to) $result .= " – {$this->to}";
