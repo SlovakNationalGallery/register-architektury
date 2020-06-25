@@ -3,6 +3,7 @@
 namespace App\Jobs\Upstream;
 
 use App\Jobs\ReindexAll;
+use App\Jobs\ProcessArchitectImage;
 use App\Jobs\ProcessBuildingImage;
 use App\Models\Architect;
 use App\Models\Building;
@@ -99,8 +100,10 @@ class ImportAll implements ShouldQueue
                'Dátum úmrtia AS death_date',
                'MiestoUmrtia.Mesto AS death_place',
                'Životopis AS bio',
-               'diela AS building_source_ids'
-            )->where('Web', 1)
+               'diela AS building_source_ids',
+               'Obrazok AS image_path',
+            )
+            ->where('Web', 1)
             ->get();
 
         $images = $this->db->table('Obrazky')
@@ -202,6 +205,9 @@ class ImportAll implements ShouldQueue
         $this->log->info('Enqueing image processing');
         Image::unprocessed()->get()->map(function ($image) {
             ProcessBuildingImage::dispatch($image);
+        });
+        Architect::withUnprocessedImage()->get()->map(function ($architect) {
+            ProcessArchitectImage::dispatch($architect);
         });
 
         $this->log->info('Enqueing search re-index');
