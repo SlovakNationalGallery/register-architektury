@@ -6,6 +6,7 @@ use App\Jobs\ReindexAll;
 use App\Jobs\ProcessImage;
 use App\Models\Architect;
 use App\Models\Building;
+use App\Models\BuildingDate;
 use App\Models\Image;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -73,6 +74,19 @@ class ImportAll implements ShouldQueue
                 'Opis AS description'
             )->get();
 
+        $building_dates = $this->db->table('RokyStavby')
+            ->leftJoin('RokyStavbyKategorie', 'RokyStavby.Kategoria', '=', 'RokyStavbyKategorie.ID')
+            ->select(
+                'RokyStavby.ID AS source_id',
+                'StavbaID AS building_source_id',
+                'Zaciatok AS from',
+                'Koniec AS to',
+                'RokyStavbyKategorie.Nazov AS category_sk',
+                'RokyStavbyKategorie.Nazov_EN AS category_en',
+                'Poznamka AS note_sk',
+                'Poznamka_EN AS note_en'
+            )->get();
+
         $architects = $this->db->table('Architekti')
             ->leftJoin('Mesto AS MiestoNarodenia', 'MiestoNarodenia.Identifikácia', '=', 'Architekti.Miesto narodenia')
             ->leftJoin('Mesto AS MiestoUmrtia', 'MiestoUmrtia.Identifikácia', '=', 'Architekti.Miesto úmrtia')
@@ -103,11 +117,12 @@ class ImportAll implements ShouldQueue
             ->whereNotNull('Cesta')
             ->get();
 
-        $this->inTransaction(function() use ($architects, $buildings, $images) {
+        $this->inTransaction(function() use ($architects, $buildings, $building_dates, $images) {
             // Delete objects no longer present in source
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
             Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
             Building::whereNotIn('source_id', Arr::pluck($buildings, 'source_id'))->delete();
+            BuildingDate::whereNotIn('source_id', Arr::pluck($building_dates, 'source_id'))->delete();
 
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
@@ -117,13 +132,36 @@ class ImportAll implements ShouldQueue
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
 
-                    $row->project_start_dates = $this->sanitizeDates($row->project_start_dates);
-
-                    $row->project_duration_dates = $this->sanitizeDates($row->project_duration_dates);
-
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
                         (array) $row
+                    );
+                }
+            });
+
+            $this->log->info('Processing ' . count($building_dates) . ' buildings dates...');
+            BuildingDate::unguarded(function() use ($building_dates) {
+                $buildings = Building::whereIn('source_id', Arr::pluck($building_dates, 'building_source_id'))->get();
+                foreach($building_dates as $row) {
+                    $building = $buildings->firstWhere('source_id', $row->building_source_id);
+                    if (empty($building)) continue;
+
+                    BuildingDate::updateOrCreate(
+                        ['source_id' => $row->source_id],
+                        [
+                            'source_id' => $row->source_id,
+                            'building_id' => $building->id,
+                            'from' => $row->from,
+                            'to' => $row->to,
+                            'category' => json_encode([
+                                'en' => $row->category_en,
+                                'sk' => $row->category_sk,
+                            ]),
+                            'note' => json_encode([
+                                'en' => $row->note_en,
+                                'sk' => $row->note_sk,
+                            ]),
+                        ]
                     );
                 }
             });
@@ -143,7 +181,7 @@ class ImportAll implements ShouldQueue
             });
 
             $this->log->info('Processing ' . count($images) . ' images...');
-            Image::unguarded(function() use ($images, $buildings) {
+            Image::unguarded(function() use ($images) {
                 foreach($images as $row) {
                     $building = Building::firstWhere('source_id', $row->building_source_id);
 
@@ -216,9 +254,5 @@ class ImportAll implements ShouldQueue
             if (empty($value)) return $value;
             return trim($value);
         }, (array) $row);
-    }
-
-    private function sanitizeDates($dates) {
-        return (empty($dates)) ? null : (string)Str::of($dates)->replace('–', '-')->replace(' ;', ';');
     }
 }
