@@ -246,25 +246,41 @@ class Building extends Model
         });
     }
 
-    public static function listValues($attribute, $search_query = [])
+    public static function getFilterValues($payload)
     {
-        if (!isSet(self::$filterable[$attribute])) return false;
-        $max_bucket_size = 100;
+        $max_bucket_size = 200;
 
-        $searchResult = Building::searchRaw([
-            'aggs' => [
-                $attribute => [
-                    'terms' => [
-                        'field' => self::$filterable[$attribute],
-                        'size' => $max_bucket_size,
-                    ]
+        $attributes = [
+            'architects',
+            'locations',
+            'functions',
+        ];
+
+        $aggs = [];
+        $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
+
+        foreach ($attributes as $attribute) {
+            if (!isSet(self::$filterable[$attribute])) continue;
+            $aggs[$attribute] = [
+                'terms' => [
+                    'field' => self::$filterable[$attribute],
+                    'size' => $max_bucket_size,
                 ]
-            ]
-        ]);
+            ];
+        }
+        $body['aggs'] = $aggs;
 
-        return collect($searchResult['aggregations'][$attribute]['buckets'])
+        $searchResult = Building::searchRaw($body);
+
+        $values = collect();
+        foreach ($searchResult['aggregations'] as $attribute => $results) {
+            $values[$attribute] = collect($results['buckets'])
             ->mapWithKeys(function ($bucket) {
                 return [$bucket['key'] => $bucket['doc_count']];
             });
+        }
+        return $values;
     }
+
+
 }

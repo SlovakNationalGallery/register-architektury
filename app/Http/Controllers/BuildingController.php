@@ -10,11 +10,7 @@ class BuildingController extends Controller
     public function index(Request $request)
     {
         $search = request()->filled('search') ? request()->input('search') : '*';
-
         $buildings = \App\Models\Building::search($search);
-        $architects = \App\Models\Building::listValues('architects');
-        $locations = \App\Models\Building::listValues('locations');
-        $functions = \App\Models\Building::listValues('functions');
 
         if (request()->input('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
         if (request()->input('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
@@ -23,9 +19,10 @@ class BuildingController extends Controller
             $buildings->where('tags', $filter);
         }
 
+        $filter_values = \App\Models\Building::getFilterValues($buildings->buildPayload());
         $buildings = $buildings->paginate(20);
 
-        return view('building.index', compact('buildings','architects','locations','functions'));
+        return view('building.index', compact('buildings','filter_values'));
     }
 
     public function show($id, $slug, Request $request)

@@ -12,13 +12,13 @@
             <form action="{{ route('building.index') }}">
                 <div class="row no-gutters">
                     <div class="col-md p-3">
-                        @include('components.custom-select', ['data' => $architects, 'label' => trans('filters.architect')])
+                        @include('components.custom-select', ['data' => $filter_values['architects'], 'label' => trans('filters.architect')])
                     </div>
                     <div class="col-md p-3">
-                        @include('components.custom-select', ['data' => $locations, 'label' => trans('filters.location')])
+                        @include('components.custom-select', ['data' => $filter_values['locations'], 'label' => trans('filters.location')])
                     </div>
                     <div class="col-md p-3">
-                        @include('components.custom-select', ['data' => $functions, 'label' => trans('filters.function')])
+                        @include('components.custom-select', ['data' => $filter_values['functions'], 'label' => trans('filters.function')])
                     </div>
                 </div>
 
