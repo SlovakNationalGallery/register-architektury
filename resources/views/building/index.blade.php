@@ -10,6 +10,7 @@
         <div class="col-md-12 p-3" id="filters">
             {{-- filters --}}
             <form action="{{ route('building.index') }}">
+                <input type="hidden" name="search" value="{{ request('search') }}">
                 <div class="row no-gutters">
                     <div class="col-md p-3">
                         @include('components.custom-select', ['data' => $filter_values['architects'], 'label' => trans('filters.architect')])
