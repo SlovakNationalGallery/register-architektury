@@ -6,11 +6,14 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use ScoutElastic\Searchable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Architect extends Model
+class Architect extends Model implements HasMedia
 {
     use CrudTrait;
     use Searchable;
+    use InteractsWithMedia;
 
     protected $indexConfigurator = \App\Elasticsearch\ArchitectsIndexConfigurator::class;
 
@@ -121,6 +124,11 @@ class Architect extends Model
     {
         $this->addMediaCollection('default')
             ->singleFile();
+    }
+
+    public function scopeWithUnprocessedImage($query)
+    {
+        return $query->whereNotNull('image_path')->whereDoesntHave('media');
     }
 
     /**
