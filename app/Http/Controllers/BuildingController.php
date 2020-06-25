@@ -16,16 +16,8 @@ class BuildingController extends Controller
         $locations = \App\Models\Building::listValues('locations');
         $functions = \App\Models\Building::listValues('functions');
 
-        if (request()->filled('sort_by')) {
-            switch (request()->input('sort_by')) {
-                case 'newest':
-                    $buildings->orderBy('year_from', 'desc');
-                    break;
-                case 'oldest':
-                    $buildings->orderBy('year_from', 'asc');
-                    break;
-            }
-        }
+        if (request()->input('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
+        if (request()->input('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
 
         foreach (request()->input('filters', []) as $filter) {
             $buildings->where('tags', $filter);
