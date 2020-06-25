@@ -22,13 +22,6 @@ class Building extends Model
         'current_function',
     ];
 
-    public static $filterable = [
-        'architects' => 'architects',
-        'locations' => 'location_city.raw',
-        'functions' => 'current_function.raw',
-    ];
-
-
     protected $appends = ['tags', 'year_from'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
@@ -249,26 +242,28 @@ class Building extends Model
     public static function getFilterValues($payload)
     {
         $max_bucket_size = 200;
-
-        $attributes = [
-            'architects',
-            'locations',
-            'functions',
-        ];
-
-        $aggs = [];
         $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
 
-        foreach ($attributes as $attribute) {
-            if (!isSet(self::$filterable[$attribute])) continue;
-            $aggs[$attribute] = [
+        $body['aggs'] = [
+            'architects' => [
                 'terms' => [
-                    'field' => self::$filterable[$attribute],
+                    'field' => 'architects',
                     'size' => $max_bucket_size,
                 ]
-            ];
-        }
-        $body['aggs'] = $aggs;
+            ],
+            'locations' => [
+                'terms' => [
+                    'field' => 'location_city.raw',
+                    'size' => $max_bucket_size,
+                ]
+            ],
+            'functions' => [
+                'terms' => [
+                    'field' => 'current_function.raw',
+                    'size' => $max_bucket_size,
+                ]
+            ],
+        ];
 
         $searchResult = Building::searchRaw($body);
 

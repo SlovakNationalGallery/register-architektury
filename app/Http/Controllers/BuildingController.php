@@ -19,7 +19,7 @@ class BuildingController extends Controller
             $buildings->where('tags', $filter);
         }
 
-        $filter_values = \App\Models\Building::getFilterValues($buildings->buildPayload());
+        $filter_values = Building::getFilterValues($buildings->buildPayload());
         $buildings = $buildings->paginate(20);
 
         return view('building.index', compact('buildings','filter_values'));
