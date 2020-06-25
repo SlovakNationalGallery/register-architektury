@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Imagick;
 use Spatie\TemporaryDirectory\TemporaryDirectory;
 
-class ProcessImage implements ShouldQueue
+class ProcessBuildingImage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
