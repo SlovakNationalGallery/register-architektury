@@ -40,18 +40,14 @@
                   {{ $building->builder_authority }}
               </li>
               @endif
-              @if (!empty($building->project_start_dates))
+              @foreach($building->dates->groupBy('category') as $category => $dates)
               <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.project_start_dates') }}</b><br>
-                  {!! implode('<br>', $building->project_start_dates_array) !!}
+                <b>{{ Str::lower($category) }}</b><br>
+                @foreach($dates as $date)
+                {{ $date }}<br>
+                @endforeach
               </li>
-              @endif
-              @if (!empty($building->project_duration_dates))
-              <li class="list-group-item px-0 py-2">
-                  <b>{{ __('building.project_duration_dates') }}</b><br>
-                  {!! implode('<br>', $building->project_duration_dates_array) !!}
-              </li>
-              @endif
+              @endforeach
             </ul>
         </div>
 

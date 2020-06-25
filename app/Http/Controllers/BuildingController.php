@@ -27,7 +27,7 @@ class BuildingController extends Controller
 
     public function show($id, $slug, Request $request)
     {
-    	$building = Building::find($id);
+    	$building = Building::with('dates')->find($id);
 
     	if (empty($building)) {
     	    \App::abort(404);

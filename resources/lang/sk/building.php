@@ -6,8 +6,6 @@ return [
     'address' => 'adresa',
     'architects' => 'architekti',
     'builders' => 'stavitelia',
-    'project_start_dates' => 'projekt',
-    'project_duration_dates' => 'realizácia',
     'bibliography' => 'Literatúra',
     'related' => 'Súvisiace',
 

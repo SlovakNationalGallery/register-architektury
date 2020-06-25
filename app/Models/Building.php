@@ -145,6 +145,11 @@ class Building extends Model
         return $this->belongsToMany('App\Models\Architect');
     }
 
+    public function dates()
+    {
+        return $this->hasMany('App\Models\BuildingDate');
+    }
+
     public function processedImages()
     {
         return $this->hasMany('App\Models\Image')->processed();
@@ -174,16 +179,6 @@ class Building extends Model
     public function getSlugAttribute()
     {
         return str_slug($this->title);
-    }
-
-    public function getProjectDurationDatesArrayAttribute()
-    {
-        return $this->makeArray($this->project_duration_dates, ';');
-    }
-
-    public function getProjectStartDatesArrayAttribute()
-    {
-        return $this->makeArray($this->project_start_dates, ';');
     }
 
     public function getYearFromAttribute()
@@ -223,22 +218,6 @@ class Building extends Model
         return $array;
     }
 
-    private function makeArray($str, $delimiter = ',')
-    {
-        if (is_array($str)) {
-            return $str;
-        }
-
-        $array = explode($delimiter, $str);
-        $array = array_map(function ($value) {
-            return trim($value);
-        }, $array);
-
-        return array_filter($array, function ($value) {
-            return $value !== "";
-        });
-    }
-
     public static function getFilterValues($payload)
     {
         $max_bucket_size = 200;
@@ -276,6 +255,5 @@ class Building extends Model
         }
         return $values;
     }
-
 
 }
