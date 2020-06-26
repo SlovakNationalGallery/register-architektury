@@ -161,11 +161,9 @@ class Building extends Model
     {
         $tags = $this->architects->pluck('full_name')->all();
         $tags[] = $this->location_city;
-        if (!empty($this->current_function)) {
-           $tags[] = $this->current_function;
-        }
+        $tags[] = $this->current_function;
         $tags[] = $this->years_span;
-        return $tags;
+        return Arr::where($tags, fn ($tag) => !empty($tag));
     }
 
     public function getUrlAttribute()
