@@ -163,7 +163,7 @@ class Building extends Model
         $tags[] = $this->location_city;
         $tags[] = $this->current_function;
         $tags[] = $this->years_span;
-        return Arr::where($tags, fn ($tag) => !empty($tag));
+        return Arr::flatten(Arr::where($tags, fn ($tag) => !empty($tag)));
     }
 
     public function getUrlAttribute()
