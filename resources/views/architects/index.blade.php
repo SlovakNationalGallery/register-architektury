@@ -19,8 +19,8 @@
     </div>
 
     @foreach($architects as $architect)
-    <div class="row border-top flex-nowrap">
-        <div class="py-1 px-4 d-flex align-items-end" style="height: 100px; width: 125px">
+    <div class="row border-top flex-nowrap py-2">
+        <div class="px-4 d-flex align-items-end" style="height: 100px; width: 125px">
             @if($architect->has_image)
             {{ $architect->image_tag->attributes(['width' => 'auto', 'height' => '100%']) }}
             @else
@@ -30,10 +30,10 @@
         <div class="d-inline-flex align-items-end pr-4">
             <h5 class="mb-0">{{ $architect->full_name }}</h5>
         </div>
-        <div class="py-1 d-flex align-items-center" style="height: 100px">
+        <div class="d-inline-flex align-items-center" style="height: 100px">
             @foreach($architect->buildings as $building)
                 @if($building->processedImages->isNotEmpty())
-                    {{ $building->cover_image_tag->attributes(['width' => 'auto', 'class' => 'mr-3', 'height' => '100%' ]) }}
+                {{ $building->cover_image_tag->attributes(['width' => 'auto', 'height' => '100%', 'class' => 'mr-3']) }}
                 @endif
             @endforeach
         </div>
