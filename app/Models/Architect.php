@@ -120,6 +120,16 @@ class Architect extends Model implements HasMedia
         return (string) Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
     }
 
+    public function getHasImageAttribute()
+    {
+        return $this->hasMedia();
+    }
+
+    public function getImageTagAttribute()
+    {
+        return $this->hasMedia() ? $this->getFirstMedia()->img() : null;
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')
