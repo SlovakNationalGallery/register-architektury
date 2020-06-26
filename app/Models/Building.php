@@ -90,9 +90,6 @@ class Building extends Model
             'architect_names' => [
                 'type' => 'text',
                 'fields' => [
-                    'raw' => [
-                        'type' => 'keyword',
-                    ],
                     'folded' => [
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
