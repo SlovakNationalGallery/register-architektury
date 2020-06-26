@@ -10,26 +10,30 @@
         <div class="col-md-10 offset-md-1 py-3">
             <nav>
                 <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                    @foreach (range('A', 'Z') as $letter)
+                    {{-- @foreach (range('A', 'Z') as $letter)
                     <a class="list-group-item border-0 mx-1{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">{{ $letter }}</a>
-                    @endforeach
+                    @endforeach --}}
                 </ul>
             </nav>
         </div>
     </div>
 
     @foreach($architects as $architect)
-    <div class="row architect-list border-top py-1 pl-3 d-flex item" style="height: 105px"> {{-- TODO remove style attr --}}
-        <div class="py-1 mx-3 d-inline-flex align-items-end" style="height: 100px; width: 100px;"> {{-- TODO remove style attr --}}
-            <img src="https://placekitten.com/{{ collect([101, 105, 92, 80, 200])->random() }}/139" class="mh-100 img-fluid">
+    <div class="row border-top flex-nowrap">
+        <div class="py-1 px-4 d-flex align-items-end" style="height: 100px; width: 125px">
+            @if($architect->has_image)
+            {{ $architect->image_tag->attributes(['width' => 'auto', 'height' => '100%']) }}
+            @else
+            <img src="https://placekitten.com/{{ collect([200])->random() }}/139" class="mh-100 mw-100">
+            @endif
         </div>
-        <div class="d-inline-flex align-items-end mr-5">
+        <div class="d-inline-flex align-items-end pr-4">
             <h5 class="mb-0">{{ $architect->full_name }}</h5>
         </div>
-        <div class="h-100 d-flex align-items-center">
+        <div class="py-1 d-flex align-items-center" style="height: 100px">
             @foreach($architect->buildings as $building)
                 @if($building->processedImages->isNotEmpty())
-                    {{ $building->cover_image_tag->attributes(['width' => 'auto', 'class' => 'mh-100 mr-3', 'style' => 'max-width: 200px' ]) }} {{-- TODO remove style attr --}}
+                    {{ $building->cover_image_tag->attributes(['width' => 'auto', 'class' => 'mr-3', 'height' => '100%' ]) }}
                 @endif
             @endforeach
         </div>
