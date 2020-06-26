@@ -73,7 +73,9 @@ class ImportAll implements ShouldQueue
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
                 'Opis AS description'
-            )->get();
+            )
+            ->where('Web', 1)
+            ->get();
 
         $building_dates = $this->db->table('RokyStavby')
             ->leftJoin('RokyStavbyKategorie', 'RokyStavby.Kategoria', '=', 'RokyStavbyKategorie.ID')
