@@ -66,8 +66,9 @@
     <h2>Buttons</h2>
 
     <div class="cd-box">
-        <button class="btn btn-outline-dark">Normal</button>
+        <button class="btn btn-outline-dark">Outlined</button>
         <button class="btn btn-outline-dark btn-sm">Outlined sm</button>
+        <button class="btn btn-outline-dark btn-sm btn-with-icon-right">Outlined sm with right icon<span>&times;</span></button>
     </div>
 </section>
 
@@ -162,7 +163,7 @@
     </div>
 </section>
 
-<section id="header-card" class="cd-header-card">
+<section id="tags-card" class="cd-tags-card">
     <h2>Component: tags</h2>
 
     <div class="cd-box">
@@ -174,7 +175,7 @@
     </div>
 </section>
 
-<section id="header-card" class="cd-header-card">
+<section id="map-card" class="cd-map-card">
     <h2>Component: map</h2>
 
     <div class="cd-box">
@@ -194,7 +195,7 @@
     </div>
 </section>
 
-<section id="header-card" class="cd-header-card">
+<section id="load-more-card" class="cd-load-more-card">
     <h2>Component: load-more</h2>
 
     <div class="cd-box">
@@ -213,6 +214,32 @@
         @{{ $buildings->links() }}
     </div>
 </section>
+
+<section id="active-filter-card" class="cd-active-filter-card">
+    <h2>Component: active-filter</h2>
+
+    <div class="cd-box">
+        @include('components.active-filter', ['filter' => 'Kultúra' ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.active-filter', ['filter' => 'Kultúra' ])
+    </div>
+</section>
+
+
+<section id="custom-select-card" class="cd-custom-select-card">
+    <h2>Component: custom-select</h2>
+
+    <div class="cd-box">
+        @include('components.custom-select', ['data' => ['Kultúra' => 10, "Obchod a služby" => 8], 'label' => 'Funkcia' ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.custom-select', ['data' => ['Kultúra' => 10, "Obchod a služby" => 8], 'label' => 'Funkcia' ])
+    </div>
+</section>
+
 
 </main>
 @stop

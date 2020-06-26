@@ -4,7 +4,7 @@
             <h1 class="ls-2 my-auto">{{ __('header.title') }}</h1>
         </div>
         <div class="col-md-4 border-bl text-center d-flex">
-            <form class="px-3 my-auto w-100" action="/">
+            <form class="px-3 my-auto w-100" action="{{ route('building.index') }}">
                 <input type="text" name="search" class="form-control form-control-sm" value="{{ request('search') }}">
             </form>
         </div>
@@ -16,8 +16,8 @@
         <div class="col-md-12">
             <nav class="nav nav-justified main-nav">
                 <a class="nav-item py-3 ls-2 border-bl nav-link" href="#">{{ __('header.oa') }}</a>
-                <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="{{ route('architects.index') }}">{{ __('header.architects') }}</a>
-                <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.objects') }}</a>
+                <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ request()->routeIs('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
+                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ request()->routeIs('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
             </nav>
         </div>

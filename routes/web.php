@@ -29,6 +29,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 	    return view('welcome', compact('buildings'));
 	});
 
+    Route::get('objekty', 'BuildingController@index')->name('building.index');
 	Route::get('objekt/{id}-{slug}', 'BuildingController@show')->name('building.detail');
 
     Route::resource('architekti', 'ArchitectController')

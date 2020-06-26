@@ -7,3 +7,16 @@
         background-color: $gray-200;
     }
 }
+
+.btn.btn-with-icon-right {
+    padding-right: (1.2rem + $input-btn-padding-x-sm);
+    position: relative;
+    vertical-align: middle;
+    i, span {
+        position: absolute;
+        right: $input-btn-padding-x-sm;
+        vertical-align: middle;
+        line-height: 1.0rem;
+        font-size: 1.2rem;
+    }
+}

@@ -7,6 +7,24 @@ use App\Models\Building;
 
 class BuildingController extends Controller
 {
+    public function index(Request $request)
+    {
+        $search = request()->filled('search') ? request()->input('search') : '*';
+        $buildings = \App\Models\Building::search($search);
+
+        if (request()->input('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
+        if (request()->input('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
+
+        foreach (request()->input('filters', []) as $filter) {
+            $buildings->where('tags', $filter);
+        }
+
+        $filter_values = Building::getFilterValues($buildings->buildPayload());
+        $buildings = $buildings->paginate(20);
+
+        return view('building.index', compact('buildings','filter_values'));
+    }
+
     public function show($id, $slug, Request $request)
     {
     	$building = Building::with('dates')->find($id);

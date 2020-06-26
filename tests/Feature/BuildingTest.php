@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Tests\RefreshSearchIndex;
 
 class BuildingTest extends TestCase
 {
@@ -25,4 +26,11 @@ class BuildingTest extends TestCase
         $response = $this->get($fake_url);
         $response->assertRedirect($building->url);
     }
+
+    public function testIndex()
+    {
+        $response = $this->get(route('building.index'));
+        $response->assertStatus(200);
+    }
+
 }

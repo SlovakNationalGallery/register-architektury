@@ -22,7 +22,7 @@ class Building extends Model
         'current_function',
     ];
 
-    protected $appends = ['tags'];
+    protected $appends = ['tags', 'year_from'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
@@ -99,6 +99,9 @@ class Building extends Model
             'location_city' => [
                 'type' => 'text',
                 'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
                     'folded' => [
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
@@ -108,8 +111,23 @@ class Building extends Model
             'location_gps' => [
                 'type' => 'geo_point',
             ],
+            'architects' => [
+                'type' => 'keyword',
+            ],
             'tags' => [
                 'type' => 'keyword',
+            ],
+            'year_from' => [
+                'type' => 'integer',
+            ],
+            'current_function' => [
+                'type' => 'text',
+                'analyzer' => 'asciifolding_analyzer',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                    ],
+                ],
             ],
         ]
     ];
@@ -143,8 +161,9 @@ class Building extends Model
     {
         $tags = $this->architects->pluck('full_name')->all();
         $tags[] = $this->location_city;
+        $tags[] = $this->current_function;
         $tags[] = $this->years_span;
-        return $tags;
+        return Arr::flatten(Arr::where($tags, fn ($tag) => !empty($tag)));
     }
 
     public function getUrlAttribute()
@@ -185,9 +204,51 @@ class Building extends Model
 
     public function toSearchableArray()
     {
-        return Arr::except($this->toSearchableArrayWithTranslations(), [
+        $array = Arr::except($this->toSearchableArrayWithTranslations(), [
             'processed_images',
             'architects',
         ]);
+        $array['architects'] = $this->architects->pluck('full_name')->all();
+
+        return $array;
     }
+
+    public static function getFilterValues($payload)
+    {
+        $max_bucket_size = 200;
+        $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
+
+        $body['aggs'] = [
+            'architects' => [
+                'terms' => [
+                    'field' => 'architects',
+                    'size' => $max_bucket_size,
+                ]
+            ],
+            'locations' => [
+                'terms' => [
+                    'field' => 'location_city.raw',
+                    'size' => $max_bucket_size,
+                ]
+            ],
+            'functions' => [
+                'terms' => [
+                    'field' => 'current_function.raw',
+                    'size' => $max_bucket_size,
+                ]
+            ],
+        ];
+
+        $searchResult = Building::searchRaw($body);
+
+        $values = collect();
+        foreach ($searchResult['aggregations'] as $attribute => $results) {
+            $values[$attribute] = collect($results['buckets'])
+            ->mapWithKeys(function ($bucket) {
+                return [$bucket['key'] => $bucket['doc_count']];
+            });
+        }
+        return $values;
+    }
+
 }

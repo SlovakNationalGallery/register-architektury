@@ -23,7 +23,9 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "@ttskch/select2-bootstrap4-theme": "^1.4.0",
         "infinite-scroll": "^3.0.6",
-        "mapbox-gl": "^1.10.1"
+        "mapbox-gl": "^1.10.1",
+        "select2": "^4.0.13"
     }
 }

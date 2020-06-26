@@ -10,6 +10,20 @@ a.nav-link {
         background-color: $gray-200;
     }
 
+    &.active:after {
+        content: "\2713";
+        padding-left: 1rem;
+        font-family: "regarch-icons" !important;
+        font-style: normal !important;
+        font-weight: normal !important;
+        font-variant: normal !important;
+        text-transform: none !important;
+        speak: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
     .main-nav & {
         @include font-size($font-size-base);
 
