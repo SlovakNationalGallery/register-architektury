@@ -7,19 +7,17 @@
 
 <div class="container-fluid py-5 px-3 items">
     <div class="row">
-        <div class="col-md-10 offset-md-1 py-3">
-            <nav>
-                <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                    {{-- @foreach (range('A', 'Z') as $letter)
-                    <a class="list-group-item border-0 mx-1{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">{{ $letter }}</a>
-                    @endforeach --}}
-                </ul>
-            </nav>
+        <div class="col-12 col-md-10 offset-md-1 py-3">
+            <ul class="d-flex justify-content-center flex-wrap px-0">
+                @foreach (range('A', 'Z') as $letter)
+                <a class="border-0 px-4 py-2 btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">{{ $letter }}</a>
+                @endforeach
+            </ul>
         </div>
     </div>
 
     @foreach($architects as $architect)
-    <div class="row border-top flex-nowrap py-2">
+    <div class="row border-top flex-nowrap py-2 item">
         <div class="px-4 d-flex align-items-end" style="height: 100px; width: 125px">
             @if($architect->has_image)
             {{ $architect->image_tag->attributes(['width' => 'auto', 'height' => '100%']) }}
