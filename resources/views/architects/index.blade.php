@@ -24,7 +24,7 @@
             @if($architect->has_image)
             {{ $architect->image_tag->attributes(['width' => 'auto', 'height' => '100%']) }}
             @else
-            <img src="https://placekitten.com/{{ collect([200])->random() }}/139" class="mh-100 mw-100">
+            <div class="bg-secondary h-100 w-100"></div>
             @endif
         </div>
         <div class="d-inline-flex align-items-end pr-4">
