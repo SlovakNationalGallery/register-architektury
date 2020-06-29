@@ -35,9 +35,7 @@
                         @endif
                     </div>
                     <div class="col-md-6 p-3 text-right">
-                        <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
-                        <a href="{{ route('building.index', request()->merge(['sort_by' => 'oldest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>
-                        <a href="{{ route('building.index', request()->merge(['sort_by' => 'newest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
+                        @include('components.sort-by', ['sort_for' => 'buildings', 'sort_by' => ['oldest', 'newest']])
                     </div>
                 </div>
             </form>
