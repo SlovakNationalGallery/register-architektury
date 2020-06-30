@@ -24,6 +24,18 @@
                 </div>
 
                 <div class="row no-gutters">
+                    <div class="col-12 mt-2 mt-md-0">
+                      <div class="">
+                        <div id="year" class="my-2 mx-4"></div>
+                        <div class="d-flex justify-content-between">
+                          <input type="text" name="year_from" id="year_from" value="{{ request('year_from', $filter_values['year_min']) }}" class="form-control form-control-unstyled form-control-sm" data-min="{{ $filter_values['year_min']}}">
+                          <input type="text" name="year_until" id="year_until" value="{{ request('year_until', $filter_values['year_max']) }}" class="form-control form-control-unstyled form-control-sm" data-max="{{ $filter_values['year_max']}}">
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row no-gutters">
                     <div class="col-md-6 p-3">
                         @foreach (request('filters', []) as $filter)
                             @include('components.active-filter', ['filter' => $filter])
@@ -40,6 +52,7 @@
                         <a href="{{ route('building.index', request()->merge(['sort_by' => 'newest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
                     </div>
                 </div>
+
             </form>
             {{-- /filters --}}
 

@@ -237,16 +237,30 @@ class Building extends Model
                     'size' => $max_bucket_size,
                 ]
             ],
+            'year_min' => [
+                'min' => [
+                    'field' => 'year_from',
+                ]
+            ],
+            'year_max' => [
+                'max' => [
+                    'field' => 'year_from',
+                ]
+            ],
         ];
 
         $searchResult = Building::searchRaw($body);
 
         $values = collect();
         foreach ($searchResult['aggregations'] as $attribute => $results) {
-            $values[$attribute] = collect($results['buckets'])
-            ->mapWithKeys(function ($bucket) {
-                return [$bucket['key'] => $bucket['doc_count']];
-            });
+            if (isSet($results['value'])) {
+                $values[$attribute] = $results['value'];
+            } else {
+                $values[$attribute] = collect($results['buckets'])
+                ->mapWithKeys(function ($bucket) {
+                    return [$bucket['key'] => $bucket['doc_count']];
+                });
+            }
         }
         return $values;
     }
