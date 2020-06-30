@@ -10,7 +10,13 @@ $(document).ready(function(){
             'min': $('#year_from').data('min'),
             'max': $('#year_until').data('max'),
         },
-        tooltips: [ false, false ],
+        behaviour: 'tap-drag',
+        tooltips: [ true, true ],
+        pips: {
+            mode: 'steps',
+            stepped: true,
+            density: 10
+        },
         format: {
             from: function(value) {
                 return parseInt(value);
@@ -24,10 +30,8 @@ $(document).ready(function(){
     timeline.on('update', function( values, handle ) {
          if ( handle ) {
              $("#year_until").val(values[handle]);
-             // $("#year_until").change();
          } else {
              $("#year_from").val(values[handle]);
-             // $("#year_from").change();
          }
      });
 
@@ -35,7 +39,6 @@ $(document).ready(function(){
          // var form = $('#filters form');
          // form.submit();
          $("#year_until").change();
-         $("#year_until").val(values[handle]);
     });
 
 });
