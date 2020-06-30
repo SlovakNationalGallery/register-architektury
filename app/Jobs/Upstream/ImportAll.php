@@ -158,14 +158,14 @@ class ImportAll implements ShouldQueue
                             'building_id' => $building->id,
                             'from' => $row->from,
                             'to' => $row->to,
-                            'category' => json_encode([
+                            'category' => [
                                 'en' => $row->category_en,
                                 'sk' => $row->category_sk,
-                            ]),
-                            'note' => json_encode([
+                            ],
+                            'note' => [
                                 'en' => $row->note_en,
                                 'sk' => $row->note_sk,
-                            ]),
+                            ],
                         ]
                     );
                 }
