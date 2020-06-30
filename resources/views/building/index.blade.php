@@ -26,7 +26,7 @@
                 <div class="row no-gutters">
                     <div class="col-12 mt-2 mt-md-0">
                       <div class="">
-                        <div id="year" class="my-2 mx-4"></div>
+                        <div id="years" class="my-2 mx-4"></div>
                         <div class="d-flex justify-content-between">
                           <input type="text" name="year_from" id="year_from" value="{{ request('year_from', $filter_values['year_min']) }}" class="form-control form-control-unstyled form-control-sm" data-min="{{ $filter_values['year_min']}}">
                           <input type="text" name="year_until" id="year_until" value="{{ request('year_until', $filter_values['year_max']) }}" class="form-control form-control-unstyled form-control-sm" data-max="{{ $filter_values['year_max']}}">
