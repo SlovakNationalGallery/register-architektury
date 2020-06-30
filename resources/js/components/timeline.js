@@ -1,0 +1,1 @@
+import noUiSlider from 'nouislider';

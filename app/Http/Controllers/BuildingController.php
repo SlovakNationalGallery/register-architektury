@@ -20,9 +20,23 @@ class BuildingController extends Controller
         }
 
         $filter_values = Building::getFilterValues($buildings->buildPayload());
+
+        $year_from = max(request('year_from', $filter_values['year_min']), $filter_values['year_min']);
+        $year_until = min(request('year_until', $filter_values['year_max']), $filter_values['year_max']);
+
+        if ($year_from > $filter_values['year_min']) {
+            $buildings->where('year_from', '>=', $year_from);
+        }
+        if ($year_until < $filter_values['year_max']) {
+            $buildings->where('year_from', '<=', $year_until);
+        }
+
         $buildings = $buildings->paginate(20);
 
-        return view('building.index', compact('buildings','filter_values'));
+        return view('building.index', compact(
+            'buildings',
+            'filter_values',
+        ));
     }
 
     public function show($id, $slug, Request $request)
