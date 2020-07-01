@@ -240,6 +240,28 @@
     </div>
 </section>
 
+<section id="timeline-card" class="cd-timeline-card">
+    <h2>Component: timeline</h2>
+
+    <div class="cd-box">
+        @include('components.timeline', [
+            'year_from' => 1950,
+            'year_until' => 1980,
+            'year_min' => 1920,
+            'year_max' => 2010,
+        ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.timeline', [
+            'year_from' => 1950,
+            'year_until' => 1980,
+            'year_min' => 1920,
+            'year_max' => 2010,
+        ])
+    </div>
+</section>
+
 
 </main>
 @stop
