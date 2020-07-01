@@ -25,9 +25,12 @@
 
                 <div class="row no-gutters">
                     <div class="col-12 py-5 mt-md-0">
-                        <div id="years" class="my-4 mx-4"></div>
-                        <input type="hidden" name="year_from" id="year_from" value="{{ request('year_from', $filter_values['year_min']) }}" data-min="{{ $filter_values['year_min']}}">
-                        <input type="hidden" name="year_until" id="year_until" value="{{ request('year_until', $filter_values['year_max']) }}" data-max="{{ $filter_values['year_max']}}">
+                        @include('components.timeline', [
+                            'year_from' => request('year_from', $filter_values['year_min']),
+                            'year_until' => request('year_until', $filter_values['year_max']),
+                            'year_min' => $filter_values['year_min'],
+                            'year_max' => $filter_values['year_max'],
+                        ])
                     </div>
                 </div>
 
