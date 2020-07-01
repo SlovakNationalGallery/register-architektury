@@ -21,6 +21,10 @@ class BuildingController extends Controller
 
         $filter_values = Building::getFilterValues($buildings->buildPayload());
 
+        if (is_numeric($filter_values['year_max'])) {
+            $filter_values['year_max'] += 10;
+        }
+
         $year_from = max(request('year_from', $filter_values['year_min']), $filter_values['year_min']);
         $year_until = min(request('year_until', $filter_values['year_max']), $filter_values['year_max']);
 
@@ -28,7 +32,7 @@ class BuildingController extends Controller
             $buildings->where('year_from', '>=', $year_from);
         }
         if ($year_until < $filter_values['year_max']) {
-            $buildings->where('year_from', '<=', $year_until);
+            $buildings->where('year_from', '<', $year_until);
         }
 
         $buildings = $buildings->paginate(20);
