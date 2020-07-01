@@ -1,0 +1,89 @@
+$handle-size: 16px;
+
+/* Painting and performance;
+ * Browsers can paint handles in their own layer.
+ */
+.noUi-base,
+.noUi-handle {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+}
+
+// slider size and handle placement
+.noUi-horizontal {
+    height: 1px;
+}
+
+.noUi-target {
+    background: $dark;
+    border: none;
+    box-shadow: none;
+}
+.noUi-connects {
+    border-radius: none;
+    overflow: visible;
+}
+.noUi-connect {
+    background: $black;
+    box-shadow: 0 0 6px $green;
+}
+
+.noUi-active {
+    box-shadow: none;
+    background: $gray-200;
+}
+
+// handles
+.noUi-horizontal .noUi-handle,
+.noUi-vertical .noUi-handle {
+    right: -8px;
+    top: -7px;
+    width: $handle-size;
+    height: $handle-size;
+    border-radius: 50%;
+    box-shadow: none;
+    background-color: $white;
+    border: 1px solid $dark;
+    transition: width .2s cubic-bezier(0.215, 0.610, 0.355, 1.000),
+    height .2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+.noUi-handle:before {
+    content: none;
+}
+.noUi-handle:after {
+    content: none;
+}
+
+.noUi-target .noUi-active.noUi-handle {
+    background-color: $gray-200;
+    box-shadow: 0 0 6px $green;
+    outline: none;
+}
+.noUi-handle:focus {
+    outline: none;
+}
+
+// tooltips
+.noUi-tooltip {
+    border: none;
+    background: transparent;
+}
+
+// pips
+.noUi-pips {
+    color: $black;
+}
+
+.noUi-marker {
+    display: none;
+}
+
+.noUi-value-sub {
+        color: $black;
+        font-size: inherit;
+}
+
+.noUi-pips-horizontal {
+    padding: 5px 0;
+    height: 50px;
+}
