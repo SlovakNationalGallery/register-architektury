@@ -255,11 +255,13 @@ class Building extends Model
         foreach ($searchResult['aggregations'] as $attribute => $results) {
             if (isSet($results['value'])) {
                 $values[$attribute] = $results['value'];
-            } else {
+            } elseif (isSet($results['buckets'])) {
                 $values[$attribute] = collect($results['buckets'])
                 ->mapWithKeys(function ($bucket) {
                     return [$bucket['key'] => $bucket['doc_count']];
                 });
+            } else {
+                $values[$attribute] = collect([]);
             }
         }
         return $values;
