@@ -10,7 +10,6 @@ $(document).ready(function(){
             'min': $('#year_from').data('min'),
             'max': $('#year_until').data('max'),
         },
-        behaviour: 'tap-drag',
         tooltips: [ true, true ],
         pips: {
             mode: 'steps',
