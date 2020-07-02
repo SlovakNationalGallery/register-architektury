@@ -28,7 +28,7 @@ class BuildingController extends Controller
             $buildings->where('year_from', '>=', $year_from);
         }
         if ($year_until < $filter_values['year_max']) {
-            $buildings->where('year_from', '<', $year_until);
+            $buildings->where('year_to', '<=', $year_until);
         }
 
         $buildings = $buildings->paginate(20);

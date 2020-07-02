@@ -22,7 +22,7 @@ class Building extends Model
         'current_function',
     ];
 
-    protected $appends = ['tags', 'year_from'];
+    protected $appends = ['tags', 'year_from', 'year_to'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
@@ -118,6 +118,9 @@ class Building extends Model
                 'type' => 'keyword',
             ],
             'year_from' => [
+                'type' => 'integer',
+            ],
+            'year_to' => [
                 'type' => 'integer',
             ],
             'current_function' => [
@@ -218,6 +221,7 @@ class Building extends Model
         $max_bucket_size = 200;
         $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
 
+        $body['size'] = 0;
         $body['aggs'] = [
             'architects' => [
                 'terms' => [
@@ -244,7 +248,7 @@ class Building extends Model
             ],
             'year_max' => [
                 'max' => [
-                    'field' => 'year_from',
+                    'field' => 'year_to',
                 ]
             ],
         ];
@@ -262,7 +266,7 @@ class Building extends Model
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
             'year_min' => $searchResult['aggregations']['year_min']['value'],
-            'year_max' => $searchResult['aggregations']['year_max']['value'] + 10,
+            'year_max' => ceil($searchResult['aggregations']['year_max']['value'] / 10) * 10,
         ];
     }
 

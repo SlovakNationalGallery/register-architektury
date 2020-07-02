@@ -35,8 +35,6 @@ $(document).ready(function(){
      });
 
     timeline.on('end', function( values, handle ) {
-         // var form = $('#filters form');
-         // form.submit();
          $("#year_until").change();
     });
 
