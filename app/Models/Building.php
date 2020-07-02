@@ -251,20 +251,19 @@ class Building extends Model
 
         $searchResult = Building::searchRaw($body);
 
-        $values = collect();
-        foreach ($searchResult['aggregations'] as $attribute => $results) {
-            if (isSet($results['value'])) {
-                $values[$attribute] = $results['value'];
-            } elseif (isSet($results['buckets'])) {
-                $values[$attribute] = collect($results['buckets'])
-                ->mapWithKeys(function ($bucket) {
-                    return [$bucket['key'] => $bucket['doc_count']];
-                });
-            } else {
-                $values[$attribute] = collect([]);
-            }
-        }
-        return $values;
+        return [
+            'architects' => collect($searchResult['aggregations']['architects']['buckets'])
+                ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
+
+            'locations' => collect($searchResult['aggregations']['locations']['buckets'])
+                ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
+
+            'functions' => collect($searchResult['aggregations']['functions']['buckets'])
+                ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
+
+            'year_min' => $searchResult['aggregations']['year_min']['value'],
+            'year_max' => $searchResult['aggregations']['year_max']['value'] + 10,
+        ];
     }
 
 }
