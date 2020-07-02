@@ -16,16 +16,16 @@
     </div>
 
     @foreach($architects as $architect)
-    <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-4 d-flex align-items-end flex-shrink-0" style="height: 100px; width: 125px">
+    <div class="row border-top flex-nowrap py-2 item h-8rem">
+        <div class="px-4 flex-shrink-0 w-8rem">
             @if($architect->has_image)
-            {{ $architect->image_tag->attributes(['width' => 'auto', 'height' => '100%']) }}
+            <div style="background-image: url({{ $architect->getImageUrl(1000) }})" class="use-background-image w-100 h-100"></div>
             @else
             {{-- Placeholder image --}}
-            <div class="bg-secondary h-100 w-100"></div>
+            <div class="bg-secondary w-100 h-100"></div>
             @endif
         </div>
-        <div class="d-inline-flex align-items-end pr-4 flex-shrink-0">
+        <div class="d-inline-flex align-items-end pr-4 flex-sm-shrink-0">
             <h5 class="mb-0">{{ $architect->full_name }}</h5>
         </div>
 
@@ -40,10 +40,10 @@
             'imagesLoaded' => true,
         ];
         @endphp
-        <div class="w-100" style="height: 100px" data-flickity="{{ json_encode($flickity_settings) }}">
+        <div class="w-100 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
             @foreach($architect->buildings as $building)
                 @if($building->processedImages->isNotEmpty())
-                {{ $building->cover_image_tag->attributes(['width' => 'auto', 'height' => '100%', 'class' => 'ml-3']) }}
+                {{ $building->cover_image_tag->attributes(['class' => 'ml-3 h-100']) }}
                 @endif
             @endforeach
         </div>
