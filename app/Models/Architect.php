@@ -130,6 +130,21 @@ class Architect extends Model implements HasMedia
         return $this->hasMedia() ? $this->getFirstMedia()->img() : null;
     }
 
+    public function getImageUrl(int $widthInPixels)
+    {
+        $widthInPixels *= 2; // Increase for retina displays
+
+        $image = $this->getFirstMedia()
+            ->responsiveImages()
+            ->files
+            ->filter(fn ($file) => $file->width() >= $widthInPixels)
+            ->sortBy(fn ($file) => $file->width())
+            ->first();
+
+        // Return original if responsive images aren't large enough
+        return $image ? $image->url() : $this->getFirstMediaUrl();
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('default')
