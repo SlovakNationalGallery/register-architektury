@@ -19,7 +19,7 @@
     <div class="row border-top flex-nowrap py-2 item h-8rem">
         <div class="px-4 flex-shrink-0 w-8rem">
             @if($architect->has_image)
-            <div style="background-image: url({{ $architect->getImageUrl(1000) }})" class="use-background-image w-100 h-100"></div>
+            <div style="background-image: url({{ $architect->getImageUrlForWidth(140) }})" class="use-background-image w-100 h-100"></div>
             @else
             {{-- Placeholder image --}}
             <div class="bg-secondary w-100 h-100"></div>
@@ -40,10 +40,14 @@
             'imagesLoaded' => true,
         ];
         @endphp
-        <div class="w-100 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
+        <div class="w-100 h-100 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
             @foreach($architect->buildings as $building)
                 @if($building->processedImages->isNotEmpty())
-                {{ $building->cover_image_tag->attributes(['class' => 'ml-3 h-100']) }}
+                <img
+                    src="{{ $building->getCoverImageUrlForHeight(80) }}"
+                    srcset="{{ $building->getCoverImageUrlForHeight(80) }}, {{ $building->getCoverImageUrlForHeight(160) }} 2x"
+                    class="h-100 mr-3"
+                >
                 @endif
             @endforeach
         </div>
