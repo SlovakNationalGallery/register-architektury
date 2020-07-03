@@ -10,8 +10,12 @@
             <div class="col-12 col-md-10 offset-md-1 py-3">
                 <ul class="d-flex justify-content-center flex-wrap px-0">
                     @foreach (range('A', 'Z') as $letter)
-                    <a class="px-4 py-2 position-relative btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">
-                        @if(request('first_letter') == $letter)<span class="circle"></span>@endif
+                    @php
+                        $extra_classes = [];
+                        if (!$first_letters->contains($letter)) $extra_classes[] = 'disabled';
+                        if (request('first_letter') == $letter) $extra_classes[] = 'active';
+                    @endphp
+                    <a class="position-relative mx-2 link-circle btn-link {{ implode(" ", $extra_classes) }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">
                         {{ $letter }}
                     </a>
                     @endforeach

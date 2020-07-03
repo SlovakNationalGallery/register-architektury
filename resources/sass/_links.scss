@@ -1,3 +1,17 @@
+a.link-circle {
+    @extend .text-center;
+
+    width: 2.4em;
+    height: 2.4em;
+    line-height: 2.4em;
+    padding-right: .1em;
+
+    &.active {
+        @extend .border;
+        border-radius: 2.4em;
+    }
+}
+
 a.link-underline {
     text-decoration: none;
     border-bottom: 1px solid $dark;
