@@ -57,9 +57,6 @@ class Architect extends Model implements HasMedia
                 'type' => 'date',
                 'format' => 'yyyy-MM-dd'
             ],
-            'active_years' => [
-                'type' => 'integer_range',
-            ],
             'bio' => [
                 'type' => 'text',
                 'fields' => [
@@ -76,43 +73,55 @@ class Architect extends Model implements HasMedia
         ]
     ];
 
-    public static function searchFirstLetters()
-    {
-        $searchResult = self::searchRaw([
-            'size' => 0, // Return counts only
-            'aggs' => [
-                'first_letters' => [
-                    'terms' => [
-                        'field' => 'first_letter',
-                        'size' => 26 // A to Z
-                    ]
-                ]
-            ]
-        ]);
-
-        return collect($searchResult['aggregations']['first_letters']['buckets'])
-            ->map(fn ($bucket) => $bucket['key'])
-            ->sort();
-    }
-
     public function buildings()
     {
         return $this->belongsToMany('App\Models\Building');
     }
 
-    public function getActiveFromAttribute()
-    {
-        return $this->buildings->min('year_from');
-    }
-
-    public function getActiveToAttribute()
-    {
-        return $this->buildings->max('year_to');
-    }
-
     public function getFullNameAttribute()
     {
         return "{$this->last_name} {$this->first_name}";
+    }
+
+    public static function getFilterValues($search = null)
+    {
+        $body = $search ? $search->buildPayload()[0]['body'] : self::search('*')->buildPayload()[0]['body'];
+
+        $body['size'] = 0;
+        $body['aggs'] = [
+            'unfiltered' => [
+                'global' => (object) [],
+                'aggs' => [
+                    'first_letters' => [
+                        'terms' => [
+                            'field' => 'first_letter',
+                            'size' => 26 // A to Z
+                        ]
+                    ]
+                ]
+            ],
+            'year_min' => [
+                'min' => [
+                    'field' => 'active_from',
+                ]
+            ],
+            'year_max' => [
+                'max' => [
+                    'field' => 'active_to',
+                ]
+            ],
+        ];
+
+        $searchResult = self::searchRaw($body);
+
+        return [
+            'first_letters' => collect($searchResult['aggregations']['unfiltered']['first_letters']['buckets'])
+                ->map(fn ($bucket) => $bucket['key'])
+                ->sort(),
+
+            'year_min' => $searchResult['aggregations']['year_min']['value'],
+            'year_max' => ceil($searchResult['aggregations']['year_max']['value'] / 10) * 10,
+        ];
     }
 
     public function getFirstLetterAttribute()
@@ -154,13 +163,9 @@ class Architect extends Model implements HasMedia
     public function toSearchableArray()
     {
         $array = $this->toArray();
-
-        $array['active_years'] = [
-            'gte' => $this->active_from,
-            'lte' => $this->active_to,
-        ];
-
         $array['first_letter'] = $this->first_letter;
+        $array['active_from'] = $this->buildings->min('year_from');
+        $array['active_to'] = $this->buildings->max('year_to');
 
         return $array;
     }
