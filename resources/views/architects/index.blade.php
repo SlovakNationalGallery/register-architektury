@@ -5,47 +5,51 @@
 
 @include('components.header')
 <div class="container-fluid py-5 px-3 items">
-    <div class="row">
-        <div class="col-12 col-md-10 offset-md-1 py-3">
-            <ul class="d-flex justify-content-center flex-wrap px-0">
-                @foreach (range('A', 'Z') as $letter)
-                <a class="px-4 py-2 position-relative btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">
-                    @if(request('first_letter') == $letter)<span class="circle"></span>@endif
-                    {{ $letter }}
-                </a>
-                @endforeach
-            </ul>
+    <form action="{{ route('architects.index') }}" id="filters">
+        <div class="row">
+            <div class="col-12 col-md-10 offset-md-1 py-3">
+                <ul class="d-flex justify-content-center flex-wrap px-0">
+                    @foreach (range('A', 'Z') as $letter)
+                    <a class="px-4 py-2 position-relative btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">
+                        @if(request('first_letter') == $letter)<span class="circle"></span>@endif
+                        {{ $letter }}
+                    </a>
+                    @endforeach
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="row no-gutters" id="filters">
-        <div class="col-12 py-5 mt-md-0">
-            <form action="{{ route('architects.index') }}">
-            @include('components.timeline', [
-                'year_from' => request('year_from', $filter_values['year_min']),
-                'year_until' => request('year_until', $filter_values['year_max']),
-                'year_min' => $filter_values['year_min'],
-                'year_max' => $filter_values['year_max'],
-            ])
-            </form>
+        <div class="row no-gutters">
+            <div class="col-12 py-5 mt-md-0">
+                @include('components.timeline', [
+                    'year_from' => request('year_from', $filter_values['year_min']),
+                    'year_until' => request('year_until', $filter_values['year_max']),
+                    'year_min' => $filter_values['year_min'],
+                    'year_max' => $filter_values['year_max'],
+                ])
+            </div>
         </div>
-    </div>
-    <div class="row no-gutters">
-        <div class="col-md-6 p-3">
-            @if(request('first_letter'))
-                @include('components.active-filter', ['filter' => "Začína na písmeno " . request('first_letter')])
-            @endif
-            @if (request('first_letter') || request('year_from') || request('year_until'))
-                <a href="{{ route('architects.index') }}" class="btn mb-2 btn-with-icon-right">
-                  {{ trans('filters.clear') }} <span>&times;</span>
-                </a>
-            @endif
+        <div class="row no-gutters">
+            <div class="col-md-6 p-3">
+                @if(request('first_letter'))
+                    @include('components.active-filter', [
+                        'label' => "Začína na písmeno " . request('first_letter'),
+                        'name' => 'first_letter',
+                        'value' => request('first_letter'),
+                    ])
+                @endif
+                @if (request('first_letter') || request('year_from') || request('year_until'))
+                    <a href="{{ route('architects.index') }}" class="btn mb-2 btn-with-icon-right">
+                    {{ trans('filters.clear') }} <span>&times;</span>
+                    </a>
+                @endif
+            </div>
+            {{-- <div class="col-md-6 p-3 text-right">
+                <span class="">{{ $buildings->total() }} {{ trans_choice('architects.objects', $buildings->total()) }}</span>
+                <a href="{{ route('building.index', request()->merge(['sort_by' => 'oldest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>
+                <a href="{{ route('building.index', request()->merge(['sort_by' => 'newest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
+            </div> --}}
         </div>
-        {{-- <div class="col-md-6 p-3 text-right">
-            <span class="">{{ $buildings->total() }} {{ trans_choice('building.objects', $buildings->total()) }}</span>
-            <a href="{{ route('building.index', request()->merge(['sort_by' => 'oldest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>
-            <a href="{{ route('building.index', request()->merge(['sort_by' => 'newest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
-        </div> --}}
-    </div>
+    </form>
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item h-8rem">
