@@ -32,7 +32,7 @@
             <div class="col-md-6 p-3">
                 @if(request('first_letter'))
                     @include('components.active-filter', [
-                        'label' => "Začína na písmeno " . request('first_letter'),
+                        'label' =>  __('filters.first_letter', ['letter' => request('first_letter')]),
                         'name' => 'first_letter',
                         'value' => request('first_letter'),
                     ])
@@ -43,6 +43,7 @@
                     </a>
                 @endif
             </div>
+            {{-- TODO --}}
             {{-- <div class="col-md-6 p-3 text-right">
                 <span class="">{{ $buildings->total() }} {{ trans_choice('architects.objects', $buildings->total()) }}</span>
                 <a href="{{ route('building.index', request()->merge(['sort_by' => 'oldest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>

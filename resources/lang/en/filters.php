@@ -5,4 +5,5 @@ return [
     'function' => 'FUNCTION',
     'location' => 'LOCATION',
     'architect' => 'ARCHITECT',
+    'first_letter' => 'Starts with letter :letter',
 ];
