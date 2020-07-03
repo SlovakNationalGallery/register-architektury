@@ -35,7 +35,7 @@
                         @endif
                     </div>
                     <div class="col-md-6 p-3 text-right">
-                        @include('components.sort-by', ['sort_for' => 'buildings', 'sort_by' => ['oldest', 'newest']])
+                        @include('components.buildings-sort-by')
                     </div>
                 </div>
             </form>
