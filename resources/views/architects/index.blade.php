@@ -9,7 +9,10 @@
         <div class="col-12 col-md-10 offset-md-1 py-3">
             <ul class="d-flex justify-content-center flex-wrap px-0">
                 @foreach (range('A', 'Z') as $letter)
-                <a class="border-0 px-4 py-2 btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">{{ $letter }}</a>
+                <a class="px-4 py-2 position-relative btn-link{{ $first_letters->contains($letter) ? '' : ' disabled' }}" href="{{ route('architects.index', ['first_letter' => $letter]) }}">
+                    @if(request('first_letter') == $letter)<span class="circle"></span>@endif
+                    {{ $letter }}
+                </a>
                 @endforeach
             </ul>
         </div>
