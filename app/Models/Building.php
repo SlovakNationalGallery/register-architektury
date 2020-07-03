@@ -155,9 +155,16 @@ class Building extends Model
         return $this->hasMany('App\Models\Image')->processed();
     }
 
+    public function getCoverImageUrlForHeight(int $heightInPixels)
+    {
+        return $this->processedImages->first()->getFirstMedia()
+            ->getUrlForHeight($heightInPixels);
+    }
+
     public function getCoverImageTagAttribute()
     {
-        return $this->processedImages->first()->getFirstMedia()->img();
+        return $this->processedImages->first()->getFirstMedia()
+            ->img();
     }
 
     public function getTagsAttribute()
