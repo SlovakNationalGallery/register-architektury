@@ -37,7 +37,11 @@
                 <div class="row no-gutters">
                     <div class="col-md-6 p-3">
                         @foreach (request('filters', []) as $filter)
-                            @include('components.active-filter', ['filter' => $filter])
+                            @include('components.active-filter', [
+                                'label' => $filter,
+                                'name' => 'filters[]',
+                                'value' => $filter,
+                            ])
                         @endforeach
                         @if (request('filters'))
                             <a href="{{ route('building.index') }}" class="btn mb-2 btn-with-icon-right">
