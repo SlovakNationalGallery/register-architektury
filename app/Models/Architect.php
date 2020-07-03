@@ -158,7 +158,7 @@ class Architect extends Model implements HasMedia
     public function toSearchableArray()
     {
         $array = $this->toArray();
-        $array['first_letter'] = Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
+        $array['first_letter'] = (string) Str::of($this->last_name)->upper()->substr(0, 1)->ascii();
         $array['active_from'] = $this->buildings->min('year_from');
         $array['active_to'] = $this->buildings->max('year_to');
 
