@@ -219,11 +219,19 @@
     <h2>Component: active-filter</h2>
 
     <div class="cd-box">
-        @include('components.active-filter', ['filter' => 'Kultúra' ])
+        @include('components.active-filter', [
+            'label' => 'Kultúra',
+            'name' => 'filters[]',
+            'value' => 'Kultúra',
+        ])
     </div>
 
     <div class="cd-box code lang-php hljs xml">
-        @@include('components.active-filter', ['filter' => 'Kultúra' ])
+        @@include('components.active-filter', [
+            'label' => 'Kultúra',
+            'name' => 'filters[]',
+            'value' => 'Kultúra',
+        ])
     </div>
 </section>
 
