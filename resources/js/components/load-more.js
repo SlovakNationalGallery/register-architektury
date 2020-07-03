@@ -1,9 +1,9 @@
 const InfiniteScroll = require("infinite-scroll");
-const Flickity = require('flickity');
+const { hydrateCarousels } = require("./carousel");
 
 $(document).ready(function() {
     if ($(".pagination__next").length > 0) {
-        var infScroll = new InfiniteScroll(".items", {
+        const infScroll = new InfiniteScroll(".items", {
             loadOnScroll: false,
             path: ".pagination__next",
             append: ".item",
@@ -14,11 +14,7 @@ $(document).ready(function() {
         });
 
         infScroll.on('append', function(response, path, items) {
-
-            // Hydrate new flickity carousels
-            $(items).find('[data-flickity]').each(function(index, element) {
-                new Flickity(element, $(element).data('flickity'))
-            })
+            hydrateCarousels(items);
         })
     }
 });
