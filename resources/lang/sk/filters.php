@@ -5,4 +5,5 @@ return [
     'function' => 'FUNKCIA',
     'location' => 'LOKALITA',
     'architect' => 'ARCHITEKT',
+    'first_letter' => 'Začína na písmeno :letter',
 ];
