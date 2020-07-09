@@ -47,7 +47,7 @@
                     </a>
                 @endif
             </div>
-            <div class="col-md-6 pt-4 pr-3 text-right">
+            <div class="col-md-6 p-3 pt-4 text-right">
                 @include('components.architects-sort-by')
             </div>
         </div>
