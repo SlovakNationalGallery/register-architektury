@@ -8,10 +8,13 @@ use Illuminate\Support\Str;
 use ScoutElastic\Searchable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Architect extends Model implements HasMedia
 {
     use CrudTrait;
+    use HasSlug;
     use Searchable;
     use InteractsWithMedia;
 
@@ -137,6 +140,18 @@ class Architect extends Model implements HasMedia
     public function getImageUrlForWidth(int $widthInPixels)
     {
         return  $this->getFirstMedia()->getUrlForWidth($widthInPixels);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('full_name')
+            ->saveSlugsTo('slug');
     }
 
     public function registerMediaCollections(): void
