@@ -28,6 +28,6 @@ class Media extends BaseMedia
             ->first();
 
         // Return original if responsive images aren't large enough
-        return $image ? $image->url() : $this->getFirstMediaUrl();
+        return $image ? $image->url() : $this->getUrl();
     }
 }
