@@ -7,4 +7,8 @@ return [
         'oldest' => 'Oldest first',
         'newest' => 'Youngest first',
     ],
+
+    // show
+    'birth_death_date' => 'Date of birth / death',
+    'birth_death_place' => 'Place of birth / death',
 ];

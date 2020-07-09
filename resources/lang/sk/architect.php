@@ -7,4 +7,8 @@ return [
         'oldest' => 'Od najstaršieho',
         'newest' => 'Od najmladšieho',
     ],
+
+    // show
+    'birth_death_date' => 'Dátum narodenia / úmrtia',
+    'birth_death_place' => 'Miesto narodenia / úmrtia',
 ];
