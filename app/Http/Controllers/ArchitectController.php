@@ -52,6 +52,13 @@ class ArchitectController extends Controller
      */
     public function show(Architect $architect)
     {
-        return view('architects.show', compact('architect'));
+        $buildings = $architect->buildings();
+
+        if (request('sort_by') == 'newest') $buildings->orderByYearFrom('desc');
+        if (request('sort_by') == 'oldest') $buildings->orderByYearFrom('asc');
+
+        $buildings = $buildings->paginate(12);
+
+        return view('architects.show', compact('architect', 'buildings'));
     }
 }
