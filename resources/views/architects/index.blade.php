@@ -81,7 +81,7 @@
             'imagesLoaded' => true,
         ];
         @endphp
-        <div class="w-100 h-100 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
+        <div class="w-100 h-100 mr-4 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
             @foreach($architect->buildings as $building)
                 @if($building->processedImages->isNotEmpty())
                 <img
