@@ -33,6 +33,9 @@ class ArchitectController extends Controller
             $architects->where('active_from', '<=', $year_until);
         }
 
+        if (request('sort_by') == 'newest') $architects->orderBy('active_from', 'desc');
+        if (request('sort_by') == 'oldest') $architects->orderBy('active_from', 'asc');
+
         $architects = $architects
             ->orderBy('last_name.raw', 'asc')
             ->with(['buildings', 'media'])
