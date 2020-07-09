@@ -64,7 +64,7 @@
             @endif
         </div>
         <div class="d-inline-flex align-items-end pr-4 flex-sm-shrink-0">
-            <h5 class="mb-0">{{ $architect->full_name }}</h5>
+            <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}">{{ $architect->full_name }}</a></h5>
         </div>
 
         @php
