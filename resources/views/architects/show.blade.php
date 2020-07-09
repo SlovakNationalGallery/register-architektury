@@ -13,29 +13,29 @@
             </h2>
         </div>
     </div>
-    <div class="row mb-4">
+    <div class="row my-4">
         <div class="col-md-6 col-lg-3">
             <div class="row">
-                <div class="col-10 col-sm-6 col-md-12 col-lg-5">
+                <div class="col-10 col-sm-6 col-lg-8 col-xl-5">
                 @if($architect->has_image)
                 {{ $architect->image_tag->attributes(['class' => 'mh-100 mw-100']) }}
                 @endif
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-3 mb-4">
+        <div class="mt-4 mt-md-0 col-md-6 col-lg-3 mb-4">
             <ul class="list-group list-group-flush">
-                <li class="list-group-item px-0 py-2 border-0">
+                <li class="list-group-item p-0 border-0">
                     <b>{{ __('architect.birth_death_date') }}</b><br>
                     {{ $architect->birth_date ?? '?' }} / {{ $architect->death_date ?? '?' }}
                 </li>
-                <li class="list-group-item px-0 py-2 border-0">
+                <li class="list-group-item p-0 border-0">
                     <b>{{ __('architect.birth_death_place') }}</b><br>
                     {{ $architect->birth_place ?? '?' }} / {{ $architect->death_place ?? '?' }}
                 </li>
             </ul>
         </div>
-        <div class="col-lg-6">
+        <div class="mt-4 mt-lg-0 col-lg-6">
             {{ nl2br(strip_tags($architect->bio)) }}
         </div>
     </div>
@@ -45,7 +45,7 @@
             @include('components.buildings-sort-by')
         </div>
     </div>
-    <div class="row no-gutters items">
+    <div class="row items">
         @foreach ($buildings as $building)
         <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
             @include('components.building-card', ['building' => $building])
