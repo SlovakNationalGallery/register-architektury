@@ -52,6 +52,6 @@ class ArchitectController extends Controller
      */
     public function show(Architect $architect)
     {
-        //
+        return view('architects.show', compact('architect'));
     }
 }
