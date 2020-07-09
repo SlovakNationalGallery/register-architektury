@@ -47,12 +47,9 @@
                     </a>
                 @endif
             </div>
-            {{-- TODO --}}
-            {{-- <div class="col-md-6 p-3 text-right">
-                <span class="">{{ $buildings->total() }} {{ trans_choice('architects.objects', $buildings->total()) }}</span>
-                <a href="{{ route('building.index', request()->merge(['sort_by' => 'oldest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.oldest') }} &darr;</a>
-                <a href="{{ route('building.index', request()->merge(['sort_by' => 'newest'])->all()) }}" class="link-no-underline ml-5">{{ __('building.sort.newest') }} &uarr;</a>
-            </div> --}}
+            <div class="col-md-6 pt-4 pr-3 text-right">
+                @include('components.architects-sort-by')
+            </div>
         </div>
     </form>
 
