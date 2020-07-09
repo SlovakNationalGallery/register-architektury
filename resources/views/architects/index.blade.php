@@ -7,7 +7,7 @@
 <div class="container-fluid py-5 px-3 items">
     <form action="{{ route('architects.index') }}" id="filters">
         <div class="row">
-            <div class="col-12 col-md-10 offset-md-1 py-3">
+            <div class="col-12 py-3">
                 <ul class="d-flex justify-content-center flex-wrap px-0">
                     @foreach (range('A', 'Z') as $letter)
                     @php
