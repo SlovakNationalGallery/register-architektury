@@ -13,5 +13,8 @@ return [
         'head_of_department' => 'Vedúca oddelenia',
         'researcher_female' => 'Vedecká pracovníčka',
         'researcher_male' => 'Vedecký pracovník',
+    ],
+    'publications' => [
+        'count' => '{0} publikácií|[1] publikácia|[2,4] publikácie|[5,*] publikácií',
     ]
 ];
