@@ -42,7 +42,10 @@ class PublicationCrudController extends CrudController
         ]);
 
         $this->crud->addFields([
-            'title',
+            [
+                'name' => 'title',
+                'type' => 'text',
+            ],
             [
                 'name' => 'slug',
                 'label' => 'Slug (URL)',
@@ -53,7 +56,10 @@ class PublicationCrudController extends CrudController
                 'name' => 'cover_image',
                 'type' => 'browse',
             ],
-            'authors',
+            [
+                'name' => 'authors',
+                'type' => 'textarea',
+            ],
             [
                 'name' => 'description',
                 'type' => 'tinymce',
