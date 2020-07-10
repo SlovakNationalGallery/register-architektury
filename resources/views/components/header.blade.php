@@ -1,7 +1,7 @@
 <div class="container-fluid p-0">
     <div class="row no-gutters align-items-stretch">
         <div class="col-md-4 py-3 border-bl text-center align-items-center">
-            <h1 class="ls-2 my-auto">{{ __('header.title') }}</h1>
+            <h1 class="ls-2 my-auto"><a href="{{ route('home') }}">{{ __('header.title') }}</a></h1>
         </div>
         <div class="col-md-4 border-bl text-center d-flex">
             <form class="px-3 my-auto w-100" action="{{ route('building.index') }}">
@@ -15,7 +15,7 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             <nav class="nav nav-justified main-nav">
-                <a class="nav-item py-3 ls-2 border-bl nav-link" href="#">{{ __('header.about.index') }}</a>
+                <a href="{{ route('about.department') }}" class="nav-item py-3 ls-2 border-bl nav-link {{ Route::is('about.*') ? 'active' : '' }}">{{ __('header.about.index') }}</a>
                 <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
                 <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
