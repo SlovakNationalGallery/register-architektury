@@ -9,6 +9,9 @@ return [
             was paid to the impact of totalitarian and authoritarian regimes on architecture, to the modern
             architecture and town planning concepts and their coexistence and conflicts with traditional town
             and to the role of women in 20th century architecture. The Department of architecture collaborates
-            regularly with the Monuments Board of the Slovak republic and with the DOCOMOMO International.'
+            regularly with the Monuments Board of the Slovak republic and with the DOCOMOMO International.',
+        'head_of_department' => 'Head of Department',
+        'researcher_female' => 'Researcher',
+        'researcher_male' => 'Researcher',
     ]
 ];

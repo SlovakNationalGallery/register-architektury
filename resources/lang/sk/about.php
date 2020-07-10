@@ -10,5 +10,8 @@ return [
             na mestskú štruktúru ako aj pôsobenie vybraných architektonických osobností. Oddelenie architektúry
             pravidelne spolupracuje s Fakultou architektúry STU v Bratislave, Pamiatkovým úradom Slovenskej
             republiky a s medzinárodnou organizáciou DOCOMOMO International.',
+        'head_of_department' => 'Vedúca oddelenia',
+        'researcher_female' => 'Vedecká pracovníčka',
+        'researcher_male' => 'Vedecký pracovník',
     ]
 ];
