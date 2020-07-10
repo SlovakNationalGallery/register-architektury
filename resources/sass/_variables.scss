@@ -60,3 +60,10 @@ $input-border-width:                    1px;
 // List group
 $list-group-border-color: $dark;
 $list-group-disabled-color: $gray-400;
+
+// Spacers
+$spacer: 1rem;
+$spacers: (
+  6: ($spacer * 6),
+  7: ($spacer * 12)
+);
