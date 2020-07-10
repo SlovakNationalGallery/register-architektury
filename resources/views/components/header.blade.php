@@ -37,9 +37,9 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             <nav class="nav nav-justified sub-nav bg-light">
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.people') ? 'active' : '' }}" href="#">{{ __('header.about.department') }}</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.news') ? 'active' : '' }}" href="#">{{ __('header.about.news') }}</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="#">{{ __('header.about.publications') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{{ __('header.about.department') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.news') ? 'active' : '' }}" href="{{ route('about.news') }}">{{ __('header.about.news') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
             </nav>
         </div>
     </div>

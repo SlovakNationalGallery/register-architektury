@@ -35,6 +35,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     Route::resource('architekti', 'ArchitectController')
         ->names('architects')
         ->parameter('architekti', 'architect');
+
+    Route::name('about.')->group(function () {
+        Route::view('/oddelenie-architektury', 'department')->name('department');
+        Route::view('/novinky', 'department')->name('news'); //TODO
+        Route::view('/publikacie', 'department')->name('publications'); //TODO
+    });
 });
 
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
