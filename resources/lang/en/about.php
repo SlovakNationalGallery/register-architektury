@@ -13,5 +13,8 @@ return [
         'head_of_department' => 'Head of Department',
         'researcher_female' => 'Researcher',
         'researcher_male' => 'Researcher',
+    ],
+    'publications' => [
+        'count' => '{0} publications|[1] publications|[2,*] publications',
     ]
 ];
