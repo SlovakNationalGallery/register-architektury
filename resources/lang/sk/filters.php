@@ -6,4 +6,8 @@ return [
     'location' => 'LOKALITA',
     'architect' => 'ARCHITEKT',
     'first_letter' => 'Začína na písmeno :letter',
+    'sort_by' => [
+        'chronologically' => 'chronologicky',
+        'alphabetically' => 'abecedne',
+    ]
 ];

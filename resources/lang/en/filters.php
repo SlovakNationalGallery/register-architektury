@@ -6,4 +6,8 @@ return [
     'location' => 'LOCATION',
     'architect' => 'ARCHITECT',
     'first_letter' => 'Starts with letter :letter',
+    'sort_by' => [
+        'chronologically' => 'chronologically',
+        'alphabetically' => 'alphabetically',
+    ]
 ];
