@@ -7,7 +7,7 @@ return [
     'collections' => 'kolekcie',
     'about' => [
         'index' => 'oA',
-        'department' => 'Oddelenie architektúry HÚ SAV',
+        'department' => 'Oddelenie architektúry HÚ&nbsp;SAV',
         'news' => 'Novinky',
         'publications' => 'Publikácie',
     ]
