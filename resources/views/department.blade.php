@@ -46,13 +46,13 @@
     @endphp
     @foreach($people as $person)
     <div class="row border-top py-3">
-        <div class="col-8 col-lg-3 px-4 mb-4 mb-lg-0">
+        <div class="col-8 col-lg-3 px-4 mb-3 mb-lg-0">
             <img src="{{ $person->image_url }}" class="mw-100" alt="{{ $person->name }}">
         </div>
         <div class="col-lg-3 px-4 d-flex flex-column justify-content-end">
             <span>{{ $person->role }}</span>
             <h6 class="font-weight-bold">{{ $person->name }}</h6>
-            <address>HÚ SAV, Dúbravská cesta 9, 845 03 Bratislava</address>
+            <address class="mb-0">HÚ SAV, Dúbravská cesta 9, 845 03 Bratislava</address>
             <span>E-mail: <a href="mailto:{{ $person->email }}">{{ $person->email }}</a></span>
         </div>
     </div>
