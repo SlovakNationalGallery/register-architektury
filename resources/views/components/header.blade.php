@@ -15,9 +15,9 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             <nav class="nav nav-justified main-nav">
-                <a class="nav-item py-3 ls-2 border-bl nav-link" href="#">{{ __('header.oa') }}</a>
-                <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ request()->routeIs('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
-                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ request()->routeIs('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
+                <a class="nav-item py-3 ls-2 border-bl nav-link" href="#">{{ __('header.about.index') }}</a>
+                <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
+                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
             </nav>
         </div>
@@ -33,4 +33,15 @@
             </nav>
         </div>
     </div>
+    @if(Route::is('about.*'))
+    <div class="row no-gutters">
+        <div class="col-md-12">
+            <nav class="nav nav-justified sub-nav bg-light">
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.people') ? 'active' : '' }}" href="#">{{ __('header.about.department') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.news') ? 'active' : '' }}" href="#">{{ __('header.about.news') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="#">{{ __('header.about.publications') }}</a>
+            </nav>
+        </div>
+    </div>
+    @endif
 </div>
