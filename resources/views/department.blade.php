@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', html_entity_decode(__('header.about.department')))
+@section('title', __('header.about.department_page_title'))
 
 @section('content')
 
