@@ -30,12 +30,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6 d-flex flex-column justify-content-end">
-            {{ strip_tags($publication->description) }}
+        <div class="col-lg-6 mb-4 mb-lg-0 d-flex flex-column justify-content-end last-child-mb-0">
+            {!! $publication->description !!}
         </div>
         <div class="col-lg-3 d-flex flex-column justify-content-end">
             @isset($publication->issuu_url)
-            <a href="{{ $publication->issuu_url }}" class="xd-flex">
+            <a href="{{ $publication->issuu_url }}">
                 <span class="align-bottom">{{ __('about.publications.issuu_link') }} ↪</span>
                 <img src="{{ asset('images/issuu-logo.svg')}}" height="44em" class="align-baseline" />
             </a>
