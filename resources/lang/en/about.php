@@ -16,5 +16,6 @@ return [
     ],
     'publications' => [
         'count' => '{0} publications|[1] publications|[2,*] publications',
+        'issuu_link' => 'Available on-line at',
     ]
 ];

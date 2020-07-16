@@ -33,6 +33,14 @@
         <div class="col-lg-6 d-flex flex-column justify-content-end">
             {{ strip_tags($publication->description) }}
         </div>
+        <div class="col-lg-3 d-flex flex-column justify-content-end">
+            @isset($publication->issuu_url)
+            <a href="{{ $publication->issuu_url }}" class="xd-flex">
+                <span class="align-bottom">{{ __('about.publications.issuu_link') }} ↪</span>
+                <img src="{{ asset('images/issuu-logo.svg')}}" height="44em" class="align-baseline" />
+            </a>
+            @endisset
+        </div>
     </div>
     @endforeach
 </div>

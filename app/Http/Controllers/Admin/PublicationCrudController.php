@@ -69,6 +69,11 @@ class PublicationCrudController extends CrudController
                 ]
             ],
             [
+                'name' => 'issuu_url',
+                'label' => 'Issuu URL',
+                'type' => 'url',
+            ],
+            [
                 'name' => 'published_at',
                 'type' => 'datetime_picker',
                 'datetime_picker_options' => [
