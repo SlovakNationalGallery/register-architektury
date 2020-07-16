@@ -4,7 +4,7 @@
 @section('content')
 @include('components.header')
 
-<div class="container-fluid my-7 border-top">
+<div class="container-fluid my-lg-7">
     @foreach($articles as $article)
     <div class="row border-bottom py-3">
         <div class="col-lg-6 order-2 order-lg-1">
@@ -17,6 +17,12 @@
         </div>
     </div>
     @endforeach
+    <div class="row">
+        <div class="col text-center">
+            {{ $articles->withQueryString()->links() }}
+        </div>
+    </div>
 </div>
+
 
 @endsection
