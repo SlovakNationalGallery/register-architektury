@@ -16,5 +16,6 @@ return [
     ],
     'publications' => [
         'count' => '{0} publikácií|[1] publikácia|[2,4] publikácie|[5,*] publikácií',
+        'issuu_link' => 'Publikácia je on-line na',
     ]
 ];
