@@ -1,0 +1,4 @@
+.border-bottom-2 {
+    @extend .border-bottom;
+    border-width: 2px;
+}

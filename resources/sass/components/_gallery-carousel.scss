@@ -1,0 +1,7 @@
+.gallery-carousel-nav .nav-slide {
+    @extend .border-white;
+
+    &.is-nav-selected {
+        @extend .border-dark;
+    }
+}
