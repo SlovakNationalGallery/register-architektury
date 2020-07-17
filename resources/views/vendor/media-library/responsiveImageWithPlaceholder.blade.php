@@ -1,0 +1,1 @@
+<img{!! $attributeString !!} loading="{{ $loadingAttributeValue }}" srcset="{{ $media->getSrcset($conversion) }}" onload="var t=this; this.onload=null; requestAnimationFrame(function() {t.sizes=Math.ceil(t.getBoundingClientRect().width/window.innerWidth*100)+'vw'})" sizes="1px" src="{{ $media->getUrl($conversion) }}" width="{{ $width }}">
