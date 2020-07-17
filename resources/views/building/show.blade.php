@@ -56,7 +56,9 @@
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
             @if($building->processedImages->isNotEmpty())
-            {{ $building->cover_image_tag->attributes(['class' => 'card-img-top mb-4']) }}
+            @include('components.gallery-carousel', [
+                'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia()->img())
+            ])
             @endif
         </div>
 

@@ -18,6 +18,7 @@
 
 @import 'type';
 @import 'forms';
+@import 'borders';
 @import 'buttons';
 @import 'nav';
 @import 'images';
@@ -25,10 +26,11 @@
 @import 'sizing';
 @import 'spacing';
 @import 'position';
+
 @import 'nouislider';
+@import 'flickity';
 
 // Components
-@import 'components/flickity';
 @import 'components/header';
 @import 'components/langswitch';
 @import 'components/load-more';
