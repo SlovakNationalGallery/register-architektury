@@ -14,12 +14,12 @@
 <div class="container-fluid py-5 px-3">
     <div class="row">
 
-        <div class="col-md-4 order-md-2">
+        <div class="col-md-3 order-md-2">
             <h2 class="mb-3 ls-2">
                 {{ $building->title }}
             </h2>
 
-            <ul class="list-group list-group-flush border-top border-bottom mb-4">
+            <ul class="list-group list-group-flush mb-4">
               @if (!empty($building->current_function))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.current_function') }}</b><br>
@@ -51,7 +51,7 @@
             </ul>
         </div>
 
-        <div class="col-md-4 order-md-1">
+        <div class="col-md-3 order-md-1">
             <p>
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
@@ -60,9 +60,9 @@
             @endif
         </div>
 
-        <div class="col-md-4 order-md-3">
+        <div class="col-md-6 order-md-3">
             <h2 class="mb-3 ls-2">&nbsp;</h2>
-            <div class="border-bottom border-top mt-2 py-2">
+            <div class="mt-2 py-2">
                 <p>
                     {!! nl2br($building->description) !!}
                 </p>
