@@ -77,21 +77,21 @@
     </div>
 </div>
 {{-- related --}}
-<div class="container-fluid p-0 border-top">
-    <div class="row no-gutters">
-        <div class="col-md-12 p-3">
-            {{ __('building.related') }} …
+<div class="container-fluid px-3 border-top">
+    <div class="row mb-4 mt-3">
+        <div class="col text-left">
+            {{ __('building.related') }} . . .
         </div>
-        <div class="col-md-12 p-3">
-            <div class="row items px-3">
-                @foreach ($related_buildings as $i=>$building)
-                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
-                        @include('components.building-card', ['building' => $building])
-                    </div>
-                @endforeach
-            </div>
+    </div>
+    <div class="row items">
+        @foreach ($related_buildings as $building)
+        <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
+            @include('components.building-card', ['building' => $building])
         </div>
-        <div class="col-md-12 p-3 text-center">
+        @endforeach
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
             {{ $related_buildings->withQueryString()->links() }}
         </div>
     </div>
