@@ -1,7 +1,9 @@
 .gallery-carousel-nav .nav-slide {
+    @extend .border-bottom;
     @extend .border-white;
 
     &.is-nav-selected {
         @extend .border-dark;
+        border-width: 2px;
     }
 }
