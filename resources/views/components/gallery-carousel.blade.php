@@ -6,7 +6,7 @@ $main_carousel_settings = json_encode([
 @endphp
 <div class="mb-4 gallery-carousel-main h-20rem" data-flickity="{{ $main_carousel_settings }}">
     @foreach($images as $image)
-    <div class="w-100 h-100 bg-info d-flex align-items-center justify-content-center">
+    <div class="w-100 h-100 d-flex align-items-center justify-content-center">
         {{ $image->attributes(['width' => 'auto', 'class' => 'w-100 d-block']) }}
     </div>
     @endforeach
@@ -26,6 +26,6 @@ $nav_carousel_settings = json_encode([
 @endphp
 <div class="h-6rem gallery-carousel-nav" data-flickity="{{ $nav_carousel_settings }}">
     @foreach($images as $image)
-        {{ $image->attributes(['width' => 'auto', 'class' => 'h-100 mr-3 pb-2 nav-slide border-bottom-2']) }}
+        {{ $image->attributes(['width' => 'auto', 'class' => 'h-100 mr-3 pb-2 nav-slide']) }}
     @endforeach
 </div>
