@@ -17,6 +17,11 @@ class Article extends Model
     protected $dates = ['published_at'];
     protected $translatable = ['title', 'content'];
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
