@@ -37,7 +37,10 @@ class ArticleCrudController extends CrudController
         ]);
 
         $this->crud->addFields([
-            'title',
+            [
+                'name' => 'title',
+                'type' => 'text',
+            ],
             [
                 'name' => 'slug',
                 'label' => 'Slug (URL)',
