@@ -74,7 +74,6 @@
                 <p>
                     {!! nl2br($building->bibliography) !!}
                 </p>
-                <div class="fadeout"></div>
             </div>
         </div>
     </div>

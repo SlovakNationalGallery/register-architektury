@@ -6,7 +6,9 @@
 		max-height: 28rem;
 	}
 
-	& > .fadeout {
+	&[aria-expanded="false"]:before {
+	    content: '';
+	    pointer-events: none;
 	    position: absolute;
 	    bottom: 0;
 	    left: 0;
