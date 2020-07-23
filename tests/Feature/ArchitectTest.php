@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Tests\RefreshSearchIndex;
 
-class ArchitectTtest extends TestCase
+class ArchitectTest extends TestCase
 {
     use RefreshDatabase;
     use RefreshSearchIndex;
