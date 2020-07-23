@@ -14,12 +14,12 @@
 <div class="container-fluid py-5 px-3">
     <div class="row">
 
-        <div class="col-md-4 order-md-2">
+        <div class="col-md-3 order-md-2">
             <h2 class="mb-3 ls-2">
                 {{ $building->title }}
             </h2>
 
-            <ul class="list-group list-group-flush border-top border-bottom mb-4">
+            <ul class="list-group list-group-flush mb-4">
               @if (!empty($building->current_function))
               <li class="list-group-item px-0 py-2">
                   <b>{{ __('building.current_function') }}</b><br>
@@ -51,7 +51,7 @@
             </ul>
         </div>
 
-        <div class="col-md-4 order-md-1">
+        <div class="col-md-3 order-md-1">
             <p>
                 <a href="#" class="link-no-underline">3D Model</a>
             </p>
@@ -62,9 +62,9 @@
             @endif
         </div>
 
-        <div class="col-md-4 order-md-3">
+        <div class="col-md-6 order-md-3">
             <h2 class="mb-3 ls-2">&nbsp;</h2>
-            <div class="border-bottom border-top mt-2 py-2">
+            <div class="mt-2 py-2">
                 <p>
                     {!! nl2br($building->description) !!}
                 </p>
@@ -79,21 +79,21 @@
     </div>
 </div>
 {{-- related --}}
-<div class="container-fluid p-0 border-top">
-    <div class="row no-gutters">
-        <div class="col-md-12 p-3">
-            {{ __('building.related') }} …
+<div class="container-fluid px-3 border-top">
+    <div class="row mb-4 mt-3">
+        <div class="col text-left">
+            {{ __('building.related') }} . . .
         </div>
-        <div class="col-md-12 p-3">
-            <div class="row items px-3">
-                @foreach ($related_buildings as $i=>$building)
-                    <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
-                        @include('components.building-card', ['building' => $building])
-                    </div>
-                @endforeach
-            </div>
+    </div>
+    <div class="row items">
+        @foreach ($related_buildings as $building)
+        <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
+            @include('components.building-card', ['building' => $building])
         </div>
-        <div class="col-md-12 p-3 text-center">
+        @endforeach
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
             {{ $related_buildings->withQueryString()->links() }}
         </div>
     </div>
