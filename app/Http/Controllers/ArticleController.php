@@ -12,4 +12,9 @@ class ArticleController extends Controller
         $articles = Article::published()->paginate(10);
         return view('articles.index', compact('articles'));
     }
+
+    public function show(Article $article)
+    {
+        return view('articles.show', compact('article'));
+    }
 }
