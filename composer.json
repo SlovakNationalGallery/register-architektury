@@ -24,6 +24,7 @@
         "laravel/ui": "^2.0",
         "lorisleiva/laravel-deployer": "^0.3.0",
         "mcamara/laravel-localization": "^1.5",
+        "paquettg/php-html-parser": "^3.0",
         "spatie/laravel-medialibrary": "8.0.0",
         "spatie/laravel-sluggable": "^2.2",
         "spatie/laravel-translatable": "^4.3",

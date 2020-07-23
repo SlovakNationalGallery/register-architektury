@@ -14,22 +14,15 @@
     <div class="row">
         <div class="col-lg-3">
             <ul class="nav flex-column">
+                @foreach($article->navigation_headings as $heading)
                 <li class="nav-item pb-3">
-                    <a href="#TODO"><h3>KOMPARATÍVNE ŠTÚDIE</h3></a>
+                 <a href="{{ $heading->href }}"><h3>{{ $heading->text }}</h3></a>
                 </li>
-                <li class="nav-item pb-3">
-                    <a href="#TODO"><h3>PRÍPADOVÉ ŠTÚDIE</h3></a>
-                </li>
-                <li class="nav-item pb-3">
-                    <a href="#TODO"><h3>FOTO</h3></a>
-                </li>
-                <li class="nav-item pb-3">
-                    <a href="#TODO"><h3>PRESS</h3></a>
-                </li>
+                @endforeach
             </ul>
         </div>
         <div class="col-lg-6 pt-4">
-            {!! $article->content !!}
+            {!! $article->contentHtml !!}
         </div>
     </div>
 </div>
