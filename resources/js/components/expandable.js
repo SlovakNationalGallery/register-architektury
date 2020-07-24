@@ -1,6 +1,6 @@
-require('readmore-js');
+import Readmore from 'readmore-js/dist/readmore.es6.js';
 
-$('.expandable').readmore({
-    moreLink: '<a href="#">Zobraz viac ↷</a>',
-    lessLink: '<a href="#">Zobraz menej ↺</a>'
+new Readmore('.expandable', {
+    moreLink: '<a href="#" class="link-no-underline d-inline">Zobraz viac ↷</a>',
+    lessLink: '<a href="#" class="link-no-underline d-inline">Zobraz menej ↺</a>'
 });
