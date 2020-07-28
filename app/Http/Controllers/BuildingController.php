@@ -74,4 +74,28 @@ class BuildingController extends Controller
             'related_buildings' => $related_buildings,
         ]);
     }
+
+    public function suggest(Request $request)
+    {
+
+        $buildings = Building::where('title', 'like', '%'.$request->get('search').'%')->limit(5)->get();
+
+        $data = [
+            'count' => 0,
+            'results' => [],
+        ];
+
+        foreach ($buildings as $building) {
+
+            $data['count']++;
+            $params = [
+                'id' => $building->id,
+                'url' => $building->url,
+                'title' => $building->title,
+            ];
+            $data['results'][] = array_merge($params);
+        }
+
+        return response()->json($data);
+    }
 }
