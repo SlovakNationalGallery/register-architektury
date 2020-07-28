@@ -1,43 +1,68 @@
-@charset "UTF-8";
+// @charset "UTF-8";
 
 @font-face {
-  font-family: "regarch-icons";
-  src:url("../fonts/regarch-icons.eot");
-  src:url("../fonts/regarch-icons.eot?#iefix") format("embedded-opentype"),
-    url("../fonts/regarch-icons.woff") format("woff"),
-    url("../fonts/regarch-icons.ttf") format("truetype"),
-    url("../fonts/regarch-icons.svg#regarch-icons") format("svg");
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?wfdiyl');
+  src:  url('../fonts/icomoon.eot?wfdiyl#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?wfdiyl') format('truetype'),
+    url('../fonts/icomoon.woff?wfdiyl') format('woff'),
+    url('../fonts/icomoon.svg?wfdiyl#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
-
+  font-display: block;
 }
 
-[data-icon]:before {
-  font-family: "regarch-icons" !important;
-  content: attr(data-icon);
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
   line-height: 1;
+
+  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-  font-family: "regarch-icons" !important;
-  font-style: normal !important;
-  font-weight: normal !important;
-  font-variant: normal !important;
-  text-transform: none !important;
-  speak: none;
-  line-height: 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.icon-plus:before {
+  content: "\2b";
 }
-
 .icon-check:before {
   content: "\2713";
+}
+.icon-close:before {
+  content: "\d7";
+}
+.icon-search:before {
+  content: "\1f50d";
+}
+.icon-arrow-down:before {
+  content: "\2193";
+}
+.icon-arrow-up:before {
+  content: "\2191";
+}
+.icon-chevron-right:before {
+  content: "\3e";
+}
+.icon-chevron-left:before {
+  content: "\3c";
+}
+.icon-cube:before {
+  content: "\3379";
+}
+.icon-minus:before {
+  content: "\2d";
+}
+.icon-fullscreen:before {
+  content: "\e90a";
+}
+.icon-chevron-up:before {
+  content: "\5e";
+}
+.icon-chevron-down:before {
+  content: "\2c5";
 }
