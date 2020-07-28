@@ -64,7 +64,7 @@
 
         <div class="col-md-6 order-md-3">
             <h2 class="mb-3 ls-2">&nbsp;</h2>
-            <div class="mt-2 py-2">
+            <div class="mt-2 py-2 expandable expandable-long">
                 <p>
                     {!! nl2br($building->description) !!}
                 </p>
