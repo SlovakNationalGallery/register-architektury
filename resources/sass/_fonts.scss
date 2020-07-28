@@ -1,12 +1,12 @@
 // @charset "UTF-8";
 
 @font-face {
-  font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?wfdiyl');
-  src:  url('../fonts/icomoon.eot?wfdiyl#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?wfdiyl') format('truetype'),
-    url('../fonts/icomoon.woff?wfdiyl') format('woff'),
-    url('../fonts/icomoon.svg?wfdiyl#icomoon') format('svg');
+  font-family: 'regarch-icons';
+  src:  url('../fonts/regarch-icons.eot?wfdiyl');
+  src:  url('../fonts/regarch-icons.eot?wfdiyl#iefix') format('embedded-opentype'),
+    url('../fonts/regarch-icons.ttf?wfdiyl') format('truetype'),
+    url('../fonts/regarch-icons.woff?wfdiyl') format('woff'),
+    url('../fonts/regarch-icons.svg?wfdiyl#regarch-icons') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -14,7 +14,7 @@
 
 [class^="icon-"], [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: 'regarch-icons' !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
