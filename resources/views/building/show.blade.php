@@ -53,7 +53,7 @@
 
         <div class="col-md-3 order-md-1">
             <p>
-                <a href="#" class="link-no-underline">3D Model</a>
+                <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
             </p>
             @if($building->processedImages->isNotEmpty())
             @include('components.gallery-carousel', [
