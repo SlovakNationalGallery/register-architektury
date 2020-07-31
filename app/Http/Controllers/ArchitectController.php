@@ -61,4 +61,29 @@ class ArchitectController extends Controller
 
         return view('architects.show', compact('architect', 'buildings'));
     }
+
+    public function suggest(Request $request)
+    {
+
+        $architects = Architect::where('last_name', 'like', '%'.$request->get('search').'%')->orWhere('first_name', 'like', '%'.$request->get('search').'%')->limit(5)->get();
+
+        $data = [
+            'count' => 0,
+            'results' => [],
+        ];
+
+        foreach ($architects as $architect) {
+
+            $data['count']++;
+            $params = [
+                'id' => $architect->id,
+                'url' => $architect->url,
+                'name' => $architect->full_name,
+            ];
+            $data['results'][] = array_merge($params);
+        }
+
+        return response()->json($data);
+    }
+
 }

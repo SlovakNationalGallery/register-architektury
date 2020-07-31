@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Register of modern architecture oA HÚ SAV',
+    'search_placeholder' => 'Search . . .',
     'architects' => 'architects',
     'objects' => 'objects',
     'collections' => 'collections',
