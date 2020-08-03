@@ -83,4 +83,6 @@ $("document").ready(function() {
       $(this).parents('form:first').submit();
   });
 
+  $search.focus();
+
 });
