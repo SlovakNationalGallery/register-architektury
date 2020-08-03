@@ -91,6 +91,7 @@ class BuildingController extends Controller
             $params = [
                 'id' => $building->id,
                 'url' => $building->url,
+                'architects' => $building->architect_names,
                 'title' => $building->title,
             ];
             $data['results'][] = array_merge($params);

@@ -147,6 +147,11 @@ class Architect extends Model implements HasMedia
         return 'slug';
     }
 
+    public function getUrlAttribute()
+    {
+        return route('architects.show', $this);
+    }
+
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()

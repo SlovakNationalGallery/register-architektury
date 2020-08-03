@@ -1,40 +1,36 @@
-global.Bloodhound = require('corejs-typeahead/dist/bloodhound.js');
+Bloodhound = require('corejs-typeahead/dist/bloodhound.js');
 require('corejs-typeahead/dist/typeahead.jquery.js');
 
-var buildings = new Bloodhound({
-  datumTokenizer: function (d) {
-            return Bloodhound.tokenizers.whitespace(d.value);
-        },
-  queryTokenizer: Bloodhound.tokenizers.whitespace,
-  remote: {
-    url: '/objekty/suggest/?search=%QUERY',
-    wildcard: '%QUERY',
-    filter: function (buildings) {
-            return $.map(buildings.results, function (item) {
-                return {
-                    id: item.id,
-                    url: item.url,
-                    title: item.title
-                    // image: building.image,
-                };
-            });
-        }
-    }
-});
-
 var architects = new Bloodhound({
-  datumTokenizer: function (d) {
-            return Bloodhound.tokenizers.whitespace(d.value);
-        },
   queryTokenizer: Bloodhound.tokenizers.whitespace,
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
   remote: {
     url: '/architekti/suggest/?search=%QUERY',
     wildcard: '%QUERY',
     filter: function (architects) {
             return $.map(architects.results, function (item) {
                 return {
-                    architect: item.architect,
-                    value: item.architect
+                    url: item.url,
+                    value: item.name
+                };
+            });
+        }
+    }
+});
+
+var buildings = new Bloodhound({
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+  datumTokenizer: Bloodhound.tokenizers.whitespace,  
+  remote: {
+    url: '/objekty/suggest/?search=%QUERY',
+    wildcard: '%QUERY',
+    filter: function (buildings) {
+            return $.map(buildings.results, function (item) {
+                return {
+                    url: item.url,
+                    architects: item.architects,
+                    title: item.title
+                    // image: building.image,
                 };
             });
         }
@@ -44,18 +40,10 @@ var architects = new Bloodhound({
 
 $("document").ready(function() {
 
-  // $('#toggleSearch.not-initialized').on('click', function() {
-  //     $(this).removeClass('not-initialized');
-  // });
-
   buildings.initialize();
   architects.initialize();
 
   $search = $('#search');
-
-  // $search.on('focus', function() {
-  //     this.value = '';
-  // });
 
   $search.typeahead(
   {
@@ -69,7 +57,7 @@ $("document").ready(function() {
     limit: 3,
     source: architects.ttAdapter(),
     templates: {
-        header: '<h3 class="suggest-type-name my-0 pt-3 pb-1">' + $search.data('architects-title') + '</h3>',
+        header: '<h3 class="suggest-type-name my-0 pt-3 pb-1 ls-3">' + $search.data('architects-title') + '</h3>',
         suggestion: function (data) {
           return '<div>'+data.value+'</div>';
         }
@@ -81,11 +69,18 @@ $("document").ready(function() {
     limit: 4,
     source: buildings.ttAdapter(),
     templates: {
-      header: '<h3 class="suggest-type-name my-0 pt-3 pb-1">'+ $search.data('buildings-title') +'</h3>',
+      header: '<h3 class="suggest-type-name my-0 pt-3 pb-1 ls-3">'+ $search.data('objects-title') +'</h3>',
       suggestion: function (data) {
-          return '<div><img src="'+data.image+'" class="preview"><span class="m-preview"><span class="">' + data.architect + '</span>: ' + data.name + '</span></div>';
+          // return '<div><img src="'+data.image+'" class="preview"><span class="m-preview"><span class="">' + data.architect + '</span>: ' + data.name + '</span></div>';
+          return '<div><span class="m-preview"><span class="">' + data.architects + '</span>: ' + data.title + '</span></div>';
       }
     }
+  }).bind("typeahead:select", function(event, object, name) {
+      if (object.hasOwnProperty('url')) {
+          window.location.href = object.url;
+          return;
+      }
+      $(this).parents('form:first').submit();
   });
 
 });
