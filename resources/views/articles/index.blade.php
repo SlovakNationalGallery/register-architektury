@@ -9,7 +9,7 @@
     <div class="row border-bottom py-3">
         <div class="col-lg-6 order-2 order-lg-1">
             <p class="mb-4">{{ $article->published_at->toDateString() }}</p>
-            <a href="{{ route('about.articles.show', $article) }}"><h6 class="mb-4 font-weight-bold">{{ $article->title }}</h6></a>
+            <h6 class="mb-4 font-weight-bold"><a href="{{ route('about.articles.show', $article) }}" class="link-no-underline">{{ $article->title }}</a></h6>
             {{ Str::words(strip_tags($article->content), 100) }}
         </div>
         <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0 ">
