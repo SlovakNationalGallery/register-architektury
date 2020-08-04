@@ -24,8 +24,8 @@ class Article extends Model
         $dom = new Dom;
         $dom->loadStr($this->content);
 
-        foreach($this->findHeadingsForNavigation($dom) as $heading) {
-            $heading->setAttribute('id', Str::slug($heading->text));
+        foreach($this->findHeadingsForNavigation($dom) as $index => $heading) {
+            $heading->setAttribute('id', Str::slug($heading->text) . "-$index");
         }
 
         return $dom;
@@ -37,9 +37,9 @@ class Article extends Model
         $dom->loadStr($this->content);
 
         return collect($this->findHeadingsForNavigation($dom))
-            ->map(fn ($heading) => (object) [
+            ->map(fn ($heading, $index) => (object) [
                 'text' => $heading->text,
-                'href' => '#' . Str::slug($heading->text),
+                'href' => '#' . Str::slug($heading->text) . "-$index",
             ]);
     }
 
