@@ -2,11 +2,11 @@
 
 @font-face {
     font-family: 'regarch-icons';
-    src:  url('../fonts/regarch-icons.eot?wfdiyl');
-    src:  url('../fonts/regarch-icons.eot?wfdiyl#iefix') format('embedded-opentype'),
-        url('../fonts/regarch-icons.ttf?wfdiyl') format('truetype'),
-        url('../fonts/regarch-icons.woff?wfdiyl') format('woff'),
-        url('../fonts/regarch-icons.svg?wfdiyl#regarch-icons') format('svg');
+    src:  url('../fonts/regarch-icons.eot?xfdiyl');
+    src:  url('../fonts/regarch-icons.eot?xfdiyl#iefix') format('embedded-opentype'),
+        url('../fonts/regarch-icons.ttf?xfdiyl') format('truetype'),
+        url('../fonts/regarch-icons.woff?xfdiyl') format('woff'),
+        url('../fonts/regarch-icons.svg?xfdiyl#regarch-icons') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
@@ -27,6 +27,9 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-menu:before {
+  	content: "\2261";
+}
 .icon-plus:before {
     content: "\2b";
 }
