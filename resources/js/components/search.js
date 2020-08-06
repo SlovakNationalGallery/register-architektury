@@ -5,7 +5,7 @@ var architects = new Bloodhound({
   queryTokenizer: Bloodhound.tokenizers.whitespace,
   datumTokenizer: Bloodhound.tokenizers.whitespace,
   remote: {
-    url: '/architekti/suggest/?search=%QUERY',
+    url: '/api/architekti/suggest/?search=%QUERY',
     wildcard: '%QUERY',
     filter: function (architects) {
             return $.map(architects.results, function (item) {
@@ -71,8 +71,7 @@ $("document").ready(function() {
     templates: {
       header: '<h3 class="suggest-type-name my-0 pt-3 pb-1 ls-3">'+ $search.data('objects-title') +'</h3>',
       suggestion: function (data) {
-          // return '<div><img src="'+data.image+'" class="preview"><span class="m-preview"><span class="">' + data.architect + '</span>: ' + data.name + '</span></div>';
-          return '<div><span class="m-preview"><span class="">' + data.architects + '</span>: ' + data.title + '</span></div>';
+          return '<div>' + data.title + '<br><span class="">' + data.architects + '</span></div>';
       }
     }
   }).bind("typeahead:select", function(event, object, name) {

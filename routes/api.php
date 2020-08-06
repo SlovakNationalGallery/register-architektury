@@ -29,3 +29,4 @@ Route::post('sync/start', function() {
 });
 
 Route::get('objekty/suggest', 'API\SuggestController@buildings');
+Route::get('architekti/suggest', 'API\SuggestController@architects');
