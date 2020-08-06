@@ -20,9 +20,9 @@ var architects = new Bloodhound({
 
 var buildings = new Bloodhound({
   queryTokenizer: Bloodhound.tokenizers.whitespace,
-  datumTokenizer: Bloodhound.tokenizers.whitespace,  
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
   remote: {
-    url: '/objekty/suggest/?search=%QUERY',
+    url: '/api/objekty/suggest/?search=%QUERY',
     wildcard: '%QUERY',
     filter: function (buildings) {
             return $.map(buildings.results, function (item) {

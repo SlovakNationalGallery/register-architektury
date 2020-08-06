@@ -27,3 +27,5 @@ Route::post('sync/reset', function() {
 Route::post('sync/start', function() {
     ImportAll::dispatchNow();
 });
+
+Route::get('objekty/suggest', 'API\SuggestController@buildings');

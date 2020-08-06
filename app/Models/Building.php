@@ -46,11 +46,10 @@ class Building extends Model
                         'type' => 'text',
                         'analyzer' => 'default_analyzer',
                     ],
-                    // 'suggest' => [
-                    //     'type' => 'text',
-                    //     'analyzer' => 'autocomplete_analyzer',
-                    //     'search_analyzer' => 'asciifolding_analyzer',
-                    // ]
+                    'suggest' => [
+                        'type' => 'completion',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ]
                 ]
             ],
             'title_alternatives' => [
@@ -67,11 +66,10 @@ class Building extends Model
                         'type' => 'text',
                         'analyzer' => 'default_analyzer',
                     ],
-                    // 'suggest' => [
-                    //     'type' => 'text',
-                    //     'analyzer' => 'autocomplete_analyzer',
-                    //     'search_analyzer' => 'asciifolding_analyzer',
-                    // ]
+                    'suggest' => [
+                        'type' => 'completion',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ]
                 ]
             ],
             'description' => [

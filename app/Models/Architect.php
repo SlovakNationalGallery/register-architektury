@@ -37,6 +37,9 @@ class Architect extends Model implements HasMedia
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
                     ],
+                    'suggest' => [
+                        'type' => 'completion',
+                    ]
                 ]
             ],
             'last_name' => [
@@ -50,6 +53,9 @@ class Architect extends Model implements HasMedia
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
                     ],
+                    'suggest' => [
+                        'type' => 'completion',
+                    ]
                 ]
             ],
             'birth_date' => [
