@@ -8,7 +8,7 @@ var architects = new Bloodhound({
 		url: '/api/architekti/suggest/?search=%QUERY',
 		wildcard: '%QUERY',
 		filter: function (architects) {
-			return $.map(architects.results, function (item) {
+			return $.map(architects.data, function (item) {
 				return {
 					url: item.url,
 					value: item.name
@@ -25,7 +25,7 @@ var buildings = new Bloodhound({
 		url: '/api/objekty/suggest/?search=%QUERY',
 		wildcard: '%QUERY',
 		filter: function (buildings) {
-			return $.map(buildings.results, function (item) {
+			return $.map(buildings.data, function (item) {
 				return {
 					url: item.url,
 					architects: item.architects,

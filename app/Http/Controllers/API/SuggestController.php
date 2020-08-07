@@ -33,24 +33,7 @@ class SuggestController extends Controller
         $ids_2 = array_column($buildings['suggest']['buildings_2'][0]['options'], '_id');
         $buildings = Building::findMany(array_merge($ids_1, $ids_2));
 
-        $data = [
-            'count' => 0,
-            'results' => [],
-        ];
-
-        foreach ($buildings as $building) {
-
-            $data['count']++;
-            $params = [
-                'id' => $building->id,
-                'url' => $building->url,
-                'architects' => $building->architect_names,
-                'title' => $building->title,
-            ];
-            $data['results'][] = array_merge($params);
-        }
-
-        return response()->json($data);
+        return \App\Http\Resources\Building::collection($buildings);
     }
 
     public function architects(Request $request)
@@ -76,23 +59,7 @@ class SuggestController extends Controller
         $ids_2 = array_column($architects['suggest']['architects_2'][0]['options'], '_id');
         $architects = Architect::findMany(array_merge($ids_1, $ids_2));
 
-        $data = [
-            'count' => 0,
-            'results' => [],
-        ];
-
-        foreach ($architects as $architect) {
-
-            $data['count']++;
-            $params = [
-                'id' => $architect->id,
-                'url' => $architect->url,
-                'name' => $architect->full_name,
-            ];
-            $data['results'][] = array_merge($params);
-        }
-
-        return response()->json($data);
+        return \App\Http\Resources\Architect::collection($architects);
     }
 
 }
