@@ -26,7 +26,7 @@ class Image extends Model implements HasMedia
             $this->author,
         ])
         ->filter()
-        ->join(',');
+        ->join(', ');
     }
 
     public function scopeProcessed($query)
