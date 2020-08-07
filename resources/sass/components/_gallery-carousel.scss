@@ -1,9 +1,41 @@
-.gallery-carousel-nav .nav-slide {
-    @extend .border-bottom;
-    @extend .border-white;
+.gallery-carousel-main {
+    $caption-height: 10vh;
 
-    &.is-nav-selected {
-        @extend .border-dark;
-        border-width: 2px;
+    .carousel-cell {
+        height: 100%
+    }
+
+    .caption {
+        display: none;
+        height: $caption-height;
+        bottom: 0;
+    }
+
+    &.is-fullscreen {
+        @extend .h-100;
+        z-index: 10;
+        background-color: $lightbox-bg-color;
+
+        .carousel-cell {
+            top: $caption-height / 2;
+            bottom: $caption-height;
+            height: auto;
+        }
+
+        .caption {
+            display: block;
+        }
+    }
+}
+
+.gallery-carousel-nav {
+    .nav-slide {
+        @extend .border-bottom;
+        @extend .border-white;
+
+        &.is-nav-selected {
+            @extend .border-dark;
+            border-width: 2px;
+        }
     }
 }
