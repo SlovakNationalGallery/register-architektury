@@ -2,11 +2,14 @@
 $main_carousel_settings = json_encode([
     'pageDots' => false,
     'lazyLoad' => 2,
+    'fullscreen' => true,
+    'cellSelector' => '.carousel-cell'
 ]);
+
 @endphp
-<div class="mb-4 gallery-carousel-main overflow-hidden vh-38" data-flickity="{{ $main_carousel_settings }}">
+<div class="gallery-carousel-main overflow-hidden vh-38" data-flickity="{{ $main_carousel_settings }}">
     @foreach($images as $image)
-    <div class="vh-38 w-100">
+    <div class="w-100 d-flex flex-column justify-content-between carousel-cell">
         <img
             data-flickity-lazyload-srcset="{{ $image->getSrcset() }}"
             data-flickity-lazyload-src="{{ $image->getUrl() }}"
@@ -15,6 +18,7 @@ $main_carousel_settings = json_encode([
         >
     </div>
     @endforeach
+    <div class="caption position-absolute w-100 text-center"></div>
 </div>
 
 
@@ -29,7 +33,7 @@ $nav_carousel_settings = json_encode([
     'asNavFor' => '.gallery-carousel-main'
 ]);
 @endphp
-<div class="h-6rem gallery-carousel-nav" data-flickity="{{ $nav_carousel_settings }}">
+<div class="gallery-carousel-nav h-6rem mt-4" data-flickity="{{ $nav_carousel_settings }}">
     @foreach($images as $image)
         {{ $image->img()->attributes(['width' => 'auto', 'class' => 'h-100 mr-3 pb-2 nav-slide']) }}
     @endforeach

@@ -46,8 +46,9 @@ $link-color:                              $black;
 $link-hover-color:                        $dark;
 
 // Components
-$border-color:                $dark;
-$border-radius:               0;
+$border-color: $dark;
+$border-radius: 0;
+$lightbox-bg-color: rgba(255, 255, 255, .9);
 
 // Forms
 $input-color:                           $body-color;
