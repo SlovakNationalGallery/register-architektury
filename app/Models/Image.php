@@ -19,6 +19,16 @@ class Image extends Model implements HasMedia
         return $this->belongsTo('App\Models\Building');
     }
 
+    public function getCaptionAttribute() {
+        return collect([
+            $this->title,
+            $this->source,
+            $this->author,
+        ])
+        ->filter()
+        ->join(',');
+    }
+
     public function scopeProcessed($query)
     {
         return $query->has('media');

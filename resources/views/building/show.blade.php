@@ -57,7 +57,8 @@
             </p>
             @if($building->processedImages->isNotEmpty())
             @include('components.gallery-carousel', [
-                'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia())
+                'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia()),
+                'captions' => $building->processedImages->pluck('caption'),
             ])
             @endif
         </div>
