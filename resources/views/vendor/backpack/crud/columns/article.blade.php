@@ -2,9 +2,9 @@
     $edit_url = url($crud->route.'/'.$entry->getKey().'/edit');
 @endphp
 <div class="media" style="white-space: normal">
-    @if($entry->cover_image)
+    @if($entry->hasMedia())
     <a href="{{ $edit_url }}">
-        <img class="mr-3" src="{{ Storage::url($entry->cover_image) }}" width="80">
+        {{ $entry->getFirstMedia()->img()->attributes(['width' => '80px', 'class' => 'm-3']) }}
     </a>
     @endif
     <div class="media-bod small">

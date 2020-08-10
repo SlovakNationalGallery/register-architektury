@@ -13,7 +13,9 @@
             {{ Str::words(strip_tags($article->content), 100) }}
         </div>
         <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0 ">
-            <img src="{{ Storage::url($article->cover_image) }}" class="mw-100 mvh-30">
+            @if($article->hasMedia())
+                {{ $article->getFirstMedia()->img()->attributes(['class' => 'mw-100 mvh-30']) }}
+            @endif
         </div>
     </div>
     @endforeach
