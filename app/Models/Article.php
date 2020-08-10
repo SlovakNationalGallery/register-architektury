@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\Publishable;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use PHPHtmlParser\Dom;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use App\Traits\Publishable;
 
-class Article extends Model
+class Article extends Model implements HasMedia
 {
-    use CrudTrait, HasSlug, Publishable, HasTranslations;
+    use CrudTrait, InteractsWithMedia, HasSlug, HasTranslations, Publishable;
 
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
@@ -29,6 +32,21 @@ class Article extends Model
         }
 
         return $dom;
+    }
+
+    public function getImagesAttribute()
+    {
+        return $this->getMedia();
+    }
+
+    public function setImagesAttribute($uploaded_files)
+    {
+        collect($uploaded_files)
+            ->filter() // Ignore nulls
+            ->each(fn (UploadedFile $file) => $this
+                ->addMedia($file)
+                ->toMediaCollection()
+            );
     }
 
     public function getNavigationHeadingsAttribute()
@@ -53,6 +71,13 @@ class Article extends Model
         return SlugOptions::create()
             ->generateSlugsFrom('title')
             ->saveSlugsTo('slug');
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('default')
+            ->withResponsiveImages();
     }
 
     private function findHeadingsForNavigation($dom)

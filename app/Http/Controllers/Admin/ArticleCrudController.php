@@ -15,7 +15,7 @@ class ArticleCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -48,6 +48,11 @@ class ArticleCrudController extends CrudController
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
+                'name'      => 'images',
+                'type'      => 'upload_multiple_media',
+                'upload'    => true,
+            ],
+            [
                 'name' => 'cover_image',
                 'type' => 'browse',
             ],
@@ -74,6 +79,18 @@ class ArticleCrudController extends CrudController
                 ],
             ],
         ]);
+    }
+
+    public function update()
+    {
+        $response = $this->traitUpdate();
+
+        // Remove media marked for deletion
+        $this->crud->getCurrentEntry()->getMedia()
+            ->whereIn('id', $this->crud->getRequest()->input('clear_images'))
+            ->each(fn ($media) => $media->delete());
+
+        return $response;
     }
 
     protected function setupCreateOperation()
