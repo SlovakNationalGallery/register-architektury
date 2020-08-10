@@ -29,9 +29,22 @@ class SuggestController extends Controller
             ]
         ]);
 
-        $ids_1 = array_column($buildings['suggest']['buildings_1'][0]['options'], '_id');
-        $ids_2 = array_column($buildings['suggest']['buildings_2'][0]['options'], '_id');
-        $buildings = Building::findMany(array_merge($ids_1, $ids_2));
+        $buildings_suggestions = collect(array_merge(
+            Arr::get($buildings, 'suggest.buildings_1.0.options'),
+            Arr::get($buildings, 'suggest.buildings_2.0.options'),
+        ))
+        ->pluck('_source')
+        ->map(fn ($b) => [
+            'id' => Arr::get($b, 'id'),
+            'architect_names' => Arr::get($b, 'architect_names'),
+            'title' => json_encode([
+                'sk' => Arr::get($b, 'sk.title'),
+                'en' => Arr::get($b, 'en.title'),
+            ])
+        ])
+        ->toArray();
+
+        $buildings = Building::hydrate($buildings_suggestions)
 
         return \App\Http\Resources\Building::collection($buildings);
     }
