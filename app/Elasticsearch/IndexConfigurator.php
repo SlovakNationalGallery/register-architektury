@@ -27,22 +27,8 @@ class IndexConfigurator extends BaseIndexConfigurator
                     'type' => 'stop',
                     'stopwords_path' => 'stop-words/stop-words-slovak.txt',
                 ],
-                'autocomplete_filter' => [
-                    'type' => 'edge_ngram',
-                    'min_gram' => 2,
-                    'max_gram' => 20,
-                ],
             ],
             'analyzer' => [
-            	'autocomplete_analyzer' => [
-            	    'type' => 'custom',
-            	    'tokenizer' => 'standard',
-            	    'filter' => [
-            	        'lowercase',
-            	        'asciifolding',
-            	        'autocomplete_filter'
-            	    ],
-            	],
             	'asciifolding_analyzer' => [
             	    'type' => 'custom',
             	    'tokenizer' => 'standard',

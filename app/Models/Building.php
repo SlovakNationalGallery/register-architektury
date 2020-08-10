@@ -47,9 +47,9 @@ class Building extends Model
                         'analyzer' => 'default_analyzer',
                     ],
                     'suggest' => [
-                        'type' => 'completion',
+                        'type' => 'search_as_you_type',
                         'analyzer' => 'asciifolding_analyzer',
-                    ]
+                    ],
                 ]
             ],
             'title_alternatives' => [
@@ -67,7 +67,7 @@ class Building extends Model
                         'analyzer' => 'default_analyzer',
                     ],
                     'suggest' => [
-                        'type' => 'completion',
+                        'type' => 'search_as_you_type',
                         'analyzer' => 'asciifolding_analyzer',
                     ]
                 ]
