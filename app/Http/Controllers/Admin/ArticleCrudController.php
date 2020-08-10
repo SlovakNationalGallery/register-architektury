@@ -53,10 +53,6 @@ class ArticleCrudController extends CrudController
                 'upload'    => true,
             ],
             [
-                'name' => 'cover_image',
-                'type' => 'browse',
-            ],
-            [
                 'name' => 'content',
                 'type' => 'tinymce',
                 'options' => [

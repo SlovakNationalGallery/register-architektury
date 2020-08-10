@@ -34,6 +34,11 @@ class Article extends Model implements HasMedia
         return $dom;
     }
 
+    public function getCoverImageTagAttribute()
+    {
+        return $this->getFirstMedia()->img();
+    }
+
     public function getImagesAttribute()
     {
         return $this->getMedia();
