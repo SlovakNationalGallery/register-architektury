@@ -8,10 +8,10 @@ var architects = new Bloodhound({
 		url: '/api/architekti/suggest/?search=%QUERY',
 		wildcard: '%QUERY',
 		filter: function (architects) {
-			return $.map(architects.data, function (item) {
+			return $.map(architects, function (item) {
 				return {
 					url: item.url,
-					value: item.name
+					value: item.full_name
 				};
 			});
 		}
@@ -25,10 +25,10 @@ var buildings = new Bloodhound({
 		url: '/api/objekty/suggest/?search=%QUERY',
 		wildcard: '%QUERY',
 		filter: function (buildings) {
-			return $.map(buildings.data, function (item) {
+			return $.map(buildings, function (item) {
 				return {
 					url: item.url,
-					architects: item.architects,
+					architect_names: item.architect_names,
 					title: item.title
                 };
             });
@@ -70,7 +70,7 @@ $("document").ready(function() {
 		templates: {
 			header: '<h3 class="suggest-type-name my-0 pt-3 pb-1 ls-3">'+ $search.data('objects-title') +'</h3>',
 			suggestion: function (data) {
-				return '<div>' + data.title + '<br><span class="">' + data.architects + '</span></div>';
+				return '<div>' + data.title + '<br><span class="">' + data.architect_names + '</span></div>';
 			}
 		}
 	}).bind("typeahead:select", function(event, object, name) {
