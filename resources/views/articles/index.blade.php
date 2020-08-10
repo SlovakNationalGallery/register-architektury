@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0 ">
             @if($article->hasMedia())
-                {{ $article->getFirstMedia()->img()->attributes(['class' => 'mw-100 mvh-30']) }}
+                {{ $article->getFirstMedia()->img()->attributes(['class' => 'h-16rem', 'width' => 'auto']) }}
             @endif
         </div>
     </div>
