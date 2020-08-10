@@ -28,4 +28,4 @@ Route::post('sync/start', function() {
     ImportAll::dispatchNow();
 });
 
-Route::get('search-sugestions', 'API\SearchSuggestionController@index');
+Route::get('search-sugestions', 'API\SearchSuggestionController@index')->name('search-sugestions');
