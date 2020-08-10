@@ -9,7 +9,7 @@
         >
     </div>
     @endforeach
-    <div class="caption position-absolute w-100 text-center"></div>
+    <div class="caption position-absolute w-100 text-center p-2"></div>
 </div>
 
 <div class="gallery-carousel-nav h-6rem mt-4">
