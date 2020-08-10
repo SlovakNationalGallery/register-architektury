@@ -7,14 +7,7 @@ var architects = new Bloodhound({
 	remote: {
 		url: '/api/search-sugestions/?search=%QUERY',
 		wildcard: '%QUERY',
-		filter: function (items) {
-			return $.map(items.architects, function (item) {
-				return {
-					url: item.url,
-					value: item.full_name
-				};
-			});
-		}
+		transform: ({architects}) => architects
 	}
 });
 
@@ -24,15 +17,7 @@ var buildings = new Bloodhound({
 	remote: {
 		url: '/api/search-sugestions/?search=%QUERY',
 		wildcard: '%QUERY',
-		filter: function (items) {
-			return $.map(items.buildings, function (item) {
-				return {
-					url: item.url,
-					architect_names: item.architect_names,
-					title: item.title
-                };
-            });
-		}
+		transform: ({buildings}) => buildings
 	}
 });
 
@@ -58,7 +43,7 @@ $("document").ready(function() {
 		templates: {
 			header: '<h3 class="suggest-type-name my-0 pt-3 pb-1 ls-3">' + $search.data('architects-title') + '</h3>',
 			suggestion: function (data) {
-				return '<div>'+data.value+'</div>';
+				return '<div>'+data.full_name+'</div>';
 			}
 		}
 	},
