@@ -35,7 +35,10 @@ new Flickity(document.querySelector('.gallery-carousel-main'), {
                 // Revert to initial sizes when exiting fullscreen
                 img.setAttribute('sizes', img.getAttribute('data-default-sizes'))
             })
-        }
+        },
+        staticClick() {
+            this.viewFullscreen();
+        },
     }
 })
 
