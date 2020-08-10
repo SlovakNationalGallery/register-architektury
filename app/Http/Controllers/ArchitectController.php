@@ -61,4 +61,5 @@ class ArchitectController extends Controller
 
         return view('architects.show', compact('architect', 'buildings'));
     }
+
 }

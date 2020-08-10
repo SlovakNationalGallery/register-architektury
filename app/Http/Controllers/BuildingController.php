@@ -74,4 +74,5 @@ class BuildingController extends Controller
             'related_buildings' => $related_buildings,
         ]);
     }
+
 }

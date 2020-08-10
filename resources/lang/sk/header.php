@@ -2,6 +2,7 @@
 
 return [
     'title' => 'Register modernej architektúry oA HÚ SAV',
+    'search_placeholder' => 'Hľadať . . .',
     'architects' => 'architekti',
     'objects' => 'objekty',
     'collections' => 'kolekcie',

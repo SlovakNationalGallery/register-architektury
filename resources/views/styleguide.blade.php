@@ -76,12 +76,20 @@
     <h2>Icons</h2>
 
     <ul class="cd-box icons">
-        {{-- @TODO --}}
         <li class="icon-menu"></li>
-        <li class="icon-chevron-left"></li>
-        <li class="icon-chevron-right"></li>
-        <li class="icon-map-pin"></li>
+        <li class="icon-plus"></li>
+        <li class="icon-check"></li>
+        <li class="icon-close"></li>
         <li class="icon-search"></li>
+        <li class="icon-arrow-down"></li>
+        <li class="icon-arrow-up"></li>
+        <li class="icon-chevron-right"></li>
+        <li class="icon-chevron-left"></li>
+        <li class="icon-cube"></li>
+        <li class="icon-minus"></li>
+        <li class="icon-fullscreen"></li>
+        <li class="icon-chevron-up"></li>
+        <li class="icon-chevron-down"></li>
     </ul>
 </section>
 

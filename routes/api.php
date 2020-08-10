@@ -27,3 +27,5 @@ Route::post('sync/reset', function() {
 Route::post('sync/start', function() {
     ImportAll::dispatchNow();
 });
+
+Route::get('search-sugestions', 'API\SearchSuggestionController@index')->name('search-sugestions');

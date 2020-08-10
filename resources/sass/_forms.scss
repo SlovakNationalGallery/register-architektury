@@ -1,6 +1,4 @@
-.form-control {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: $input-border-width solid $input-border-color;
+input.form-control::placeholder {
+  color: $body-color;
+  padding-left: $font-size-base / 2;
 }

@@ -5,7 +5,21 @@
         </div>
         <div class="col-md-4 border-bl text-center d-flex">
             <form class="px-3 my-auto w-100" action="{{ route('building.index') }}">
-                <input type="text" name="search" class="form-control form-control-sm" value="{{ request('search') }}">
+                <div class="input-group border-0">
+                    <input type="text" name="search" id="search" class="form-control border-0"  
+                    placeholder="{{ __('header.search_placeholder')}}"
+                    value="{{ request('search') }}"
+                    data-objects-title="{{ trans('header.objects') }}"
+                    data-architects-title="{{ trans('header.architects') }}"
+                    autocomplete="off"
+                    autofocus
+                    >
+                    <div class="input-group-append">
+                      <button class="btn bg-transparent" type="button">
+                        <span class="icon-search lead"></span>
+                      </button>
+                    </div>
+                  </div>
             </form>
         </div>
         <div class="col-md-4 py-3 border-bl text-center">

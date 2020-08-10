@@ -37,6 +37,10 @@ class Architect extends Model implements HasMedia
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
                     ],
+                    'suggest' => [
+                        'type' => 'search_as_you_type',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ]
                 ]
             ],
             'last_name' => [
@@ -50,6 +54,10 @@ class Architect extends Model implements HasMedia
                         'type' => 'text',
                         'analyzer' => 'asciifolding_analyzer',
                     ],
+                    'suggest' => [
+                        'type' => 'search_as_you_type',
+                        'analyzer' => 'asciifolding_analyzer',
+                    ]
                 ]
             ],
             'birth_date' => [
@@ -145,6 +153,11 @@ class Architect extends Model implements HasMedia
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getUrlAttribute()
+    {
+        return route('architects.show', $this);
     }
 
     public function getSlugOptions(): SlugOptions
