@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 pt-4 lg-pt-0">
             <ul class="nav flex-column">
                 @foreach($article->navigation_headings as $heading)
                 <li class="nav-item pb-3">
@@ -23,6 +23,11 @@
         </div>
         <div class="col-lg-6 pt-4">
             {!! $article->contentHtml !!}
+        </div>
+        <div class="col-lg-3">
+            @include('components.gallery-carousel', [
+                'images' => $article->getMedia(),
+            ])
         </div>
     </div>
 </div>
