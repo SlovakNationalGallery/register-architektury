@@ -1,6 +1,6 @@
 <div class="gallery-carousel-main overflow-hidden vh-38">
     @foreach($images as $index => $image)
-    <div class="w-100 d-flex flex-column justify-content-between carousel-cell" data-caption="{{ $captions[$index] }}">
+    <div class="w-100 d-flex flex-column justify-content-center carousel-cell" data-caption="{{ $captions[$index] }}">
         <img
             data-flickity-lazyload-srcset="{{ $image->getSrcset() }}"
             data-flickity-lazyload-src="{{ $image->getUrl() }}"

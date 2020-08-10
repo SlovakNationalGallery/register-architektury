@@ -1,6 +1,6 @@
-.gallery-carousel-main {
-    $caption-height: 10vh;
+$caption-height: $spacer * 8;
 
+.gallery-carousel-main {
     .carousel-cell {
         height: 100%
     }
@@ -17,7 +17,7 @@
         background-color: $lightbox-bg-color;
 
         .carousel-cell {
-            top: $caption-height / 2;
+            top: $caption-height;
             bottom: $caption-height;
             height: auto;
         }
