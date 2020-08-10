@@ -8,10 +8,43 @@ use Illuminate\Support\Arr;
 use App\Models\Building;
 use App\Models\Architect;
 
-class SuggestController extends Controller
+class SearchSuggestionController extends Controller
 {
 
-    public function buildings(Request $request)
+    public function index(Request $request)
+    {
+        return [
+            'architects' => $this->architects($request),
+            'buildings' => $this->buildings($request),
+        ];
+    }
+
+    private function architects(Request $request)
+    {
+        $architects = Architect::searchRaw([
+            'query' => [
+                'multi_match' => [
+                    'query' => $request->get('search'),
+                    'type' => 'bool_prefix',
+                    'fields' => [
+                        'first_name.suggest',
+                        'last_name.suggest'
+                    ]
+                ]
+            ]
+        ]);
+
+        $architects_suggestions = collect(
+            Arr::get($architects, 'hits.hits'),
+        )
+        ->pluck('_source')
+        ->toArray();
+
+        $architects = Architect::hydrate($architects_suggestions);
+        return $architects->map->only('id', 'url', 'full_name');
+    }
+
+    private function buildings(Request $request)
     {
         $buildings = Building::searchRaw([
             'query' => [
@@ -45,29 +78,5 @@ class SuggestController extends Controller
         return $buildings->map->only('id', 'url', 'architect_names', 'title');
     }
 
-    public function architects(Request $request)
-    {
-        $architects = Architect::searchRaw([
-            'query' => [
-                'multi_match' => [
-                    'query' => $request->get('search'),
-                    'type' => 'bool_prefix',
-                    'fields' => [
-                        'first_name.suggest',
-                        'last_name.suggest'
-                    ]
-                ]
-            ]
-        ]);
-
-        $architects_suggestions = collect(
-            Arr::get($architects, 'hits.hits'),
-        )
-        ->pluck('_source')
-        ->toArray();
-
-        $architects = Architect::hydrate($architects_suggestions);
-        return $architects->map->only('id', 'url', 'full_name');
-    }
 
 }

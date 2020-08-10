@@ -5,10 +5,10 @@ var architects = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/architekti/suggest/?search=%QUERY',
+		url: '/api/search-sugestions/?search=%QUERY',
 		wildcard: '%QUERY',
-		filter: function (architects) {
-			return $.map(architects, function (item) {
+		filter: function (items) {
+			return $.map(items.architects, function (item) {
 				return {
 					url: item.url,
 					value: item.full_name
@@ -22,10 +22,10 @@ var buildings = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/objekty/suggest/?search=%QUERY',
+		url: '/api/search-sugestions/?search=%QUERY',
 		wildcard: '%QUERY',
-		filter: function (buildings) {
-			return $.map(buildings, function (item) {
+		filter: function (items) {
+			return $.map(items.buildings, function (item) {
 				return {
 					url: item.url,
 					architect_names: item.architect_names,

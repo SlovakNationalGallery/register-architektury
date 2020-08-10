@@ -28,5 +28,4 @@ Route::post('sync/start', function() {
     ImportAll::dispatchNow();
 });
 
-Route::get('objekty/suggest', 'API\SuggestController@buildings');
-Route::get('architekti/suggest', 'API\SuggestController@architects');
+Route::get('search-sugestions', 'API\SearchSuggestionController@index');
