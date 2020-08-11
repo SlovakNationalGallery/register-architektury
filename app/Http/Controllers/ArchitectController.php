@@ -35,6 +35,8 @@ class ArchitectController extends Controller
 
         if (request('sort_by') == 'newest') $architects->orderBy('active_from', 'desc');
         if (request('sort_by') == 'oldest') $architects->orderBy('active_from', 'asc');
+        if (request('sort_by') == 'name_asc') $architects->orderBy('last_name.raw', 'asc');
+        if (request('sort_by') == 'name_desc') $architects->orderBy('last_name.raw', 'desc');
 
         $architects = $architects
             ->orderBy('last_name.raw', 'asc')
