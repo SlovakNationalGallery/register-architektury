@@ -2,54 +2,70 @@ const { Flickity } = require('./carousel');
 require('flickity-as-nav-for');
 require('flickity-fullscreen');
 
-const caption = document.querySelector('.gallery-carousel-main .caption')
+const mainCarousel = document.querySelector('.gallery-carousel-main')
 
-// Initialize main carousel
-new Flickity(document.querySelector('.gallery-carousel-main'), {
-    pageDots: false,
-    lazyLoad: 2,
-    fullscreen: true,
-    cellSelector: '.carousel-cell',
+if (mainCarousel) {
+    const caption = mainCarousel.querySelector('.caption')
+    const nextButton = mainCarousel.querySelector('.next-button')
+    const prevButton = mainCarousel.querySelector('.prev-button')
 
-    on: {
-        ready() {
-            // Initialize first caption
-            caption.innerHTML = this.selectedElement.getAttribute('data-caption')
-        },
-        change() {
-            // Update caption on cell change
-            caption.innerHTML = this.selectedElement.getAttribute('data-caption')
-        },
-        fullscreenChange(isFullScreen) {
-            this.cells
-            .map(cell => cell.element.querySelector('img'))
-            .forEach(img => {
+    // Initialize main carousel
+    new Flickity(mainCarousel, {
+        prevNextButtons: false,
+        pageDots: false,
+        lazyLoad: 2,
+        fullscreen: true,
+        cellSelector: '.carousel-cell',
 
-                // Remove size restriction when going fullscreen
-                if (isFullScreen) {
-                    img.setAttribute('data-default-sizes', img.getAttribute('sizes'))
-                    img.setAttribute('sizes', null)
-                    return
-                }
+        on: {
+            ready() {
+                nextButton.onclick = () => this.next();
+                prevButton.onclick = () => this.previous();
 
-                // Revert to initial sizes when exiting fullscreen
-                img.setAttribute('sizes', img.getAttribute('data-default-sizes'))
-            })
-        },
-        staticClick() {
-            this.viewFullscreen();
-        },
-    }
-})
+                nextButton.disabled = this.selectedIndex === this.slides.length - 1
+                prevButton.disabled = this.selectedIndex === 0
+
+                // Initialize first caption
+                caption.innerHTML = this.selectedElement.getAttribute('data-caption')
+            },
+            change(index) {
+                nextButton.disabled = this.selectedIndex === this.slides.length - 1
+                prevButton.disabled = this.selectedIndex === 0
+
+                // Update caption on cell change
+                caption.innerHTML = this.selectedElement.getAttribute('data-caption')
+            },
+            fullscreenChange(isFullScreen) {
+                this.cells
+                .map(cell => cell.element.querySelector('img'))
+                .forEach(img => {
+
+                    // Remove size restriction when going fullscreen
+                    if (isFullScreen) {
+                        img.setAttribute('data-default-sizes', img.getAttribute('sizes'))
+                        img.setAttribute('sizes', null)
+                        return
+                    }
+
+                    // Revert to initial sizes when exiting fullscreen
+                    img.setAttribute('sizes', img.getAttribute('data-default-sizes'))
+                })
+            },
+            staticClick() {
+                this.viewFullscreen();
+            },
+        }
+    })
 
 
-// Initialize navigation carousel
-new Flickity(document.querySelector('.gallery-carousel-nav'), {
-    cellAlign: 'left',
-    freeScroll: true,
-    contain: true,
-    prevNextButtons: false,
-    pageDots: false,
-    setGallerySize: false,
-    asNavFor: '.gallery-carousel-main'
-})
+    // Initialize navigation carousel
+    new Flickity(document.querySelector('.gallery-carousel-nav'), {
+        cellAlign: 'left',
+        freeScroll: true,
+        contain: true,
+        prevNextButtons: false,
+        pageDots: false,
+        setGallerySize: false,
+        asNavFor: '.gallery-carousel-main'
+    })
+}
