@@ -5,6 +5,7 @@ function initializeBuildingsCarousels(scope) {
 
         new Flickity(container.querySelector('.carousel'), {
             cellAlign: 'left',
+            lazyLoad: 10,
             freeScroll: true,
             prevNextButtons: false,
             pageDots: false,
@@ -22,6 +23,10 @@ function initializeBuildingsCarousels(scope) {
                 change(index) {
                     nextButton.disabled = this.selectedIndex === this.slides.length - 1 || this.slides.length === 0
                     prevButton.disabled = this.selectedIndex === 0
+                },
+                lazyLoad(event, cell) {
+                    const image = cell.querySelector('img')
+                    image.sizes = Math.ceil(image.getBoundingClientRect().width / window.innerWidth * 100 ) + 'vw'
                 },
             }
         })
