@@ -158,12 +158,6 @@ class Building extends Model
         return $query->orderBy('decade', $direction);
     }
 
-    public function getCoverImageUrlForHeight(int $heightInPixels)
-    {
-        return $this->processedImages->first()->getFirstMedia()
-            ->getUrlForHeight($heightInPixels);
-    }
-
     public function getCoverImageAttribute()
     {
         return $this->processedImages->first()->getFirstMedia();

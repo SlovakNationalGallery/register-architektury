@@ -145,11 +145,6 @@ class Architect extends Model implements HasMedia
         return $this->hasMedia() ? $this->getFirstMedia()->img() : null;
     }
 
-    public function getImageUrlForWidth(int $widthInPixels)
-    {
-        return  $this->getFirstMedia()->getUrlForWidth($widthInPixels);
-    }
-
     public function getRouteKeyName()
     {
         return 'slug';
