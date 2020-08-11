@@ -59,9 +59,9 @@
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-4 flex-shrink-0 w-8rem">
+        <div class="px-4 flex-shrink-0 w-8rem d-flex align-items-end">
             @if($architect->has_image)
-            <div style="background-image: url({{ $architect->getImageUrlForWidth(140) }})" class="use-background-image w-100 h-100"></div>
+            {{ $architect->image_tag->attributes(['class' => 'w-100']) }}
             @else
             {{-- Placeholder image --}}
             <div class="bg-secondary w-100 h-100"></div>
