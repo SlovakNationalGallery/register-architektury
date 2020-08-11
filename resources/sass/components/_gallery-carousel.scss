@@ -11,12 +11,16 @@ $caption-height: $spacer * 8;
         bottom: 0;
     }
 
-    .next-button, .prev-button {
+    .btn {
         position: absolute;
         display: none;
+        z-index: 1;
+        font-size: 2 * $font-size-lg;
+    }
+
+    .next-button, .prev-button {
         top: 50%;
         transform: translateY(-50%);
-        z-index: 1;
 
         &:disabled {
             opacity: .3;
@@ -29,6 +33,16 @@ $caption-height: $spacer * 8;
 
     .prev-button {
         left: 0;
+    }
+
+    .fullscreen-exit-button {
+        top: 0;
+        right: 0;
+        font-size: 1.5 * $font-size-lg;
+    }
+
+    .flickity-fullscreen-button {
+        display: none !important;
     }
 
     &.is-fullscreen {
@@ -46,8 +60,7 @@ $caption-height: $spacer * 8;
             display: block;
         }
 
-        .next-button,.prev-button {
-            font-size: 2 * $font-size-lg;
+        .btn {
             display: block;
         }
     }

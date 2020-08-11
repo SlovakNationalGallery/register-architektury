@@ -8,6 +8,7 @@ if (mainCarousel) {
     const caption = mainCarousel.querySelector('.caption')
     const nextButton = mainCarousel.querySelector('.next-button')
     const prevButton = mainCarousel.querySelector('.prev-button')
+    const fullscreenExitButton = mainCarousel.querySelector('.fullscreen-exit-button')
 
     // Initialize main carousel
     new Flickity(mainCarousel, {
@@ -19,8 +20,9 @@ if (mainCarousel) {
 
         on: {
             ready() {
-                nextButton.onclick = () => this.next();
-                prevButton.onclick = () => this.previous();
+                nextButton.onclick = this.next.bind(this)
+                prevButton.onclick = this.previous.bind(this)
+                fullscreenExitButton.onclick = this.exitFullscreen.bind(this)
 
                 nextButton.disabled = this.selectedIndex === this.slides.length - 1
                 prevButton.disabled = this.selectedIndex === 0
@@ -52,7 +54,7 @@ if (mainCarousel) {
                 })
             },
             staticClick() {
-                this.viewFullscreen();
+                this.viewFullscreen()
             },
         }
     })
