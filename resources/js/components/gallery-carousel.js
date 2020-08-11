@@ -1,4 +1,3 @@
-const { Flickity } = require('./carousel');
 require('flickity-as-nav-for');
 require('flickity-fullscreen');
 
