@@ -1,6 +1,27 @@
-.border-bl { 
-	border-bottom: $border-width solid $border-color; 
-	&:not(:first-child) {
-	  border-left: $border-width solid $border-color; 
-	}
+.border-bl {
+	border-bottom: $border-width solid $border-color;
+    @include media-breakpoint-up(sm) {
+    	&:not(:first-child) {
+    	  border-left: $border-width solid $border-color;
+    	}
+    }
 }
+
+#header {
+    .collapsing {
+      transition: none !important;
+    }
+    .nav.nav-justified {
+        @include media-breakpoint-down(sm) {
+            flex-direction: column;
+            margin-bottom: $spacer * 3;
+            &:not(.main-nav) {
+              border-top: $border-width solid $border-color;
+            }
+            .nav-item {
+                width: 100%;
+            }
+        }
+    }
+}
+

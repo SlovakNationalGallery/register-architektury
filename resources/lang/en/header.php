@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Register of modern architecture oA HÚ SAV',
+    'title' => 'Register of modern architecture',
     'search_placeholder' => 'Search . . .',
     'architects' => 'architects',
     'objects' => 'objects',

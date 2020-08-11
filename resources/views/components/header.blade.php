@@ -1,12 +1,16 @@
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 navbar-expand-sm" id="header">
     <div class="row no-gutters align-items-stretch">
-        <div class="col-md-4 py-3 border-bl text-center align-items-center">
-            <h1 class="ls-2 my-auto"><a href="{{ route('home') }}">{{ __('header.title') }}</a></h1>
+        <div class="d-none d-sm-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
+            <h1 class="ls-2 my-auto"><a href="{{ route('home') }}">{{ __('header.title') }}<span class="d-lg-none d-xl-inline"> oA HÚ SAV</span></a></h1>
         </div>
-        <div class="col-md-4 border-bl text-center d-flex">
-            <form class="px-3 my-auto w-100" action="{{ route('building.index') }}">
+        <div class="col-12 col-md-8 col-lg-4 border-bl text-center d-flex">
+            <button class="navbar-toggler py-3 my-auto" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-menu"></span>
+            </button>
+
+            <form class="px-0 px-sm-3 py-sm-0 my-auto w-100" action="{{ route('building.index') }}">
                 <div class="input-group border-0">
-                    <input type="text" name="search" id="search" class="form-control border-0"  
+                    <input type="text" name="search" id="search" class="form-control border-0"
                     placeholder="{{ __('header.search_placeholder')}}"
                     value="{{ request('search') }}"
                     data-objects-title="{{ trans('header.objects') }}"
@@ -21,15 +25,20 @@
                     </div>
                   </div>
             </form>
+
+            <div class="d-block d-sm-none my-auto">
+                <a href="#" class="px-3">EN</a>
+            </div>
         </div>
-        <div class="col-md-4 py-3 border-bl text-center">
+        <div class="d-none d-md-block col-md-4">
             @include('components.langswitch')
         </div>
     </div>
     <div class="row no-gutters">
         <div class="col-md-12">
-            <nav class="nav nav-justified main-nav">
-                <a href="{{ route('about.department') }}" class="nav-item py-3 ls-2 border-bl nav-link {{ Route::is('about.*') ? 'active' : '' }}">{{ __('header.about.index') }}</a>
+            <nav class="nav nav-justified main-nav collapse navbar-collapse">
+                <a href="{{ route('home') }}" class="nav-item py-3 ls-2 border-bl nav-link d-block d-sm-none">{{ __('header.title') }}</a>
+                <a href="{{ route('about.department') }}" class="nav-item py-3 ls-2 border-bottom nav-link {{ Route::is('about.*') ? 'active' : '' }}">{{ __('header.about.index') }}</a>
                 <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
                 <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
                 <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
@@ -39,7 +48,7 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             {{-- fields bellow should be taken from "featured" collections and translated within them --}}
-            <nav class="nav nav-justified sub-nav">
+            <nav class="nav nav-justified sub-nav collapse navbar-collapse">
                 <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">MoMoWo</a>
                 <a class="nav-item py-3 ls-3 border-bl text-uppercase nav-link" href="#">ATRIUM</a>
                 <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">ŠUR</a>
@@ -50,10 +59,10 @@
     @if(Route::is('about.*'))
     <div class="row no-gutters">
         <div class="col-md-12">
-            <nav class="nav nav-justified sub-nav bg-light">
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
+            <nav class="nav nav-justified sub-nav bg-light collapse navbar-collapse align-items-stretch">
+                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
+                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
+                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
             </nav>
         </div>
     </div>
