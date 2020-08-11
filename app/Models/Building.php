@@ -164,10 +164,9 @@ class Building extends Model
             ->getUrlForHeight($heightInPixels);
     }
 
-    public function getCoverImageTagAttribute()
+    public function getCoverImageAttribute()
     {
-        return $this->processedImages->first()->getFirstMedia()
-            ->img();
+        return $this->processedImages->first()->getFirstMedia();
     }
 
     public function getTagsAttribute()
