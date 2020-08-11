@@ -15,7 +15,7 @@
     <div class="caption position-absolute w-100 text-center p-2"></div>
     <button class="next-button btn btn-lg icon-chevron-right mr-1"></button>
     <button class="prev-button btn btn-lg icon-chevron-left ml-1"></button>
-
+    <button class="fullscreen-exit-button btn btn-lg icon-close"></button>
 </div>
 
 <div class="gallery-carousel-nav h-6rem mt-4">
