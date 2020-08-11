@@ -1,5 +1,5 @@
 const InfiniteScroll = require("infinite-scroll");
-const { hydrateCarousels } = require("./carousel");
+const { initializeCarousels } = require("./carousel");
 
 $(document).ready(function() {
     if ($(".pagination__next").length > 0) {
@@ -14,7 +14,7 @@ $(document).ready(function() {
         });
 
         infScroll.on('append', function(response, path, items) {
-            hydrateCarousels(items);
+            initializeCarousels(items);
         })
     }
 });
