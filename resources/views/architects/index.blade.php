@@ -58,7 +58,7 @@
     </form>
 
     @foreach($architects as $architect)
-    <div class="row border-top flex-nowrap py-2 item h-8rem">
+    <div class="row border-top flex-nowrap py-2 item">
         <div class="px-4 flex-shrink-0 w-8rem">
             @if($architect->has_image)
             <div style="background-image: url({{ $architect->getImageUrlForWidth(140) }})" class="use-background-image w-100 h-100"></div>
@@ -79,18 +79,17 @@
             'prevNextButtons' => false,
             'pageDots' => false,
             'setGallerySize' => false,
-            'imagesLoaded' => true,
         ];
+
+        $buildings_with_images = $architect->buildings
+            ->filter(fn ($building) => $building->processedImages->isNotEmpty());
+
         @endphp
-        <div class="w-100 h-100 mr-4 d-none d-sm-block" data-flickity="{{ json_encode($flickity_settings) }}">
-            @foreach($architect->buildings as $building)
-                @if($building->processedImages->isNotEmpty())
-                <img
-                    src="{{ $building->getCoverImageUrlForHeight(80) }}"
-                    srcset="{{ $building->getCoverImageUrlForHeight(80) }}, {{ $building->getCoverImageUrlForHeight(160) }} 2x"
-                    class="h-100 mr-3"
-                >
-                @endif
+        <div class="h-8rem mr-4 w-100" data-flickity="{{ json_encode($flickity_settings) }}">
+            @foreach($buildings_with_images as $building)
+            <a href="{{ $building->url }}" class="mr-3" title="{{ $building->title }}">
+                {{ $building->cover_image_tag->attributes(['width' => 'auto', 'class' => 'h-100']) }}
+            </a>
             @endforeach
         </div>
     </div>
