@@ -11,6 +11,26 @@ $caption-height: $spacer * 8;
         bottom: 0;
     }
 
+    .next-button, .prev-button {
+        position: absolute;
+        display: none;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1;
+
+        &:disabled {
+            opacity: .3;
+        }
+    }
+
+    .next-button {
+        right: 0;
+    }
+
+    .prev-button {
+        left: 0;
+    }
+
     &.is-fullscreen {
         @extend .h-100;
         z-index: 10;
@@ -23,6 +43,11 @@ $caption-height: $spacer * 8;
         }
 
         .caption {
+            display: block;
+        }
+
+        .next-button,.prev-button {
+            font-size: 2 * $font-size-lg;
             display: block;
         }
     }
