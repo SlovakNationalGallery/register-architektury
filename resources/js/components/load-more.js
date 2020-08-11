@@ -1,5 +1,5 @@
 const InfiniteScroll = require("infinite-scroll");
-const { initializeCarousels } = require("./carousel");
+const { initializeBuildingsCarousels } = require("./buildings-carousel");
 
 $(document).ready(function() {
     if ($(".pagination__next").length > 0) {
@@ -14,7 +14,7 @@ $(document).ready(function() {
         });
 
         infScroll.on('append', function(response, path, items) {
-            initializeCarousels(items);
+            items.forEach(item => initializeBuildingsCarousels(item))
         })
     }
 });

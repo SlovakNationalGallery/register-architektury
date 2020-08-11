@@ -1,0 +1,7 @@
+.buildings-carousel {
+    .btn {
+        &:disabled {
+            visibility: hidden;
+        }
+    }
+}

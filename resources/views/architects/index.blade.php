@@ -70,28 +70,7 @@
         <div class="d-inline-flex align-items-end pr-4 flex-sm-shrink-0">
             <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}">{{ $architect->full_name }}</a></h5>
         </div>
-
-        @php
-        $flickity_settings = [
-            'cellAlign' => 'left',
-            'freeScroll' => true,
-            'contain' => true,
-            'prevNextButtons' => false,
-            'pageDots' => false,
-            'setGallerySize' => false,
-        ];
-
-        $buildings_with_images = $architect->buildings
-            ->filter(fn ($building) => $building->processedImages->isNotEmpty());
-
-        @endphp
-        <div class="h-8rem mr-4 w-100" data-flickity="{{ json_encode($flickity_settings) }}">
-            @foreach($buildings_with_images as $building)
-            <a href="{{ $building->url }}" class="mr-3" title="{{ $building->title }}">
-                {{ $building->cover_image_tag->attributes(['width' => 'auto', 'class' => 'h-100']) }}
-            </a>
-            @endforeach
-        </div>
+        @include('components.buildings-carousel', ['buildings' => $architect->buildings])
     </div>
     @endforeach
 
