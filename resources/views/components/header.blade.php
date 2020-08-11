@@ -1,7 +1,11 @@
 <div class="container-fluid p-0 navbar-expand-sm" id="header">
     <div class="row no-gutters align-items-stretch">
         <div class="d-none d-sm-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
-            <h1 class="ls-2 my-auto"><a href="{{ route('home') }}">{{ __('header.title') }}<span class="d-lg-none d-xl-inline"> oA HÚ SAV</span></a></h1>
+            <h1 class="ls-2 my-auto">
+                <a href="{{ route('home') }}">
+                    {{ __('header.title') }}<span class="d-lg-none d-xl-inline"> oA HÚ SAV</span>
+                </a>
+            </h1>
         </div>
         <div class="col-12 col-md-8 col-lg-4 border-bl text-center d-flex">
             <button class="navbar-toggler py-3 my-auto" type="button" data-toggle="collapse" data-target=".navbar-collapse">
@@ -64,9 +68,9 @@
     <div class="row no-gutters">
         <div class="col-md-12">
             <nav class="nav nav-justified sub-nav bg-light collapse navbar-collapse align-items-stretch">
-                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
-                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
-                <a class="nav-item d-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
+                <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
+                <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
+                <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
             </nav>
         </div>
     </div>
