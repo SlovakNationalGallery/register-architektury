@@ -48,7 +48,11 @@
                 @endif
             </div>
             <div class="col-md-6 p-3 pt-4 text-right">
-                @include('components.architects-sort-by')
+                @include('components.sort-by', [
+                    'count' => $architects->total(),
+                    'count_translation_key' => 'architect.count',
+                    'default_sort' => 'name_asc',
+                ])
             </div>
         </div>
     </form>
