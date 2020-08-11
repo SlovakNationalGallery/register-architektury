@@ -27,7 +27,11 @@
             </form>
 
             <div class="d-block d-sm-none my-auto">
-                <a href="#" class="px-3">EN</a>
+                @foreach(LaravelLocalization::getLocalesOrder() as $localeCode => $properties)
+                    @if ($localeCode != LaravelLocalization::getCurrentLocale())
+                        <a rel="alternate" hreflang="{{ $localeCode }}" title="{{ $properties['native'] }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" class="px-3 text-uppercase ls-3" >{{ $localeCode }}</a>
+                    @endif
+                @endforeach
             </div>
         </div>
         <div class="d-none d-md-block col-md-4">
