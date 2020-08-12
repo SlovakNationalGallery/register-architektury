@@ -47,7 +47,7 @@
                     </a>
                 @endif
             </div>
-            <div class="col-md-6 p-3 pt-4 text-right">
+            <div class="col-md-6 p-3 pt-4 text-left text-sm-right">
                 @include('components.sort-by', [
                     'count' => $architects->total(),
                     'count_translation_key' => 'architect.count',
