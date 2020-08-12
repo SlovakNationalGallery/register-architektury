@@ -59,7 +59,7 @@
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-4 flex-shrink-0 w-8rem d-flex align-items-end">
+        <div class="px-3 px-sm-4 flex-shrink-0 w-8rem d-flex align-items-end">
             @if($architect->has_image)
             {{ $architect->image_tag->attributes(['class' => 'w-100']) }}
             @else
@@ -67,7 +67,7 @@
             <div class="bg-secondary w-100 h-100"></div>
             @endif
         </div>
-        <div class="d-inline-flex align-items-end pr-4 flex-sm-shrink-0">
+        <div class="d-inline-flex align-items-end pr-1 pr-md-4 flex-sm-shrink-0">
             <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}">{{ $architect->full_name }}</a></h5>
         </div>
         @include('components.buildings-carousel', ['buildings' => $architect->buildings])

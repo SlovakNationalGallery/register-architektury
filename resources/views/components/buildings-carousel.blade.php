@@ -3,10 +3,10 @@ $buildings_with_images = $architect->buildings
     ->filter(fn ($building) => $building->processedImages->isNotEmpty());
 @endphp
 <div class="buildings-carousel h-8rem w-100 d-flex">
-    <button class="prev-button btn btn-lg bg-white icon-chevron-left" disabled></button>
+    <button class="prev-button btn btn-lg px-1 px-md-2 bg-white icon-chevron-left" disabled></button>
     <div class="carousel w-100">
         @foreach($buildings_with_images as $building)
-        <a href="{{ $building->url }}" class="carousel-cell mr-3 d-block" title="{{ $building->title }}">
+        <a href="{{ $building->url }}" class="carousel-cell mr-1 mr-sm-2 mr-lg-3 d-block" title="{{ $building->title }}">
             <img
                 data-flickity-lazyload-srcset="{{ $building->cover_image->getSrcset() }}"
                 data-flickity-lazyload-src="{{ $building->cover_image->getUrl() }}"
@@ -17,5 +17,5 @@ $buildings_with_images = $architect->buildings
         </a>
         @endforeach
     </div>
-    <button class="next-button btn btn-lg bg-white icon-chevron-right" disabled></button>
+    <button class="next-button btn btn-lg px-1 px-md-2 bg-white icon-chevron-right" disabled></button>
 </div>

@@ -3,7 +3,17 @@
 .mvh-30 { max-height: 30vh !important; }
 
 .h-6rem { height: 6rem !important; }
-.h-8rem { height: 8rem !important; }
+.h-8rem {
+    height: 8rem !important;
+    @include media-breakpoint-down(sm) {
+        height: 5rem !important;
+    }
+}
 .h-16rem { height: 16rem !important; }
 
-.w-8rem { width: 8rem !important; }
+.w-8rem {
+    width: 8rem !important;
+    @include media-breakpoint-down(sm) {
+        width: 6rem !important;
+    }
+}
