@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'title' => 'Register modernej architektúry oA HÚ SAV',
+    'title' => 'Register modernej architektúry',
     'search_placeholder' => 'Hľadať . . .',
     'architects' => 'architekti',
     'objects' => 'objekty',
