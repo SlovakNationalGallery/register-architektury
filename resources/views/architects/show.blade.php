@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row my-4">
-        <div class="col-md-6 col-lg-3">
+        <div class="col-6 col-lg-3">
             <div class="row">
                 <div class="col-10 col-sm-6 col-lg-8 col-xl-5">
                 @if($architect->has_image)
