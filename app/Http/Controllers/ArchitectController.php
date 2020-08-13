@@ -54,10 +54,18 @@ class ArchitectController extends Controller
      */
     public function show(Architect $architect)
     {
+        $locale = \LaravelLocalization::getCurrentLocale();
         $buildings = $architect->buildings();
 
-        if (request('sort_by') == 'newest') $buildings->orderByYearFrom('desc');
-        if (request('sort_by') == 'oldest') $buildings->orderByYearFrom('asc');
+        if (request('sort_by') == 'newest') $buildings->orderBy('decade', 'desc');
+        if (request('sort_by') == 'oldest') $buildings->orderBy('decade', 'asc');
+        if (request('sort_by') == 'name_asc') $buildings->orderBy('title->' . $locale, 'asc');
+        if (request('sort_by') == 'name_desc') $buildings->orderBy('title->' . $locale, 'desc');
+
+        // default sort if not search
+        if (!request()->filled('sort_by')) {
+            $buildings->orderBy('title->' . $locale, 'asc');
+        }
 
         $buildings = $buildings->paginate(12);
 

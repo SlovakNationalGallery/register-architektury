@@ -9,11 +9,17 @@ class BuildingController extends Controller
 {
     public function index(Request $request)
     {
-        $search = request()->filled('search') ? request()->input('search') : '*';
-        $buildings = \App\Models\Building::search($search);
+        $buildings = \App\Models\Building::search(request('search', '*'));
 
-        if (request()->input('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
-        if (request()->input('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
+        if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
+        if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
+        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.raw', 'asc');
+        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.raw', 'desc');
+
+        // default sort if not search
+        if (!request()->filled('search') && !request()->filled('sort_by')) {
+            $buildings->orderBy('title.raw', 'asc');
+        }
 
         foreach (request()->input('filters', []) as $filter) {
             $buildings->where('tags', $filter);

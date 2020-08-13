@@ -41,8 +41,12 @@
     </div>
     {{-- related buildings --}}
     <div class="row mt-5">
-        <div class="col text-right">
-            @include('components.buildings-sort-by')
+        <div class="col text-left text-sm-right">
+            @include('components.sort-by', [
+                'count' => $buildings->total(),
+                'count_translation_key' => 'building.count',
+                'default_sort' => (request()->filled('search')) ? 'relevance' : 'name_asc',
+            ])
         </div>
     </div>
     <div class="row items">
