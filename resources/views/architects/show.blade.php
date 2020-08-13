@@ -44,7 +44,7 @@
             </ul>
         </div>
         <div class="mt-4 mt-lg-0 col-lg-6">
-            <div class="expandable expandable-long">
+            <div class="py-2 expandable">
                 {{ nl2br(strip_tags($architect->bio)) }}
             </div>
         </div>
