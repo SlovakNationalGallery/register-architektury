@@ -5,6 +5,8 @@ return [
     'count' => '{0} architektov|[1] architekt|[2,4] architekti|[5,*] architektov',
 
     // show
-    'birth_death_date' => 'Dátum narodenia / úmrtia',
-    'birth_death_place' => 'Miesto narodenia / úmrtia',
+    'birth_date' => 'Dátum narodenia',
+    'death_date' => 'Dátum úmrtia',
+    'birth_place' => 'Miesto narodenia',
+    'death_place' => 'Miesto úmrtia',
 ];
