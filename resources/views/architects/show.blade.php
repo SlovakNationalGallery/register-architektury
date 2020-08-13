@@ -45,7 +45,7 @@
             @include('components.sort-by', [
                 'count' => $buildings->total(),
                 'count_translation_key' => 'building.count',
-                'default_sort' => (request()->filled('search')) ? 'relevance' : 'name_asc',
+                'default_sort' => 'name_asc',
             ])
         </div>
     </div>

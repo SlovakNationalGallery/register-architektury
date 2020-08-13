@@ -278,6 +278,26 @@
     </div>
 </section>
 
+<section id="sort-by-card" class="cd-sort-by-card">
+    <h2>Component: sort-by</h2>
+
+    <div class="cd-box text-left text-sm-right">
+        @include('components.sort-by', [
+            'count' => $buildings->count(),
+            'count_translation_key' => 'building.count',
+            'default_sort' => 'name_asc',
+        ])
+    </div>
+
+    <div class="cd-box code lang-php hljs xml">
+        @@include('components.sort-by', [
+            'count' => $buildings->count(),
+            'count_translation_key' => 'building.count',
+            'default_sort' => 'name_asc',
+        ])
+    </div>
+</section>
+
 
 </main>
 @stop
