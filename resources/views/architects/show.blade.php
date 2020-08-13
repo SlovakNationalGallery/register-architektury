@@ -24,19 +24,21 @@
             </div>
         </div>
         <div class="mt-4 mt-md-0 col-md-6 col-lg-3 mb-4">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item p-0 border-0">
+            <ul class="list-group list-group-flush mb-4">
+                <li class="list-group-item px-0 py-2">
                     <b>{{ __('architect.birth_death_date') }}</b><br>
                     {{ $architect->birth_date ?? '?' }} / {{ $architect->death_date ?? '?' }}
                 </li>
-                <li class="list-group-item p-0 border-0">
+                <li class="list-group-item px-0 py-2">
                     <b>{{ __('architect.birth_death_place') }}</b><br>
                     {{ $architect->birth_place ?? '?' }} / {{ $architect->death_place ?? '?' }}
                 </li>
             </ul>
         </div>
         <div class="mt-4 mt-lg-0 col-lg-6">
-            {{ nl2br(strip_tags($architect->bio)) }}
+            <div class="expandable expandable-long">
+                {{ nl2br(strip_tags($architect->bio)) }}
+            </div>
         </div>
     </div>
     {{-- related buildings --}}
