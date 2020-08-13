@@ -1,8 +1,14 @@
 .border-bl {
     border-bottom: $border-width solid $border-color;
-    @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(md) {
         &:not(:first-child) {
-          border-left: $border-width solid $border-color;
+            border-left: $border-width solid $border-color;
+            @include media-breakpoint-only(md) {
+                &.border-left-md-0 {
+                    border-left: 0;
+                }
+            }
+
         }
     }
 }

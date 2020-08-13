@@ -1,13 +1,13 @@
-<div class="container-fluid p-0 navbar-expand-sm" id="header">
+<div class="container-fluid p-0 navbar-expand-md" id="header">
     <div class="row no-gutters align-items-stretch">
-        <div class="d-none d-sm-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
+        <div class="d-none d-md-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
             <h1 class="ls-2 my-auto">
                 <a href="{{ route('home') }}">
                     {{ __('header.title') }}<span class="d-lg-none d-xl-inline"> oA HÚ SAV</span>
                 </a>
             </h1>
         </div>
-        <div class="col-12 col-md-8 col-lg-4 border-bl text-center d-flex">
+        <div class="col-12 col-md-8 col-lg-4 border-bl text-center d-flex border-left-md-0">
             <button class="navbar-toggler py-3 my-auto" type="button" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="icon-menu"></span>
             </button>
