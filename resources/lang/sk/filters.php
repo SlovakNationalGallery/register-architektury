@@ -9,6 +9,6 @@ return [
     'sort_by' => [
         'chronologically' => 'chronologicky',
         'alphabetically' => 'abecedne',
-        'relevance' => 'relevancie',
+        'relevance' => 'podľa relevancie',
     ]
 ];
