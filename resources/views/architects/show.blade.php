@@ -29,10 +29,12 @@
                     <b>{{ __('architect.birth') }}</b><br>
                     {{ $architect->birth_date ?? '?' }} {{ $architect->birth_place ?? '?' }}
                 </li>
-                <li class="list-group-item px-0 py-2">
-                    <b>{{ __('architect.death') }}</b><br>
-                    {{ $architect->death_date ?? '?' }} {{ $architect->death_place ?? '?' }}
-                </li>
+                @if ($architect->death_date || $architect->death_place)
+                    <li class="list-group-item px-0 py-2">
+                        <b>{{ __('architect.death') }}</b><br>
+                        {{ $architect->death_date ?? '?' }} {{ $architect->death_place ?? '?' }}
+                    </li>
+                @endif
             </ul>
         </div>
         <div class="mt-4 mt-lg-0 col-lg-6">
