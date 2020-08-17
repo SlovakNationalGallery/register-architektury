@@ -26,20 +26,12 @@
         <div class="mt-4 mt-md-0 col-md-6 col-lg-3 mb-4">
             <ul class="list-group list-group-flush mb-4">
                 <li class="list-group-item px-0 py-2">
-                    <b>{{ __('architect.birth_date') }}</b><br>
-                    {{ $architect->birth_date ?? '?' }}
+                    <b>{{ __('architect.birth') }}</b><br>
+                    {{ $architect->birth_date ?? '?' }} {{ $architect->birth_place ?? '?' }}
                 </li>
                 <li class="list-group-item px-0 py-2">
-                    <b>{{ __('architect.death_date') }}</b><br>
-                    {{ $architect->death_date ?? '?' }}
-                </li>
-                <li class="list-group-item px-0 py-2">
-                    <b>{{ __('architect.birth_place') }}</b><br>
-                    {{ $architect->birth_place ?? '?' }}
-                </li>
-                <li class="list-group-item px-0 py-2">
-                    <b>{{ __('architect.death_place') }}</b><br>
-                    {{ $architect->death_place ?? '?' }}
+                    <b>{{ __('architect.death') }}</b><br>
+                    {{ $architect->death_date ?? '?' }} {{ $architect->death_place ?? '?' }}
                 </li>
             </ul>
         </div>
