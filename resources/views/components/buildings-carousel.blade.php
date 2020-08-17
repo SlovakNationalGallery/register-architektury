@@ -2,7 +2,7 @@
 $buildings_with_images = $architect->buildings
     ->filter(fn ($building) => $building->processedImages->isNotEmpty());
 @endphp
-<div class="buildings-carousel h-8rem w-100 d-flex">
+<div class="buildings-carousel h-6rem h-sm-8rem w-100 d-flex">
     <button class="prev-button btn btn-lg px-1 px-md-2 bg-white icon-chevron-left" disabled></button>
     <div class="carousel w-100">
         @foreach($buildings_with_images as $building)
