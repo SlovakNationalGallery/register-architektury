@@ -5,8 +5,10 @@
 .h-6rem { height: 6rem !important; }
 .h-8rem {
     height: 8rem !important;
-    @include media-breakpoint-down(sm) {
-        height: 5rem !important;
+}
+.h-sm-8rem {
+    @include media-breakpoint-up(sm) {
+        height: 8rem !important;
     }
 }
 .h-16rem { height: 16rem !important; }
