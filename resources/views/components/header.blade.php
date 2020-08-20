@@ -57,10 +57,10 @@
         <div class="col-md-12">
             {{-- fields bellow should be taken from "featured" collections and translated within them --}}
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">MoMoWo</a>
-                <a class="nav-item py-3 ls-3 border-bl text-uppercase nav-link" href="#">ATRIUM</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">ŠUR</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">Do.co,mo.mo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ isset($project) && $project->slug == 'momowo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'momowo') }}">MoMoWo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ isset($project) && $project->slug == 'atrium' ? 'active' : '' }}" href="{{ route('about.projects.show', 'atrium') }}">ATRIUM</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ isset($project) && $project->slug == 'sur' ? 'active' : '' }}" href="{{ route('about.projects.show', 'sur') }}">ŠUR</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ isset($project) && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}">Do.co,mo.mo</a>
             </nav>
         </div>
     </div>
