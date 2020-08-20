@@ -27,7 +27,6 @@ class CollectionRequest extends FormRequest
     {
         return [
             'title' => 'required|min:2|max:255',
-            'content' => 'required',
         ];
     }
 
