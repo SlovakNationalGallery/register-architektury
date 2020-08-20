@@ -3,7 +3,7 @@
 $current_sort = request('sort_by') ?? $default_sort ?? null;
 
 $enable_relevance_sort = $default_sort == 'relevance';
-$chronological_sort = $current_sort == 'newest' ? 'oldest' : 'newest';
+$chronological_sort = $current_sort == 'oldest' ? 'newest' : 'oldest';
 $alphabetical_sort  = $current_sort == 'name_asc' ? 'name_desc' : 'name_asc';
 @endphp
 
