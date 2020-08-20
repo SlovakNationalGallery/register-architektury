@@ -39,8 +39,8 @@ class Building extends Model
                         'type' => 'keyword',
                     ],
                     'folded' => [
-                        'type' => 'text',
-                        'analyzer' => 'asciifolding_analyzer',
+                        'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
                     ],
                     'stemmed' => [
                         'type' => 'text',

@@ -13,12 +13,12 @@ class BuildingController extends Controller
 
         if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
         if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
-        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.raw', 'asc');
-        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.raw', 'desc');
+        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.folded', 'asc');
+        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.folded', 'desc');
 
         // default sort if not search
         if (!request()->filled('search') && !request()->filled('sort_by')) {
-            $buildings->orderBy('title.raw', 'asc');
+            $buildings->orderBy('title.folded', 'asc');
         }
 
         foreach (request()->input('filters', []) as $filter) {
