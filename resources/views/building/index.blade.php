@@ -49,8 +49,12 @@
                             </a>
                         @endif
                     </div>
-                    <div class="col-md-6 p-3 text-right">
-                        @include('components.buildings-sort-by')
+                    <div class="col-md-6 p-3 pt-4 text-left text-sm-right">
+                        @include('components.sort-by', [
+                            'count' => $buildings->total(),
+                            'count_translation_key' => 'building.count',
+                            'default_sort' => (request()->filled('search')) ? 'relevance' : 'name_asc',
+                        ])
                     </div>
                 </div>
 

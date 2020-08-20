@@ -39,8 +39,8 @@ class Building extends Model
                         'type' => 'keyword',
                     ],
                     'folded' => [
-                        'type' => 'text',
-                        'analyzer' => 'asciifolding_analyzer',
+                        'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
                     ],
                     'stemmed' => [
                         'type' => 'text',
@@ -151,11 +151,6 @@ class Building extends Model
     public function processedImages()
     {
         return $this->hasMany('App\Models\Image')->processed();
-    }
-
-    public function scopeOrderByYearFrom($query, $direction = 'asc')
-    {
-        return $query->orderBy('decade', $direction);
     }
 
     public function getCoverImageAttribute()
