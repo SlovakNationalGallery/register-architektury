@@ -21,11 +21,6 @@ class Article extends Model implements HasMedia
     protected $dates = ['published_at'];
     protected $translatable = ['title', 'content'];
 
-    public function getCoverImageTagAttribute()
-    {
-        return $this->getFirstMedia()->img();
-    }
-
     public function getRouteKeyName()
     {
         return 'slug';
