@@ -42,7 +42,10 @@ class CollectionCrudController extends CrudController
         ]);
 
         $this->crud->addFields([
-            'title',
+            [
+                'name' => 'title',
+                'type' => 'text',
+            ],
             [
                 'type' => 'relationship',
                 'name'  => 'project_id',
@@ -54,11 +57,7 @@ class CollectionCrudController extends CrudController
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
-                'name' => 'cover_image',
-                'type' => 'browse',
-            ],
-            [
-                'name' => 'content',
+                'name' => 'description',
                 'type' => 'tinymce',
                 'options' => [
                     'entity_encoding' => 'raw',
