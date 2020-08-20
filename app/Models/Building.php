@@ -153,11 +153,6 @@ class Building extends Model
         return $this->hasMany('App\Models\Image')->processed();
     }
 
-    public function scopeOrderByYearFrom($query, $direction = 'asc')
-    {
-        return $query->orderBy('decade', $direction);
-    }
-
     public function getCoverImageAttribute()
     {
         return $this->processedImages->first()->getFirstMedia();
