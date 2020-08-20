@@ -13,9 +13,11 @@
 }
 .h-16rem { height: 16rem !important; }
 
-.w-8rem {
-    width: 8rem !important;
-    @include media-breakpoint-down(sm) {
+.w-6rem {
+    width: 6rem !important;
+}
+.w-sm-8rem {
+    @include media-breakpoint-up(sm) {
         width: 6rem !important;
     }
 }

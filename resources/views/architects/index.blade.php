@@ -59,7 +59,7 @@
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-3 px-sm-4 flex-shrink-0 w-8rem d-flex align-items-end">
+        <div class="px-3 px-sm-4 flex-shrink-0 w-6rem w-sm-8rem d-flex align-items-end">
             @if($architect->has_image)
             {{ $architect->image_tag->attributes(['class' => 'w-100']) }}
             @else
