@@ -44,6 +44,10 @@ class CollectionCrudController extends CrudController
         $this->crud->addFields([
             'title',
             [
+                'type' => 'relationship',
+                'name'  => 'project_id',
+            ],
+            [
                 'name' => 'slug',
                 'label' => 'Slug (URL)',
                 'type' => 'text',

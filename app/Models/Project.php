@@ -21,9 +21,9 @@ class Project extends Model implements HasMedia
     protected $dates = ['published_at'];
     protected $translatable = ['title', 'content'];
 
-    public function getCoverImageTagAttribute()
+    public function collection()
     {
-        return $this->getFirstMedia()->img();
+        return $this->hasOne('App\Models\Collection');
     }
 
     public function getRouteKeyName()

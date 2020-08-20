@@ -26,4 +26,9 @@ class Collection extends Model
     {
         return $this->belongsToMany('App\Models\Building')->withPivot('position')->orderBy('position');
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Models\Project');
+    }
 }
