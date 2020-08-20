@@ -11,6 +11,7 @@ return [
         'department' => 'Department of Architecture',
         'department_page_title' => 'Department of Architecture',
         'news' => 'News',
+        'projects' => 'Projects',
         'publications' => 'Publications',
     ]
 ];
