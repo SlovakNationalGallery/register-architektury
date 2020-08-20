@@ -40,6 +40,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::view('/oddelenie-architektury', 'department')->name('department');
         Route::resource('novinky', 'ArticleController')->names('articles')
             ->parameter('novinky', 'article');
+        Route::resource('projekty', 'ProjectController')->names('projects')
+            ->parameter('projekty', 'project');
         Route::get('publikacie', 'PublicationController@index')->name('publications');
     });
 });
