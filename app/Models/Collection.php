@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\Publishable;
+use Illuminate\Support\Facades\App;
 
 class Collection extends Model
 {
@@ -27,5 +28,13 @@ class Collection extends Model
     public function buildings()
     {
         return $this->belongsToMany('App\Models\Building')->withPivot('position')->orderBy('position');
+    }
+
+    public function scopeOrderByTitle($query, $direction = 'ASC')
+    {
+        $locale = App::getLocale();
+        $fallbackLocale = config('translatable.fallback_locale');
+
+        return $query->orderByRaw("COALESCE(title->\"$.$locale\", title->\"$.$fallbackLocale\") $direction");
     }
 }

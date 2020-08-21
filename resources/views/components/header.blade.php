@@ -48,8 +48,8 @@
                 <a href="{{ route('home') }}" class="nav-item py-3 ls-2 border-bl nav-link d-block d-sm-none">{{ __('header.title') }}</a>
                 <a href="{{ route('about.department') }}" class="nav-item py-3 ls-2 border-bottom nav-link {{ Route::is('about.*') ? 'active' : '' }}">{{ __('header.about.index') }}</a>
                 <a href="{{ route('architects.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('architects.*') ? 'active' : '' }}">{{ __('header.architects') }}</a>
-                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('building.*') ? 'active' : '' }}" href="#">{{ __('header.objects') }}</a>
-                <a class="nav-item py-3 ls-2 border-bl text-uppercase nav-link" href="#">{{ __('header.collections') }}</a>
+                <a href="{{ route('building.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('building.*') ? 'active' : '' }}">{{ __('header.objects') }}</a>
+                <a href="{{ route('collections.index') }}" class="nav-item py-3 ls-2 border-bl text-uppercase nav-link {{ Route::is('collections.*') ? 'active' : '' }}">{{ __('header.collections') }}</a>
             </nav>
         </div>
     </div>
