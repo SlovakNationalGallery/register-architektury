@@ -24,7 +24,7 @@ class Building extends Model
         'status'
     ];
 
-    protected $appends = ['tags', 'year_from', 'year_to'];
+    protected $appends = ['year_from', 'year_to'];
 
     protected $indexConfigurator = \App\Elasticsearch\BuildingsIndexConfigurator::class;
 
@@ -114,21 +114,37 @@ class Building extends Model
             'architects' => [
                 'type' => 'keyword',
             ],
-            'tags' => [
-                'type' => 'keyword',
-            ],
             'year_from' => [
                 'type' => 'integer',
             ],
             'year_to' => [
                 'type' => 'integer',
             ],
-            'current_function' => [
+
+            // Translatable attributes
+            'sk.tags' => [
+                'type' => 'keyword',
+            ],
+            'sk.current_function' => [
                 'type' => 'text',
                 'analyzer' => 'asciifolding_analyzer',
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
+                    ],
+                ],
+            ],
+            'en.tags' => [
+                'type' => 'keyword',
+            ],
+            'en.current_function' => [
+                'type' => 'text',
+                'analyzer' => 'asciifolding_analyzer',
+                'fields' => [
+                    'raw' => [
+                        'type' => 'keyword',
+                        'normalizer' => 'asciifolding_normalizer',
                     ],
                 ],
             ],
@@ -160,12 +176,13 @@ class Building extends Model
         return $this->processedImages->first()->getFirstMedia();
     }
 
-    public function getTagsAttribute()
+    public function getTagsAttribute($locale = null)
     {
         $tags = $this->architects->pluck('full_name')->all();
         $tags[] = $this->location_city;
-        $tags[] = $this->current_function;
+        $tags[] = $this->getTranslation('current_function', $locale ?? \App::getLocale());
         $tags[] = $this->years_span;
+
         return Arr::flatten(Arr::where($tags, fn ($tag) => !empty($tag)));
     }
 
@@ -213,6 +230,10 @@ class Building extends Model
         ]);
         $array['architects'] = $this->architects->pluck('full_name')->all();
 
+        foreach($this->getAllTranslatedLocales() as $locale) {
+            Arr::set($array, "$locale.tags", $this->getTagsAttribute($locale));
+        }
+
         return $array;
     }
 
@@ -237,7 +258,7 @@ class Building extends Model
             ],
             'functions' => [
                 'terms' => [
-                    'field' => 'current_function.raw',
+                    'field' => 'en.current_function.raw',
                     'size' => $max_bucket_size,
                 ]
             ],
@@ -270,4 +291,12 @@ class Building extends Model
         ];
     }
 
+    private function getAllTranslatedLocales()
+    {
+        return collect($this->getTranslations())
+            ->values()
+            ->map(fn ($translation) => array_keys($translation))
+            ->flatten()
+            ->unique();
+    }
 }
