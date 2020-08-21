@@ -15,10 +15,12 @@ class MakeMoreFieldsTranslatable extends Migration
     {
         Schema::table('buildings', function ($table) {
             $table->dropColumn('style');
+            $table->dropColumn('status');
         });
 
         Schema::table('buildings', function ($table) {
             $table->json('style')->nullable()->after('decade');
+            $table->json('status')->nullable()->after('style');
         });
     }
 
@@ -31,10 +33,12 @@ class MakeMoreFieldsTranslatable extends Migration
     {
         Schema::table('buildings', function ($table) {
             $table->dropColumn('style');
+            $table->dropColumn('status');
         });
 
         Schema::table('buildings', function ($table) {
             $table->string('style')->nullable()->after('decade');
+            $table->string('status')->nullable()->after('style');
         });
     }
 }
