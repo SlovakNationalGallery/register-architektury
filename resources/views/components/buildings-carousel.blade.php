@@ -1,8 +1,9 @@
 @php
-$buildings_with_images = $architect->buildings
+$height = $height ?? 'h-6rem h-sm-8rem';
+$buildings_with_images = $buildings
     ->filter(fn ($building) => $building->processedImages->isNotEmpty());
 @endphp
-<div class="buildings-carousel h-6rem h-sm-8rem w-100 d-flex">
+<div class="buildings-carousel {{ $height }} d-flex">
     <button class="prev-button btn btn-lg px-1 px-md-2 bg-white icon-chevron-left" disabled></button>
     <div class="carousel w-100">
         @foreach($buildings_with_images as $building)
@@ -12,7 +13,7 @@ $buildings_with_images = $architect->buildings
                 data-flickity-lazyload-src="{{ $building->cover_image->getUrl() }}"
                 {{-- Initial size updated in JS --}}
                 sizes="1px"
-                class="h-8rem"
+                class="{{ $height }}"
             >
         </a>
         @endforeach
