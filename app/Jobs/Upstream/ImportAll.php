@@ -202,16 +202,16 @@ class ImportAll implements ShouldQueue
             });
         });
 
-        // $this->log->info('Enqueing image processing');
-        // Image::unprocessed()->get()->map(function ($image) {
-        //     ProcessBuildingImage::dispatch($image);
-        // });
-        // Architect::withUnprocessedImage()->get()->map(function ($architect) {
-        //     ProcessArchitectImage::dispatch($architect);
-        // });
+        $this->log->info('Enqueing image processing');
+        Image::unprocessed()->get()->map(function ($image) {
+            ProcessBuildingImage::dispatch($image);
+        });
+        Architect::withUnprocessedImage()->get()->map(function ($architect) {
+            ProcessArchitectImage::dispatch($architect);
+        });
 
-        // $this->log->info('Enqueing search re-index');
-        // ReindexAll::dispatch();
+        $this->log->info('Enqueing search re-index');
+        ReindexAll::dispatch();
 
         $this->log->info('🚀 Done');
     }
