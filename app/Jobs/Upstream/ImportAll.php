@@ -70,11 +70,11 @@ class ImportAll implements ShouldQueue
                 'Roky.Rok0 AS decade',
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
-                'Opis AS description'
             )
             ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
             ->selectRaw("JSON_OBJECT('sk', Obdobie.Pole1, 'en', Obdobie.Pole2) as style")
             ->selectRaw("JSON_OBJECT('sk', Stav.Stav, 'en', Stav.`Stav ENG`) as status")
+            ->selectRaw("JSON_OBJECT('sk', Opis, 'en', `Opis ENG`) as description")
             ->where('Web', 1)
             ->get();
 
@@ -139,6 +139,7 @@ class ImportAll implements ShouldQueue
                     $row->current_function = (array) json_decode($row->current_function);
                     $row->style = (array) json_decode($row->style);
                     $row->status = (array) json_decode($row->status);
+                    $row->description = (array) json_decode($row->description);
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -146,8 +147,6 @@ class ImportAll implements ShouldQueue
                     );
                 }
             });
-
-            return;
 
             $this->log->info('Processing ' . count($building_dates) . ' buildings dates...');
             BuildingDate::unguarded(function() use ($building_dates) {
