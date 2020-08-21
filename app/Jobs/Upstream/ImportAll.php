@@ -52,6 +52,7 @@ class ImportAll implements ShouldQueue
             ->leftJoin('Stav', 'Stav.Identifikácia', '=', 'Stavby.Modalita')
             ->leftJoin('Roky', 'Roky.Identifikácia', '=', 'Stavby.Chronológia')
             ->leftJoin('Funkcia', 'Funkcia.Identifikácia', '=', 'Stavby.Súčasná funkcia')
+            ->leftJoin('Obdobie', 'Obdobie.Pole1', '=', 'Stavby.Štýlová charkteristika')
             ->select(
                 'Evid_č AS source_id',
                 'Pôvodný názov diela AS title',
@@ -68,12 +69,12 @@ class ImportAll implements ShouldQueue
                 'Realizácia AS project_duration_dates',
                 'Roky.Rok0 AS decade',
                 'Stav.Stav AS status',
-                'Štýlová charkteristika AS style',
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
                 'Opis AS description'
             )
             ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
+            ->selectRaw("JSON_OBJECT('sk', Obdobie.Pole1, 'en', Obdobie.Pole2) as style")
             ->where('Web', 1)
             ->get();
 
@@ -136,6 +137,7 @@ class ImportAll implements ShouldQueue
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
                     $row->current_function = (array) json_decode($row->current_function);
+                    $row->style = (array) json_decode($row->style);
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
