@@ -66,7 +66,6 @@ class ImportAll implements ShouldQueue
                 'GPS AS location_gps',
                 'Projekt AS project_start_dates',
                 'Realizácia AS project_duration_dates',
-                'Funkcia.Pole1 AS current_function',
                 'Roky.Rok0 AS decade',
                 'Stav.Stav AS status',
                 'Štýlová charkteristika AS style',
@@ -74,6 +73,7 @@ class ImportAll implements ShouldQueue
                 'Literatúra: AS bibliography',
                 'Opis AS description'
             )
+            ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
             ->where('Web', 1)
             ->get();
 
@@ -84,11 +84,10 @@ class ImportAll implements ShouldQueue
                 'StavbaID AS building_source_id',
                 'Zaciatok AS from',
                 'Koniec AS to',
-                'RokyStavbyKategorie.Nazov AS category_sk',
-                'RokyStavbyKategorie.Nazov_EN AS category_en',
-                'Poznamka AS note_sk',
-                'Poznamka_EN AS note_en'
-            )->get();
+            )
+            ->selectRaw("JSON_OBJECT('sk', RokyStavbyKategorie.Nazov, 'en', RokyStavbyKategorie.Nazov_EN) as category")
+            ->selectRaw("JSON_OBJECT('sk', Poznamka, 'en', Poznamka_EN) as note")
+            ->get();
 
         $architects = $this->db->table('Architekti')
             ->leftJoin('Mesto AS MiestoNarodenia', 'MiestoNarodenia.Identifikácia', '=', 'Architekti.Miesto narodenia')
@@ -136,6 +135,7 @@ class ImportAll implements ShouldQueue
 
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+                    $row->current_function = (array) json_decode($row->current_function);
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -158,14 +158,8 @@ class ImportAll implements ShouldQueue
                             'building_id' => $building->id,
                             'from' => $row->from,
                             'to' => $row->to,
-                            'category' => [
-                                'en' => $row->category_en,
-                                'sk' => $row->category_sk,
-                            ],
-                            'note' => [
-                                'en' => $row->note_en,
-                                'sk' => $row->note_sk,
-                            ],
+                            'category' => (array) json_decode($row->category),
+                            'note' => (array) json_decode($row->note),
                         ]
                     );
                 }
@@ -204,16 +198,16 @@ class ImportAll implements ShouldQueue
             });
         });
 
-        $this->log->info('Enqueing image processing');
-        Image::unprocessed()->get()->map(function ($image) {
-            ProcessBuildingImage::dispatch($image);
-        });
-        Architect::withUnprocessedImage()->get()->map(function ($architect) {
-            ProcessArchitectImage::dispatch($architect);
-        });
+        // $this->log->info('Enqueing image processing');
+        // Image::unprocessed()->get()->map(function ($image) {
+        //     ProcessBuildingImage::dispatch($image);
+        // });
+        // Architect::withUnprocessedImage()->get()->map(function ($architect) {
+        //     ProcessArchitectImage::dispatch($architect);
+        // });
 
-        $this->log->info('Enqueing search re-index');
-        ReindexAll::dispatch();
+        // $this->log->info('Enqueing search re-index');
+        // ReindexAll::dispatch();
 
         $this->log->info('🚀 Done');
     }
