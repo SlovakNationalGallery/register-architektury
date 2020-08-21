@@ -131,7 +131,6 @@ class Building extends Model
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
-                        'normalizer' => 'asciifolding_normalizer',
                     ],
                 ],
             ],
@@ -144,7 +143,6 @@ class Building extends Model
                 'fields' => [
                     'raw' => [
                         'type' => 'keyword',
-                        'normalizer' => 'asciifolding_normalizer',
                     ],
                 ],
             ],
@@ -258,7 +256,7 @@ class Building extends Model
             ],
             'functions' => [
                 'terms' => [
-                    'field' => 'en.current_function.raw',
+                    'field' => \App::getLocale() . '.current_function.raw',
                     'size' => $max_bucket_size,
                 ]
             ],
