@@ -20,6 +20,8 @@ class Building extends Model
         'title',
         'description',
         'current_function',
+        'style',
+        'status'
     ];
 
     protected $appends = ['tags', 'year_from', 'year_to'];
