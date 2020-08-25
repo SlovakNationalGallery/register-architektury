@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="row no-gutters">
-                    <div class="col-12 py-5 mt-md-0">
+                    <div class="col-12 py-2 py-md-3 py-lg-5 mt-md-0">
                         @include('components.timeline', [
                             'year_from' => request('year_from', $filter_values['year_min']),
                             'year_until' => request('year_until', $filter_values['year_max']),
