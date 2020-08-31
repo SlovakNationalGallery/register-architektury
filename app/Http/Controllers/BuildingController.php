@@ -10,6 +10,7 @@ class BuildingController extends Controller
     public function index(Request $request)
     {
         $buildings = \App\Models\Building::search(request('search', '*'));
+        $locale = \App::getLocale();
 
         if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
         if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
@@ -22,7 +23,7 @@ class BuildingController extends Controller
         }
 
         foreach (request()->input('filters', []) as $filter) {
-            $buildings->where('tags', $filter);
+            $buildings->where("$locale.tags", $filter);
         }
 
         $filter_values = Building::getFilterValues($buildings->buildPayload());

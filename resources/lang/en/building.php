@@ -2,7 +2,7 @@
 
 return [
     // show
-    'current_function' => 'type',
+    'current_function' => 'current function',
     'address' => 'address',
     'architects' => 'architects',
     'builders' => 'builders',

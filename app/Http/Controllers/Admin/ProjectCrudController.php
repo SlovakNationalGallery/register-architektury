@@ -2,38 +2,33 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CollectionRequest;
+use App\Http\Requests\ProjectRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class CollectionCrudController
+ * Class ProjectCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class CollectionCrudController extends CrudController
+class ProjectCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as traitUpdate; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
     public function setup()
     {
-        $this->crud->setModel('App\Models\Collection');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/collections');
-        $this->crud->setEntityNameStrings('collection', 'collections');
+        $this->crud->setModel('App\Models\Project');
+        $this->crud->setRoute(config('backpack.base.route_prefix') . '/projects');
+        $this->crud->setEntityNameStrings('project', 'projects');
 
         $this->crud->setColumns([
             [
                 'name' => 'title',
-                'type' => 'collection',
-            ],
-            [
-                'name' => 'buildings',
-                'type' => 'relationship_count',
-                'suffix' => '',
+                'type' => 'article',
             ],
             [
                 'name' => 'published',
@@ -47,17 +42,18 @@ class CollectionCrudController extends CrudController
                 'type' => 'text',
             ],
             [
-                'type' => 'relationship',
-                'name'  => 'project_id',
-            ],
-            [
                 'name' => 'slug',
                 'label' => 'Slug (URL)',
                 'type' => 'text',
                 'hint' => 'Will be automatically generated from your title, if left empty.'
             ],
             [
-                'name' => 'description',
+                'name'      => 'images',
+                'type'      => 'upload_multiple_media',
+                'upload'    => true,
+            ],
+            [
+                'name' => 'content',
                 'type' => 'tinymce',
                 'options' => [
                     'entity_encoding' => 'raw',
@@ -65,10 +61,6 @@ class CollectionCrudController extends CrudController
                     'plugins' => 'image,link,media,anchor,fullscreen',
                     'toolbar' => 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | fullscreen'
                 ]
-            ],
-            [
-                'name' => 'buildings',
-                'type' => 'items_sortable',
             ],
             [
                 'name' => 'published_at',
@@ -85,36 +77,25 @@ class CollectionCrudController extends CrudController
         ]);
     }
 
+    public function update()
+    {
+        $response = $this->traitUpdate();
+
+        // Remove media marked for deletion
+        $this->crud->getCurrentEntry()->getMedia()
+            ->whereIn('id', $this->crud->getRequest()->input('clear_images'))
+            ->each(fn ($media) => $media->delete());
+
+        return $response;
+    }
+
     protected function setupCreateOperation()
     {
-        $this->crud->setValidation(CollectionRequest::class);
+        $this->crud->setValidation(ProjectRequest::class);
     }
 
     protected function setupUpdateOperation()
     {
         $this->setupCreateOperation();
-    }
-
-    public function update()
-    {
-        $response = $this->traitUpdate();
-        $this->syncBuildingPositions();
-        return $response;
-    }
-
-    public function store()
-    {
-      $response = $this->traitStore();
-      $this->syncBuildingPositions();
-      return $response;
-    }
-
-    private function syncBuildingPositions() {
-        $buildings = [];
-        $building_ids = $this->crud->getRequest()->get('buildings', []);
-        foreach ($building_ids as $building_position => $building_id) {
-            $buildings[$building_id] = ['position' => $building_position];
-        }
-        $this->crud->getCurrentEntry()->buildings()->sync($buildings);
     }
 }

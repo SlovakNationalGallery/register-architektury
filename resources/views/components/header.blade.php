@@ -57,10 +57,10 @@
         <div class="col-md-12">
             {{-- fields bellow should be taken from "featured" collections and translated within them --}}
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">MoMoWo</a>
-                <a class="nav-item py-3 ls-3 border-bl text-uppercase nav-link" href="#">ATRIUM</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">ŠUR</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link" href="#">Do.co,mo.mo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'momowo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'momowo') }}">MoMoWo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'atrium' ? 'active' : '' }}" href="{{ route('about.projects.show', 'atrium') }}">ATRIUM</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'sur' ? 'active' : '' }}" href="{{ route('about.projects.show', 'sur') }}">ŠUR</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}">Do.co,mo.mo</a>
             </nav>
         </div>
     </div>
@@ -70,6 +70,7 @@
             <nav class="nav nav-justified sub-nav bg-light collapse navbar-collapse align-items-stretch">
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
+                <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.*') ? 'active' : '' }}" href="{{ route('about.projects.index') }}">{{ __('header.about.projects') }}</a>
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.publications') ? 'active' : '' }}" href="{{ route('about.publications') }}">{{ __('header.about.publications') }}</a>
             </nav>
         </div>

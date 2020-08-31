@@ -52,6 +52,7 @@ class ImportAll implements ShouldQueue
             ->leftJoin('Stav', 'Stav.Identifikácia', '=', 'Stavby.Modalita')
             ->leftJoin('Roky', 'Roky.Identifikácia', '=', 'Stavby.Chronológia')
             ->leftJoin('Funkcia', 'Funkcia.Identifikácia', '=', 'Stavby.Súčasná funkcia')
+            ->leftJoin('Obdobie', 'Obdobie.Pole1', '=', 'Stavby.Štýlová charkteristika')
             ->select(
                 'Evid_č AS source_id',
                 'Pôvodný názov diela AS title',
@@ -66,14 +67,14 @@ class ImportAll implements ShouldQueue
                 'GPS AS location_gps',
                 'Projekt AS project_start_dates',
                 'Realizácia AS project_duration_dates',
-                'Funkcia.Pole1 AS current_function',
                 'Roky.Rok0 AS decade',
-                'Stav.Stav AS status',
-                'Štýlová charkteristika AS style',
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
-                'Opis AS description'
             )
+            ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
+            ->selectRaw("JSON_OBJECT('sk', Obdobie.Pole1, 'en', Obdobie.Pole2) as style")
+            ->selectRaw("JSON_OBJECT('sk', Stav.Stav, 'en', Stav.`Stav ENG`) as status")
+            ->selectRaw("JSON_OBJECT('sk', Opis, 'en', `Opis ENG`) as description")
             ->where('Web', 1)
             ->get();
 
@@ -84,11 +85,10 @@ class ImportAll implements ShouldQueue
                 'StavbaID AS building_source_id',
                 'Zaciatok AS from',
                 'Koniec AS to',
-                'RokyStavbyKategorie.Nazov AS category_sk',
-                'RokyStavbyKategorie.Nazov_EN AS category_en',
-                'Poznamka AS note_sk',
-                'Poznamka_EN AS note_en'
-            )->get();
+            )
+            ->selectRaw("JSON_OBJECT('sk', RokyStavbyKategorie.Nazov, 'en', RokyStavbyKategorie.Nazov_EN) as category")
+            ->selectRaw("JSON_OBJECT('sk', Poznamka, 'en', Poznamka_EN) as note")
+            ->get();
 
         $architects = $this->db->table('Architekti')
             ->leftJoin('Mesto AS MiestoNarodenia', 'MiestoNarodenia.Identifikácia', '=', 'Architekti.Miesto narodenia')
@@ -136,6 +136,10 @@ class ImportAll implements ShouldQueue
 
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+                    $row->current_function = (array) json_decode($row->current_function);
+                    $row->style = (array) json_decode($row->style);
+                    $row->status = (array) json_decode($row->status);
+                    $row->description = (array) json_decode($row->description);
 
                     Building::updateOrCreate(
                         ['source_id' => $row->source_id],
@@ -158,14 +162,8 @@ class ImportAll implements ShouldQueue
                             'building_id' => $building->id,
                             'from' => $row->from,
                             'to' => $row->to,
-                            'category' => [
-                                'en' => $row->category_en,
-                                'sk' => $row->category_sk,
-                            ],
-                            'note' => [
-                                'en' => $row->note_en,
-                                'sk' => $row->note_sk,
-                            ],
+                            'category' => (array) json_decode($row->category),
+                            'note' => (array) json_decode($row->note),
                         ]
                     );
                 }

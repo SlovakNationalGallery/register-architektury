@@ -37,4 +37,9 @@ class Collection extends Model
 
         return $query->orderByRaw("COALESCE(title->\"$.$locale\", title->\"$.$fallbackLocale\") $direction");
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Models\Project');
+    }
 }

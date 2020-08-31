@@ -3,6 +3,16 @@ import noUiSlider from 'nouislider';
 $(document).ready(function(){
     if($('#year_from').length > 0) {
 
+        function filterPips(value, type) {
+            if (
+                ($(window).width() < 768) &&
+                ($('#year_until').data('max') - $('#year_from').data('min') >= 70)
+            ) {
+                return value % 20 ? 0 : 1;
+            }
+            return type;
+        }
+
         var timeline = noUiSlider.create($('#years')[0], {
             start: [$("#year_from").val(), $("#year_until").val()],
             connect: true,
@@ -15,6 +25,7 @@ $(document).ready(function(){
             pips: {
                 mode: 'steps',
                 stepped: true,
+                filter: filterPips,
                 density: 10
             },
             format: {
