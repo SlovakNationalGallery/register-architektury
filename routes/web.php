@@ -36,6 +36,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         ->names('architects')
         ->parameter('architekti', 'architect');
 
+    Route::resource('kolekcie', 'CollectionController')
+        ->names('collections')
+        ->parameter('kolekcie', 'collection');
+
     Route::name('about.')->group(function () {
         Route::view('/oddelenie-architektury', 'department')->name('department');
         Route::resource('novinky', 'ArticleController')->names('articles')

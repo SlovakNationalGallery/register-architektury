@@ -1,8 +1,13 @@
 .vh-38 { height: 38vh !important; }
+.vh-md-25 {
+    @include media-breakpoint-up(md) {
+        height: 25vh !important;
+    }
+}
 
 .mvh-30 { max-height: 30vh !important; }
 
-.h-6rem { height: 6rem !important; }
+.h-6rem { height: 6rem; }
 .h-8rem {
     height: 8rem !important;
 }
