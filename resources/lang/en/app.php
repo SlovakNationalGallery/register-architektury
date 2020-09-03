@@ -9,4 +9,5 @@ return [
     'load_more' => 'Show more!',
     'loading' => 'Loading...',
     'last_page' => 'End of content',
+    'return_home' => 'Return home',
 ];
