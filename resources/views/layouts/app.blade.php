@@ -34,12 +34,12 @@
   </head>
 
   <body class="h-100">
-    <div id="app" class="d-flex flex-column h-100">
-        <main role="main" class="flex-shrink-0">
+    <div id="app" class="d-flex flex-column min-vh-100">
+        <main role="main" class="flex-fill {{ (isSet($error_number)) ? 'bg-light' : '' }}">
             @yield('content')
         </main>
 
-        <footer class="footer mt-auto py-3 border-top">
+        <footer class="footer py-3 border-top">
             <div class="container-fluid">
                 <span class="ls-2">
                     {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>.
