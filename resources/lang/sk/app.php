@@ -9,4 +9,5 @@ return [
     'load_more' => 'Zobraz viac!',
     'loading' => 'Načítava sa...',
     'last_page' => 'A to je všetko',
+    'produced_by' => 'Vyrobil a spravuje',
 ];
