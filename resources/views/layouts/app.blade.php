@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="description" content="@yield('page_description', 'TODO')">
     <meta property="og:title" content="@yield('page_title', __('app.title'))" />
@@ -41,9 +41,14 @@
 
         <footer class="footer py-3 border-top">
             <div class="container-fluid">
-                <span class="ls-2">
-                    {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>.
-                </span>
+                <div class="row">
+                    <div class="col-md-auto ls-2">
+                        {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>.
+                    </div>
+                    <div class="col-md ls-2 text-right">
+                        {{ __('app.produced_by') }} <a href="https://lab.sng.sk" class="link-underline" target="_blank">lab.SNG</a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>

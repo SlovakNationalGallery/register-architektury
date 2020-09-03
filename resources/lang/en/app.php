@@ -10,4 +10,5 @@ return [
     'loading' => 'Loading...',
     'last_page' => 'End of content',
     'return_home' => 'Return home',
+    'produced_by' => 'Produced and maintained by',
 ];
