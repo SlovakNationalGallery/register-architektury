@@ -9,5 +9,5 @@ return [
     'load_more' => 'Show more!',
     'loading' => 'Loading...',
     'last_page' => 'End of content',
-    'produced_by' => 'Produced and maintained by',
+    'produced_by' => 'Produced by',
 ];
