@@ -7,13 +7,16 @@
 
 @include('components.map', [
     'location' => $building->lng_lat,
-    'tags' => $building->tags,
     'show_map' => session('show_map', true),
 ])
 
-<div class="container-fluid py-5 px-3">
+<div class="container-fluid px-3">
     <div class="row">
-
+        <div class="col-md-12 pt-3 pb-5">
+            @include('components.tags', ['tags' => $building->tags])
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3 order-md-2">
             <h2 class="mb-3 ls-2">
                 {{ $building->title }}
