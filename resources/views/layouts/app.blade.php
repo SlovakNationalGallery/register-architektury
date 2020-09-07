@@ -34,12 +34,12 @@
   </head>
 
   <body class="h-100">
-    <div id="app" class="d-flex flex-column h-100">
-        <main role="main" class="flex-shrink-0">
+    <div id="app" class="d-flex flex-column min-vh-100">
+        <main role="main" class="flex-fill {{ (isSet($error_number)) ? 'bg-light' : '' }}">
             @yield('content')
         </main>
 
-        <footer class="footer mt-auto py-3 border-top">
+        <footer class="footer py-3 border-top">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-auto ls-2">

@@ -9,5 +9,6 @@ return [
     'load_more' => 'Zobraz viac!',
     'loading' => 'Načítava sa...',
     'last_page' => 'A to je všetko',
+    'return_home' => 'Návrat domov',
     'produced_by' => 'Vyrobil a spravuje',
 ];
