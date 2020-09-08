@@ -1,57 +1,25 @@
-@extends(backpack_user() && (Str::startsWith(\Request::path(), config('backpack.base.route_prefix'))) ? 'backpack::layouts.top_left' : 'backpack::layouts.plain')
-{{-- show error using sidebar layout if looged in AND on an admin page; otherwise use a blank page --}}
+@extends('layouts.app')
 
 @php
   $title = 'Error '.$error_number;
 @endphp
 
-@section('after_styles')
-  <style>
-    .error_number {
-      font-size: 156px;
-      font-weight: 600;
-      line-height: 100px;
-    }
-    .error_number small {
-      font-size: 56px;
-      font-weight: 700;
-    }
-
-    .error_number hr {
-      margin-top: 60px;
-      margin-bottom: 0;
-      width: 50px;
-    }
-
-    .error_title {
-      margin-top: 40px;
-      font-size: 36px;
-      font-weight: 400;
-    }
-
-    .error_description {
-      font-size: 24px;
-      font-weight: 400;
-    }
-  </style>
-@endsection
-
 @section('content')
-<div class="row">
-  <div class="col-md-12 text-center">
-    <div class="error_number">
-      <small>ERROR</small><br>
-      {{ $error_number }}
-      <hr>
+
+@include('components.header')
+
+<div class="container-fluid p-0 bg-light h-100">
+    <div class="row no-gutters h-100">
+      <div class="col-md-12 text-center">
+        <div class="error_number ls-3">
+          ERROR<br>
+          {{ $error_number }}
+        </div>
+        <div class="error_title my-4">
+          @yield('title')
+        </div>
+        <a href="/" class="btn btn-outline-dark my-5 view-more-button px-5">{{ __('app.return_home') }}</a>
+      </div>
     </div>
-    <div class="error_title text-muted">
-      @yield('title')
-    </div>
-    <div class="error_description text-muted">
-      <small>
-        @yield('description')
-     </small>
-    </div>
-  </div>
 </div>
 @endsection
