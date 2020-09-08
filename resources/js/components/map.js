@@ -9,6 +9,7 @@ function initMap() {
 
 	const map_container = document.querySelector('#map');
 	var location = JSON.parse(map_container.dataset.location);
+	var popup = new mapboxgl.Popup({ offset: 25 }).setText(map_container.dataset.title);
 
 	const map = new mapboxgl.Map({
 		container: 'map',
@@ -22,6 +23,7 @@ function initMap() {
 
 	const marker = new mapboxgl.Marker(el)
 		.setLngLat(location)
+		.setPopup(popup)
 		.addTo(map);
 }
 
