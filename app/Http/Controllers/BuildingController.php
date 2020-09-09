@@ -49,6 +49,7 @@ class BuildingController extends Controller
     public function show($id, $slug, Request $request)
     {
     	$building = Building::with('dates')->find($id);
+        $locale = \App::getLocale();
 
     	if (empty($building)) {
     	    \App::abort(404);
@@ -59,11 +60,11 @@ class BuildingController extends Controller
     	}
 
         $related_buildings = Building::search($building->id)
-            ->rule(function($builder) {
+            ->rule(function($builder) use ($locale) {
                 return [
                     'must' => [
                         'more_like_this' => [
-                            'fields' => ['tags'],
+                            'fields' => [$locale . '.tags'],
                             'like' => [
                                 '_id' => $builder->query
                             ],
