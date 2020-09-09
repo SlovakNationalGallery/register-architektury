@@ -39,3 +39,16 @@ a.link-no-underline {
         border-bottom: 1px solid $dark;
     }
 }
+
+a.image-link {
+    & img {
+        opacity: 100%;
+        -webkit-transition: opacity .2s ease-in-out;
+        -moz-transition: opacity .2s ease-in-out;
+        transition: opacity .2s ease-in-out;
+    }
+
+    &:hover img {
+        opacity: 80%;
+    }
+}

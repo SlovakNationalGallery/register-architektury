@@ -7,13 +7,16 @@
 
 @include('components.map', [
     'location' => $building->lng_lat,
-    'tags' => $building->tags,
     'show_map' => session('show_map', true),
 ])
 
-<div class="container-fluid py-5 px-3">
+<div class="container-fluid pt-3 pb-5 px-3">
     <div class="row">
-
+        <div class="col-md-12 pb-5">
+            @include('components.tags', ['tags' => $building->tags])
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-3 order-md-2">
             <h2 class="mb-3 ls-2">
                 {{ $building->title }}
@@ -51,10 +54,13 @@
             </ul>
         </div>
 
-        <div class="col-md-3 order-md-1">
-            <p>
-                <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
-            </p>
+        <div class="col-md-3 order-md-1 pb-4">
+            @if ($building->has3DModel())
+              <p>
+                  <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
+              </p>
+            @endif
+
             @if($building->processedImages->isNotEmpty())
             @include('components.gallery-carousel', [
                 'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia()),
@@ -64,8 +70,7 @@
         </div>
 
         <div class="col-md-6 order-md-3">
-            <h2 class="mb-3 ls-2">&nbsp;</h2>
-            <div class="mt-2 py-2 expandable expandable-long">
+            <div class="pb-2 expandable expandable-long">
                 <p>
                     {!! nl2br($building->description) !!}
                 </p>

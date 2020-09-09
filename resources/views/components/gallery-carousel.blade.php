@@ -1,7 +1,7 @@
 @php
     $captions = $captions ?? [];
 @endphp
-<div class="gallery-carousel-main overflow-hidden vh-38">
+<div class="gallery-carousel-main overflow-hidden vh-38 border p-4">
     @foreach($images as $index => $image)
     <div class="w-100 d-flex flex-column justify-content-center carousel-cell" data-caption="{{ Arr::get($captions, $index) }}">
         <img
