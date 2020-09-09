@@ -59,12 +59,11 @@
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-3 px-sm-4 flex-shrink-0 w-6rem w-sm-8rem d-flex align-items-end">
+        <div class="px-3 px-sm-4 flex-shrink-0 h-8rem d-flex align-items-end">
             @if($architect->has_image)
-            {{ $architect->image_tag->attributes(['class' => 'w-100']) }}
+                {{ $architect->image_tag->attributes(['class' => 'h-100']) }}
             @else
-            {{-- Placeholder image --}}
-            <div class="bg-secondary w-100 h-100"></div>
+                <img src="{{ asset('images/no-image-architect.svg') }}" class="h-100" alt="{{ $architect->full_name }}">
             @endif
         </div>
         <div class="d-inline-flex align-items-end pr-1 pr-md-4 flex-sm-shrink-0">
