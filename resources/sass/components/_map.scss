@@ -21,6 +21,15 @@
     }
 }
 
+.mapboxgl-popup {
+    max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+    text-align: center;
+    font-family: $font-family-base;
+}
+
 #map-toggle {
 	box-shadow: 0 0 6px $orange;
 

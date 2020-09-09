@@ -27,7 +27,6 @@ function initMap() {
 		.addTo(map);
 }
 
-
 $(document).ready(function(){
 	$('#map-toggle').click(function(){
 
