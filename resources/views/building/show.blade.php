@@ -55,9 +55,12 @@
         </div>
 
         <div class="col-md-3 order-md-1 pb-4">
-            <p>
-                <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
-            </p>
+            @if ($building->has3DModel())
+              <p>
+                  <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
+              </p>
+            @endif
+
             @if($building->processedImages->isNotEmpty())
             @include('components.gallery-carousel', [
                 'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia()),

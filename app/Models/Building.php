@@ -289,6 +289,11 @@ class Building extends Model
         ];
     }
 
+    public function has3DModel()
+    {
+        return true; //@TODO
+    }
+
     private function getAllTranslatedLocales()
     {
         return collect($this->getTranslations())
