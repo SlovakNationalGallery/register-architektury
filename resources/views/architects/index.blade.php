@@ -68,7 +68,7 @@
             @endif
         </div>
         <div class="d-inline-flex align-items-end pr-1 pr-md-4 flex-sm-shrink-0">
-            <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}">{{ $architect->full_name }}</a></h5>
+            <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}" class="link-no-underline">{{ $architect->full_name }}</a></h5>
         </div>
         @include('components.buildings-carousel', ['buildings' => $architect->buildings])
     </div>

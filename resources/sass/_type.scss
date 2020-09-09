@@ -21,3 +21,11 @@
     line-height: 3rem;
     margin-top: 100px;
 }
+
+.font-weight-normal {
+    font-weight: $font-weight-normal;
+}
+
+h5, .h5 {
+    font-weight: $font-weight-normal;
+}
