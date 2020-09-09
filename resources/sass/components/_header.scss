@@ -13,21 +13,22 @@
     }
 }
 
-#header {
+#header,  {
     .collapsing {
         transition: none !important;
     }
-    .nav.nav-justified {
-        @include media-breakpoint-down(sm) {
-            flex-direction: column;
-            margin-bottom: $spacer * 3;
-            &:not(.main-nav) {
-                border-top: $border-width solid $border-color;
-            }
-            .nav-item {
-                width: 100%;
-                text-align: left;
-            }
+}
+
+.nav.nav-justified {
+    @include media-breakpoint-down(sm) {
+        flex-direction: column;
+        margin-bottom: $spacer * 3;
+        &:not(.main-nav) {
+            border-top: $border-width solid $border-color;
+        }
+        .nav-item {
+            width: 100%;
+            text-align: left;
         }
     }
 }
