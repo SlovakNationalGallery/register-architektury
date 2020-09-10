@@ -16,6 +16,12 @@
         height: 8rem !important;
     }
 }
+
+.h-md-16rem {
+    @include media-breakpoint-up(sm) {
+        height: 16rem !important;
+    }
+}
 .h-16rem { height: 16rem !important; }
 
 .w-6rem {
