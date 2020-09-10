@@ -36,7 +36,9 @@ function initMap() {
 	$.getJSON('/api/markers', function(data) {
         data.features.forEach(function(marker) {
         	var is_active = (marker.properties.id == active_id) ? 1 : 0;
-        	initMarker(marker, map, is_active);
+        	if (marker.geometry.coordinates) {
+        		initMarker(marker, map, is_active);
+        	}
         });
     });
 }
