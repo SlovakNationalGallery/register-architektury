@@ -38,7 +38,9 @@ class BuildingController extends Controller
             $buildings->where('year_to', '<=', $year_until);
         }
 
-        $buildings = $buildings->paginate(20);
+        $buildings = $buildings
+            ->with(['dates', 'collections', 'architects'])
+            ->paginate(20);
 
         return view('building.index', compact(
             'buildings',
@@ -48,12 +50,8 @@ class BuildingController extends Controller
 
     public function show($id, $slug, Request $request)
     {
-    	$building = Building::with('dates')->find($id);
+    	$building = Building::findOrFail($id);
         $locale = \App::getLocale();
-
-    	if (empty($building)) {
-    	    \App::abort(404);
-    	}
 
     	if ($slug != $building->slug) {
     		return redirect($building->url);
@@ -75,6 +73,7 @@ class BuildingController extends Controller
                     ]
                 ];
             })
+            ->with(['dates', 'collections', 'architects'])
             ->paginate(8);
 
     	return view('building.show', [
@@ -82,5 +81,4 @@ class BuildingController extends Controller
             'related_buildings' => $related_buildings,
         ]);
     }
-
 }
