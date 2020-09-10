@@ -25,6 +25,8 @@ class CollectionCrudController extends CrudController
         $this->crud->setModel('App\Models\Collection');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/collections');
         $this->crud->setEntityNameStrings('collection', 'collections');
+        $this->crud->query = $this->crud->query->withoutGlobalScopes();
+        $this->crud->model->clearGlobalScopes();
 
         $this->crud->setColumns([
             [
