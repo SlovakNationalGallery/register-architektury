@@ -13,7 +13,7 @@
                 'height' => 'vh-md-25 vh-38',
             ])
         <p class="text-center my-4">
-            <a href="{{ route('building.index', ['filter' => $project->collection->title]) }}">🡢 Prejsť na kolekciu</a>
+            <a href="{{ route('building.index', ['filter' => $project->collection->title]) }}">🡢 {{ __('collection.go_to_collection') }}</a>
         </p>
         </div>
     </div>
