@@ -24,9 +24,11 @@
             {!! $project->contentHtml !!}
         </div>
         <div class="col-lg-3">
-            @include('components.gallery-carousel', [
-                'images' => $project->getMedia(),
-            ])
+            @if($project->hasMedia())
+                @include('components.gallery-carousel', [
+                    'images' => $project->getMedia(),
+                ])
+            @endif
         </div>
     </div>
 </div>
