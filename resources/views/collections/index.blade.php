@@ -22,12 +22,14 @@
     <div class="row border-top py-2 item">
         <div class="col-lg-6">
             <h5><a href="#TODO">{{ $collection->title }}</a></h5>
-            {!! $collection->description !!}
+            <div class="expandable expandable-medium">
+                {!! $collection->description !!}
+            </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 py-4 py-md-0">
             @include('components.buildings-carousel', [
                 'buildings' => $collection->buildings,
-                'height' => 'vh-md-25 h-6rem',
+                'height' => 'vh-md-25 vh-38',
             ])
         </div>
     </div>
