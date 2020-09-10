@@ -61,7 +61,7 @@
     <div class="row border-top flex-nowrap py-2 item">
         <div class="px-3 px-sm-4 flex-shrink-0 h-8rem d-flex align-items-end">
             @if($architect->has_image)
-                {{ $architect->image_tag->attributes(['class' => 'h-100']) }}
+                {{ $architect->image_tag->attributes(['class' => 'h-100 w-auto']) }}
             @else
                 <img src="{{ asset('images/no-image-architect.svg') }}" class="h-100" alt="{{ $architect->full_name }}">
             @endif
