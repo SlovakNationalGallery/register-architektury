@@ -20,6 +20,11 @@
 
 <div class="gallery-carousel-nav h-6rem mt-4">
     @foreach($images as $image)
-        {{ $image->img()->attributes(['width' => 'auto', 'class' => 'h-100 mr-3 pb-2 nav-slide']) }}
+    <img
+        data-flickity-lazyload-srcset="{{ $image->getSrcset() }}"
+        data-flickity-lazyload-src="{{ $image->getUrl() }}"
+        sizes="1px" {{-- Initial size updated in JS --}}
+        class="h-100 mr-3 pb-2 nav-slide"
+    >
     @endforeach
 </div>
