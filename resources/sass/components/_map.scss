@@ -7,8 +7,9 @@
     cursor: pointer;
 
     &:before {
+        transition: border .2s ease-in-out;
         background: none;
-        border: 4px solid #fff;
+        border: 4px solid transparent;
         content: "";
         display: block;
         position: absolute;
@@ -18,6 +19,22 @@
         bottom: 0;
         pointer-events: none;
         border-radius: 50%;
+    }
+
+    &:hover, &.active {
+        &:before {
+            background: none;
+            border: 4px solid #fff;
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            border-radius: 50%;
+        }
     }
 }
 
@@ -32,7 +49,7 @@
 
 #map-toggle {
 	box-shadow: 0 0 6px $orange;
-    pointer-events:all;
+    pointer-events: all;
 
 	&.active {
 		color: $black;
