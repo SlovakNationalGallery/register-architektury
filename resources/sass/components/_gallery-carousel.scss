@@ -10,6 +10,7 @@ $caption-height: $spacer * 8;
         &:after {
             font-family: 'regarch-icons';
             content: '\1f50d';
+            background-color: $white;
             @extend .border;
             padding: 0.2rem 0.4rem;
             display: inline-block;
