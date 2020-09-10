@@ -32,6 +32,7 @@
 
 #map-toggle {
 	box-shadow: 0 0 6px $orange;
+    pointer-events:all;
 
 	&.active {
 		color: $black;
@@ -42,4 +43,10 @@
 			background-color: $gray-200;
 		}
 	}
+}
+
+#map-container {
+    .row {
+        pointer-events: none;
+    }
 }
