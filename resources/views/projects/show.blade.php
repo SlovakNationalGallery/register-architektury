@@ -12,9 +12,9 @@
                 'buildings' => $project->collection->buildings,
                 'height' => 'h-8rem h-md-16rem',
             ])
-        <p class="text-center my-4">
-            <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}">🡢 {{ __('collection.go_to_collection') }}</a>
-        </p>
+            <p class="text-center my-4">
+                <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}">🡢 {{ __('collection.go_to_collection') }}</a>
+            </p>
         </div>
     </div>
     @endif
