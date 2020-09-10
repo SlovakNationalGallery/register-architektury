@@ -21,6 +21,9 @@
                     <div class="col-md p-3">
                         @include('components.custom-select', ['data' => $filter_values['functions'], 'label' => trans('filters.function')])
                     </div>
+                    <div class="col-md p-3">
+                        @include('components.custom-select', ['data' => $filter_values['collections'], 'label' => trans('filters.collection')])
+                    </div>
                 </div>
 
                 <div class="row no-gutters">
