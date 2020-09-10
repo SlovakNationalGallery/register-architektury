@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\PublishedScope;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Backpack\CRUD\app\Models\Traits\SpatieTranslatable\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,16 @@ class Collection extends Model
     protected $guarded = ['id'];
     protected $dates = ['published_at'];
     protected $translatable = ['title', 'description'];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new PublishedScope);
+    }
+
+    public function clearGlobalScopes()
+    {
+        static::$globalScopes = [];
+    }
 
     public function getSlugOptions(): SlugOptions
     {
