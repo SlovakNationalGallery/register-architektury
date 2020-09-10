@@ -159,6 +159,11 @@ class Building extends Model
         return $this->belongsToMany('App\Models\Architect');
     }
 
+    public function collections()
+    {
+        return $this->belongsToMany('App\Models\Collection');
+    }
+
     public function dates()
     {
         return $this->hasMany('App\Models\BuildingDate');
@@ -174,12 +179,17 @@ class Building extends Model
         return $this->processedImages->first()->getFirstMedia();
     }
 
-    public function getTagsAttribute($locale = null)
+    public function getTagsAttribute($preferredLocale = null)
     {
-        $tags = $this->architects->pluck('full_name')->all();
-        $tags[] = $this->location_city;
-        $tags[] = $this->getTranslation('current_function', $locale ?? \App::getLocale());
-        $tags[] = $this->years_span;
+        $locale = $preferredLocale ?? \App::getLocale();
+
+        $tags = [
+            $this->architects->pluck('full_name')->all(),
+            $this->location_city,
+            $this->getTranslation('current_function', $locale),
+            $this->collections->map->getTranslation('title', $locale),
+            $this->years_span,
+        ];
 
         return Arr::flatten(Arr::where($tags, fn ($tag) => !empty($tag)));
     }
