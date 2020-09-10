@@ -228,9 +228,8 @@ class Building extends Model
         ]);
         $array['architects'] = $this->architects->pluck('full_name')->all();
 
-        foreach($this->getAllTranslatedLocales() as $locale) {
-            Arr::set($array, "$locale.tags", $this->getTagsAttribute($locale));
-        }
+        Arr::set($array, "sk.tags", $this->getTagsAttribute('sk'));
+        Arr::set($array, "en.tags", $this->getTagsAttribute('en'));
 
         return $array;
     }
@@ -292,14 +291,5 @@ class Building extends Model
     public function has3DModel()
     {
         return true; //@TODO
-    }
-
-    private function getAllTranslatedLocales()
-    {
-        return collect($this->getTranslations())
-            ->values()
-            ->map(fn ($translation) => array_keys($translation))
-            ->flatten()
-            ->unique();
     }
 }
