@@ -4,6 +4,18 @@ mapboxgl.accessToken = process.env.MIX_MAPBOX_TOKEN;
 
 var map_initialised = false;
 
+function initMarker(marker, map) {
+	var el = document.createElement('div');
+	el.className = 'marker';
+
+	new mapboxgl.Marker(el)
+	  .setLngLat(marker.geometry.coordinates)
+	  .setPopup(new mapboxgl.Popup({ offset: 20 })
+	      .setHTML('<a href="' + marker.properties.url + '" class="mt-2 link-no-underline">' + marker.properties.title + '</a>'))
+	  .addTo(map);
+}
+
+
 function initMap() {
 	map_initialised = true;
 
@@ -18,13 +30,40 @@ function initMap() {
 		zoom: 14
 	});
 
-	var el = document.createElement('div');
-	 el.className = 'marker';
+	// map.addSource('markers', {
+	// 	type: 'geojson',
+	// 	data: 'https://www.register-architektury.local/api/markers'
+	// });
 
-	const marker = new mapboxgl.Marker(el)
-		.setLngLat(location)
-		.setPopup(popup)
-		.addTo(map);
+	// map.addLayer({
+	// 	'id': 'markers',
+	// 	'type': 'symbol',
+	// 	'source': 'markers',
+	// 	'layout': {
+	// 		'icon-image': 'custom-marker',
+	// 		// get the title name from the source's "title" property
+	// 		'text-field': ['get', 'title'],
+	// 		'text-font': [
+	// 			'IBM Plex Mono'
+	// 		],
+	// 		'text-offset': [0, 1.25],
+	// 		'text-anchor': 'top'
+	// 	}
+	// });
+
+	$.getJSON('/api/markers', function(data) {
+        data.features.forEach(function(marker) {
+        	initMarker(marker, map)
+        });
+    });
+
+	// var el = document.createElement('div');
+	//  el.className = 'marker';
+
+	// const marker = new mapboxgl.Marker(el)
+	// 	.setLngLat(location)
+	// 	.setPopup(popup)
+	// 	.addTo(map);
 }
 
 $(document).ready(function(){
