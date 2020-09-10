@@ -122,6 +122,9 @@ class Building extends Model
             ],
 
             // Translatable attributes
+            'sk.collections' => [
+                'type' => 'keyword',
+            ],
             'sk.tags' => [
                 'type' => 'keyword',
             ],
@@ -133,6 +136,9 @@ class Building extends Model
                         'type' => 'keyword',
                     ],
                 ],
+            ],
+            'en.collections' => [
+                'type' => 'keyword',
             ],
             'en.tags' => [
                 'type' => 'keyword',
@@ -238,14 +244,17 @@ class Building extends Model
         ]);
         $array['architects'] = $this->architects->pluck('full_name')->all();
 
-        Arr::set($array, "sk.tags", $this->getTagsAttribute('sk'));
-        Arr::set($array, "en.tags", $this->getTagsAttribute('en'));
+        foreach (['sk', 'en'] as $locale) {
+            Arr::set($array, "$locale.tags", $this->getTagsAttribute($locale));
+            Arr::set($array, "$locale.collections", $this->collections->map->getTranslation('title', $locale));
+        }
 
         return $array;
     }
 
     public static function getFilterValues($payload)
     {
+        $locale = \App::getLocale();
         $max_bucket_size = 200;
         $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
 
@@ -257,6 +266,12 @@ class Building extends Model
                     'size' => $max_bucket_size,
                 ]
             ],
+            'collections' => [
+                'terms' => [
+                    'field' => "$locale.collections",
+                    'size' => $max_bucket_size,
+                ]
+            ],
             'locations' => [
                 'terms' => [
                     'field' => 'location_city.raw',
@@ -265,7 +280,7 @@ class Building extends Model
             ],
             'functions' => [
                 'terms' => [
-                    'field' => \App::getLocale() . '.current_function.raw',
+                    'field' => "$locale.current_function.raw",
                     'size' => $max_bucket_size,
                 ]
             ],
@@ -281,20 +296,23 @@ class Building extends Model
             ],
         ];
 
-        $searchResult = Building::searchRaw($body);
+        $aggregations = Arr::get(Building::searchRaw($body), 'aggregations');
 
         return [
-            'architects' => collect($searchResult['aggregations']['architects']['buckets'])
+            'architects' => collect(Arr::get($aggregations, 'architects.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'locations' => collect($searchResult['aggregations']['locations']['buckets'])
+            'collections' => collect(Arr::get($aggregations, 'collections.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'functions' => collect($searchResult['aggregations']['functions']['buckets'])
+            'locations' => collect(Arr::get($aggregations, 'locations.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'year_min' => $searchResult['aggregations']['year_min']['value'],
-            'year_max' => ceil($searchResult['aggregations']['year_max']['value'] / 10) * 10,
+            'functions' => collect(Arr::get($aggregations, 'functions.buckets'))
+                ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
+
+            'year_min' => Arr::get($aggregations, 'year_min.value'),
+            'year_max' => ceil(Arr::get($aggregations, 'year_max.value') / 10) * 10,
         ];
     }
 

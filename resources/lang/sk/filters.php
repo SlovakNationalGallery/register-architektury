@@ -2,9 +2,10 @@
 
 return [
     'clear' => 'Zrušiť všetky filtre',
-    'function' => 'FUNKCIA',
-    'location' => 'LOKALITA',
-    'architect' => 'ARCHITEKT',
+    'function' => 'funkcia',
+    'location' => 'lokalita',
+    'architect' => 'architekt',
+    'collection' => 'kolekcia',
     'first_letter' => 'Začína na písmeno :letter',
     'sort_by' => [
         'chronologically' => 'chronologicky',

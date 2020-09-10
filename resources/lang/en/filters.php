@@ -2,9 +2,10 @@
 
 return [
     'clear' => 'Clear all filters',
-    'function' => 'FUNCTION',
-    'location' => 'LOCATION',
-    'architect' => 'ARCHITECT',
+    'function' => 'function',
+    'location' => 'location',
+    'architect' => 'architect',
+    'collection' => 'collection',
     'first_letter' => 'Starts with letter :letter',
     'sort_by' => [
         'chronologically' => 'chronologically',
