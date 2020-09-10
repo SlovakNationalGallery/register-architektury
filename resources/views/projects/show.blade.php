@@ -5,6 +5,19 @@
 @include('components.header')
 
 <div class="container-fluid my-lg-7">
+    @if($project->collection)
+    <div class="row border-top pt-3">
+        <div class="col">
+            @include('components.buildings-carousel', [
+                'buildings' => $project->collection->buildings,
+                'height' => 'vh-md-25 vh-38',
+            ])
+        <p class="text-center my-4">
+            <a href="{{ route('building.index', ['filter' => $project->collection->title]) }}">🡢 Prejsť na kolekciu</a>
+        </p>
+        </div>
+    </div>
+    @endif
     <div class="row border-top pt-3">
         <div class="col-lg-6 offset-lg-3">
             <h2 class="mb-2 ls-2">{{ $project->title }}</h2>
