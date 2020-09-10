@@ -23,7 +23,7 @@ class CollectionController extends Controller
         if (request('sort_by') == 'name_desc') $collections->orderByTitle('desc');
 
         $collections = $collections
-            ->with(['buildings'])
+            ->with(['buildings', 'project'])
             ->paginate(12);
 
         return view('collections.index', compact('collections'));

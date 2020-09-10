@@ -23,6 +23,11 @@
         <div class="col-lg-6">
             <h5><a href="#TODO">{{ $collection->title }}</a></h5>
             <div class="expandable expandable-medium">
+                @if($collection->project)
+                <p class="ml-2">
+                    <a href="{{ route('about.projects.show', $collection->project) }}">🡢 Prejsť na projekt</a>
+                </p>
+                @endif
                 {!! $collection->description !!}
             </div>
         </div>
