@@ -6,8 +6,9 @@
 @include('components.header')
 
 @include('components.map', [
-    'title' => $building->title,
-    'location' => $building->lng_lat,
+    'active_id' => $building->id,
+    'center' => $building->lng_lat,
+    'zoom' => 14,
     'show_map' => session('show_map', true),
 ])
 

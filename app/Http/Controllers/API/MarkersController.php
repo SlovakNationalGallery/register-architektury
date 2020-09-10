@@ -21,7 +21,7 @@ class MarkersController extends Controller
 
     private function features($search)
     {
-        $buildings = \App\Models\Building::search($search)->take(100)->get();
+        $buildings = \App\Models\Building::search($search)->take(500)->get();
 
         $features = [];
 
@@ -33,6 +33,7 @@ class MarkersController extends Controller
                         'coordinates' => $building->lng_lat
                     ],
                     'properties' => [
+                        'id' => $building->id,
                         'title' => $building->title,
                         'description' => $building->architect_names,
                         'url' => $building->url

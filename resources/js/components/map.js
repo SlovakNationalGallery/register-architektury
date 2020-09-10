@@ -4,9 +4,11 @@ mapboxgl.accessToken = process.env.MIX_MAPBOX_TOKEN;
 
 var map_initialised = false;
 
-function initMarker(marker, map) {
+function initMarker(marker, map, is_active = 0) {
 	var el = document.createElement('div');
 	el.className = 'marker';
+
+	if (is_active) el.className += ' active';
 
 	new mapboxgl.Marker(el)
 	  .setLngLat(marker.geometry.coordinates)
@@ -20,50 +22,23 @@ function initMap() {
 	map_initialised = true;
 
 	const map_container = document.querySelector('#map');
-	var location = JSON.parse(map_container.dataset.location);
-	var popup = new mapboxgl.Popup({ offset: 25 }).setText(map_container.dataset.title);
+	var center = JSON.parse(map_container.dataset.center);
+	var zoom = map_container.dataset.zoom;
+	var active_id = map_container.dataset.active_id;
 
 	const map = new mapboxgl.Map({
 		container: 'map',
 		style: 'mapbox://styles/mapbox/streets-v11',
-		center: location,
-		zoom: 14
+		center: center,
+		zoom: zoom
 	});
-
-	// map.addSource('markers', {
-	// 	type: 'geojson',
-	// 	data: 'https://www.register-architektury.local/api/markers'
-	// });
-
-	// map.addLayer({
-	// 	'id': 'markers',
-	// 	'type': 'symbol',
-	// 	'source': 'markers',
-	// 	'layout': {
-	// 		'icon-image': 'custom-marker',
-	// 		// get the title name from the source's "title" property
-	// 		'text-field': ['get', 'title'],
-	// 		'text-font': [
-	// 			'IBM Plex Mono'
-	// 		],
-	// 		'text-offset': [0, 1.25],
-	// 		'text-anchor': 'top'
-	// 	}
-	// });
 
 	$.getJSON('/api/markers', function(data) {
         data.features.forEach(function(marker) {
-        	initMarker(marker, map)
+        	var is_active = (marker.properties.id == active_id) ? 1 : 0;
+        	initMarker(marker, map, is_active);
         });
     });
-
-	// var el = document.createElement('div');
-	//  el.className = 'marker';
-
-	// const marker = new mapboxgl.Marker(el)
-	// 	.setLngLat(location)
-	// 	.setPopup(popup)
-	// 	.addTo(map);
 }
 
 $(document).ready(function(){
