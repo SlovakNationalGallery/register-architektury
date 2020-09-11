@@ -55,17 +55,9 @@ function initMap() {
 			source: 'buildings',
 			filter: ['has', 'point_count'],
 			paint: {
+				'circle-color': '#000000',
 				// Using step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
 				// with three steps to implement three types of circles
-				'circle-color': [
-					'step',
-					['get', 'point_count'],
-					'#000000',
-					10,
-					'#000000',
-					50,
-					'#000000'
-				],
 				'circle-radius': [
 					'step',
 					['get', 'point_count'],
@@ -139,7 +131,7 @@ function initMap() {
 		map.on('click', 'unclustered-point', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 
-			new mapboxgl.Popup({ offset: 5 })
+			new mapboxgl.Popup({ offset: 10 })
 				.setLngLat(coordinates)
 				.setHTML(
 					'<div class="d-inline-block p-1 pt-2"><a href="' + e.features[0].properties.url + '" class="link-no-underline">' + e.features[0].properties.title + '</a></div>'
