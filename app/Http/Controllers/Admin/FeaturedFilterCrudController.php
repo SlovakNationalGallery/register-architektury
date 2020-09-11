@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\DB;
 class FeaturedFilterCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as storeTrait; }
-    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation { update as updateTrait; }
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
+    use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
 
@@ -79,7 +79,7 @@ class FeaturedFilterCrudController extends CrudController
                 'type' => 'select2_from_array',
                 'label' => 'Architects',
                 'options' => $select_options['architect_tags'],
-                'allows_null' => false,
+                'allows_null' => true,
                 'allows_multiple' => true,
             ],
             [
@@ -87,7 +87,7 @@ class FeaturedFilterCrudController extends CrudController
                 'type' => 'select2_from_array',
                 'label' => 'Locations',
                 'options' => $select_options['location_tags'],
-                'allows_null' => false,
+                'allows_null' => true,
                 'allows_multiple' => true,
             ],
             [
@@ -95,7 +95,7 @@ class FeaturedFilterCrudController extends CrudController
                 'type' => 'select2_from_array',
                 'label' => 'Functions',
                 'options' => $select_options['function_tags'],
-                'allows_null' => false,
+                'allows_null' => true,
                 'allows_multiple' => true,
             ],
             [
@@ -103,7 +103,7 @@ class FeaturedFilterCrudController extends CrudController
                 'type' => 'select2_from_array',
                 'label' => 'Decades',
                 'options' => $select_options['year_range_tags'],
-                'allows_null' => false,
+                'allows_null' => true,
                 'allows_multiple' => true,
             ],
             [

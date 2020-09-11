@@ -28,7 +28,7 @@ class FeaturedFilter extends Model
             ...$this->getLocalizedFunctionTags(app()->getLocale()),
             ...$this->location_tags,
             ...$this->year_range_tags,
-        ]);
+        ])->filter();
     }
 
     public function getLocalizedFunctionTags($locale)
