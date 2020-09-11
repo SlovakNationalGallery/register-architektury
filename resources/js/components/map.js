@@ -35,7 +35,11 @@ function initMap() {
 
 	var hoveredBuildingId = null;
 
-	// map.addControl(new mapboxgl.NavigationControl());
+	var nav = new mapboxgl.NavigationControl({
+		showCompass: false,
+		showZoom: true
+	});
+	map.addControl(nav, 'top-left');
 
 	map.on('load', function () {
 
