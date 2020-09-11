@@ -5,6 +5,12 @@
 
 @include('components.header')
 
+@include('components.map', [
+    'center' => [19.696058, 48.6737532],
+    'zoom' => 6,
+    'show_map' => session('show_map', true),
+])
+
 <div class="container-fluid p-0">
     <div class="row no-gutters">
         <div class="col-md-12 p-3" id="filters">
