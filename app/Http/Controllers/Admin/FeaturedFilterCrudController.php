@@ -33,20 +33,6 @@ class FeaturedFilterCrudController extends CrudController
         $this->crud->setEntityNameStrings('featured filter', 'featured filters');
     }
 
-    public function store()
-    {
-        return $this->storeTrait();
-    }
-
-    public function update()
-    {
-        // $request = $this->crud->getRequest();
-        // $request->merge([
-        //     'function_tags_strings' => collect($request->input('function_tags'))->map(fn ($tag) => (array) json_decode($tag))->toArray(),
-        // ]);
-        return $this->updateTrait();
-    }
-
     /**
      * Define what happens when the List operation is loaded.
      *
@@ -55,13 +41,20 @@ class FeaturedFilterCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::setFromDb(); // columns
-
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']);
-         */
+        CRUD::addColumns([
+            [
+                'name' => 'description',
+            ],
+            [
+                'name' => 'tags',
+                'type' => 'closure',
+                'function' => fn ($entry) => $entry->tags->map(fn ($tag) => "<span class=\"badge badge-light my-1\">$tag</span>")->join(' '),
+                'wrapper' => [
+                    'element' => 'div',
+                    'class' => 'd-flex flex-wrap',
+                ]
+            ],
+        ]);
     }
 
     /**
@@ -150,12 +143,11 @@ class FeaturedFilterCrudController extends CrudController
             'location_tags' => $filter_values['locations']
                 ->mapWithKeys(fn ($index, $value) => [$value => $value]),
             'function_tags' => Building::selectRaw('DISTINCT(current_function)')
-                ->whereNotNull("current_function->$locale")
-                ->get()->mapWithKeys(fn ($b) => [json_encode($b->getTranslations('current_function')) => $b->current_function]),
+                ->whereNotNull("current_function->$locale")->get()
+                ->mapWithKeys(fn ($b) => [json_encode($b->getTranslations('current_function')) => $b->current_function]),
             'year_range_tags' => Building::select(DB::raw('DISTINCT(decade)'))
-                ->whereNotNull('decade')
-                ->orderBy('decade')
-                ->get()->map->years_span
+                ->whereNotNull('decade')->orderBy('decade')->get()
+                ->map->years_span
                 ->mapWithKeys(fn ($value) => [$value => $value]),
         ];
     }
