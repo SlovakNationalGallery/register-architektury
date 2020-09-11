@@ -4,20 +4,6 @@ mapboxgl.accessToken = process.env.MIX_MAPBOX_TOKEN;
 
 var map_initialised = false;
 
-function initMarker(marker, map, is_active = 0) {
-	var el = document.createElement('div');
-	el.className = 'marker';
-
-	if (is_active) el.className += ' active';
-
-	new mapboxgl.Marker(el)
-	  .setLngLat(marker.geometry.coordinates)
-	  .setPopup(new mapboxgl.Popup({ offset: 20 })
-	      .setHTML('<a href="' + marker.properties.url + '" class="mt-2 link-no-underline">' + marker.properties.title + '</a>'))
-	  .addTo(map);
-}
-
-
 function initMap() {
 	map_initialised = true;
 
@@ -28,7 +14,7 @@ function initMap() {
 
 	const map = new mapboxgl.Map({
 		container: 'map',
-		style: 'mapbox://styles/lab-sng/ckey3tyxr0ak719qgxj4y219b/draft',
+		style: 'mapbox://styles/lab-sng/ckey3tyxr0ak719qgxj4y219b/draft', // @TODO switch to production once the map edits is fine
 		center: center,
 		zoom: zoom
 	});
