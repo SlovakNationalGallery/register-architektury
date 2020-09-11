@@ -1,7 +1,7 @@
 @php
     $captions = $captions ?? [];
 @endphp
-<div class="gallery-carousel-main overflow-hidden vh-38">
+<div class="gallery-carousel-main overflow-hidden vh-38 border p-4">
     @foreach($images as $index => $image)
     <div class="w-100 d-flex flex-column justify-content-center carousel-cell" data-caption="{{ Arr::get($captions, $index) }}">
         <img
@@ -20,6 +20,11 @@
 
 <div class="gallery-carousel-nav h-6rem mt-4">
     @foreach($images as $image)
-        {{ $image->img()->attributes(['width' => 'auto', 'class' => 'h-100 mr-3 pb-2 nav-slide']) }}
+    <img
+        data-flickity-lazyload-srcset="{{ $image->getSrcset() }}"
+        data-flickity-lazyload-src="{{ $image->getUrl() }}"
+        sizes="1px" {{-- Initial size updated in JS --}}
+        class="h-100 mr-3 pb-2 nav-slide"
+    >
     @endforeach
 </div>

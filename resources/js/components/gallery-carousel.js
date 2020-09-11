@@ -67,6 +67,12 @@ if (mainCarousel) {
         prevNextButtons: false,
         pageDots: false,
         setGallerySize: false,
-        asNavFor: '.gallery-carousel-main'
+        asNavFor: '.gallery-carousel-main',
+        lazyLoad: 5,
+        on: {
+            lazyLoad(event, image) {
+                image.sizes = Math.ceil(image.getBoundingClientRect().width / window.innerWidth * 100 ) + 'vw'
+            },
+        }
     })
 }

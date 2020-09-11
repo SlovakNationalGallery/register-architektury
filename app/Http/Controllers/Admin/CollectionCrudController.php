@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\CollectionRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use Illuminate\Support\Collection;
 
 /**
  * Class CollectionCrudController
@@ -24,6 +25,8 @@ class CollectionCrudController extends CrudController
         $this->crud->setModel('App\Models\Collection');
         $this->crud->setRoute(config('backpack.base.route_prefix') . '/collections');
         $this->crud->setEntityNameStrings('collection', 'collections');
+        $this->crud->query = $this->crud->query->withoutGlobalScopes();
+        $this->crud->model->clearGlobalScopes();
 
         $this->crud->setColumns([
             [
@@ -97,16 +100,33 @@ class CollectionCrudController extends CrudController
 
     public function update()
     {
+        $removedBuildings = $this->getRemovedBuildings();
+
         $response = $this->traitUpdate();
         $this->syncBuildingPositions();
+        $this->reindexBuildings($removedBuildings);
         return $response;
     }
 
     public function store()
     {
-      $response = $this->traitStore();
-      $this->syncBuildingPositions();
-      return $response;
+        $response = $this->traitStore();
+        $this->syncBuildingPositions();
+        $this->reindexBuildings();
+        return $response;
+    }
+
+    private function reindexBuildings(Collection $removedBuildings = null) {
+        // Re-index removed buildings
+        if ($removedBuildings) $removedBuildings->searchable();
+
+        // Re-index added buildings
+        $this->crud->getCurrentEntry()->buildings()->searchable();
+    }
+
+    private function getRemovedBuildings() {
+        $newBuildingIds = $this->crud->getRequest()->get('buildings', []);
+        return $this->crud->getCurrentEntry()->buildings()->whereNotIn('id', $newBuildingIds)->get();
     }
 
     private function syncBuildingPositions() {

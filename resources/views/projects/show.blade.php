@@ -5,6 +5,19 @@
 @include('components.header')
 
 <div class="container-fluid my-lg-7">
+    @if($project->collection)
+    <div class="row border-top pt-3">
+        <div class="col">
+            @include('components.buildings-carousel', [
+                'buildings' => $project->collection->buildings,
+                'height' => 'h-8rem h-md-16rem',
+            ])
+            <p class="text-center my-4">
+                <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}">🡢 {{ __('collection.go_to_collection') }}</a>
+            </p>
+        </div>
+    </div>
+    @endif
     <div class="row border-top pt-3">
         <div class="col-lg-6 offset-lg-3">
             <h2 class="mb-2 ls-2">{{ $project->title }}</h2>
@@ -24,9 +37,11 @@
             {!! $project->contentHtml !!}
         </div>
         <div class="col-lg-3">
-            @include('components.gallery-carousel', [
-                'images' => $project->getMedia(),
-            ])
+            @if($project->hasMedia())
+                @include('components.gallery-carousel', [
+                    'images' => $project->getMedia(),
+                ])
+            @endif
         </div>
     </div>
 </div>

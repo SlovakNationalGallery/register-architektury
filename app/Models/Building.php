@@ -122,6 +122,9 @@ class Building extends Model
             ],
 
             // Translatable attributes
+            'sk.collections' => [
+                'type' => 'keyword',
+            ],
             'sk.tags' => [
                 'type' => 'keyword',
             ],
@@ -133,6 +136,9 @@ class Building extends Model
                         'type' => 'keyword',
                     ],
                 ],
+            ],
+            'en.collections' => [
+                'type' => 'keyword',
             ],
             'en.tags' => [
                 'type' => 'keyword',
@@ -159,6 +165,11 @@ class Building extends Model
         return $this->belongsToMany('App\Models\Architect');
     }
 
+    public function collections()
+    {
+        return $this->belongsToMany('App\Models\Collection');
+    }
+
     public function dates()
     {
         return $this->hasMany('App\Models\BuildingDate');
@@ -174,12 +185,17 @@ class Building extends Model
         return $this->processedImages->first()->getFirstMedia();
     }
 
-    public function getTagsAttribute($locale = null)
+    public function getTagsAttribute($preferredLocale = null)
     {
-        $tags = $this->architects->pluck('full_name')->all();
-        $tags[] = $this->location_city;
-        $tags[] = $this->getTranslation('current_function', $locale ?? \App::getLocale());
-        $tags[] = $this->years_span;
+        $locale = $preferredLocale ?? \App::getLocale();
+
+        $tags = [
+            $this->architects->pluck('full_name')->all(),
+            $this->location_city,
+            $this->getTranslation('current_function', $locale),
+            $this->collections->map->getTranslation('title', $locale),
+            $this->years_span,
+        ];
 
         return Arr::flatten(Arr::where($tags, fn ($tag) => !empty($tag)));
     }
@@ -228,8 +244,9 @@ class Building extends Model
         ]);
         $array['architects'] = $this->architects->pluck('full_name')->all();
 
-        foreach($this->getAllTranslatedLocales() as $locale) {
+        foreach (['sk', 'en'] as $locale) {
             Arr::set($array, "$locale.tags", $this->getTagsAttribute($locale));
+            Arr::set($array, "$locale.collections", $this->collections->map->getTranslation('title', $locale));
         }
 
         return $array;
@@ -237,6 +254,7 @@ class Building extends Model
 
     public static function getFilterValues($payload)
     {
+        $locale = \App::getLocale();
         $max_bucket_size = 200;
         $body = (isSet($payload[0]['body'])) ? $payload[0]['body'] : [];
 
@@ -248,6 +266,12 @@ class Building extends Model
                     'size' => $max_bucket_size,
                 ]
             ],
+            'collections' => [
+                'terms' => [
+                    'field' => "$locale.collections",
+                    'size' => $max_bucket_size,
+                ]
+            ],
             'locations' => [
                 'terms' => [
                     'field' => 'location_city.raw',
@@ -256,7 +280,7 @@ class Building extends Model
             ],
             'functions' => [
                 'terms' => [
-                    'field' => \App::getLocale() . '.current_function.raw',
+                    'field' => "$locale.current_function.raw",
                     'size' => $max_bucket_size,
                 ]
             ],
@@ -272,29 +296,28 @@ class Building extends Model
             ],
         ];
 
-        $searchResult = Building::searchRaw($body);
+        $aggregations = Arr::get(Building::searchRaw($body), 'aggregations');
 
         return [
-            'architects' => collect($searchResult['aggregations']['architects']['buckets'])
+            'architects' => collect(Arr::get($aggregations, 'architects.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'locations' => collect($searchResult['aggregations']['locations']['buckets'])
+            'collections' => collect(Arr::get($aggregations, 'collections.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'functions' => collect($searchResult['aggregations']['functions']['buckets'])
+            'locations' => collect(Arr::get($aggregations, 'locations.buckets'))
                 ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
 
-            'year_min' => $searchResult['aggregations']['year_min']['value'],
-            'year_max' => ceil($searchResult['aggregations']['year_max']['value'] / 10) * 10,
+            'functions' => collect(Arr::get($aggregations, 'functions.buckets'))
+                ->flatMap(fn ($bucket) => [$bucket['key'] => $bucket['doc_count']]),
+
+            'year_min' => Arr::get($aggregations, 'year_min.value'),
+            'year_max' => ceil(Arr::get($aggregations, 'year_max.value') / 10) * 10,
         ];
     }
 
-    private function getAllTranslatedLocales()
+    public function has3DModel()
     {
-        return collect($this->getTranslations())
-            ->values()
-            ->map(fn ($translation) => array_keys($translation))
-            ->flatten()
-            ->unique();
+        return true; //@TODO
     }
 }

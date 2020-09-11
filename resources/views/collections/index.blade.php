@@ -21,13 +21,20 @@
     @foreach($collections as $collection)
     <div class="row border-top py-2 item">
         <div class="col-lg-6">
-            <h5><a href="#TODO">{{ $collection->title }}</a></h5>
-            {!! $collection->description !!}
+            <h5><a href="{{ route('building.index', ['filters[]' => $collection->title]) }}">{{ $collection->title }}</a></h5>
+            <div class="expandable expandable-medium">
+                @if($collection->project)
+                <p class="ml-2">
+                    <a href="{{ route('about.projects.show', $collection->project) }}">🡢 {{ __('collection.go_to_project') }}</a>
+                </p>
+                @endif
+                {!! $collection->description !!}
+            </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 py-4 py-md-0">
             @include('components.buildings-carousel', [
                 'buildings' => $collection->buildings,
-                'height' => 'vh-md-25 h-6rem',
+                'height' => 'h-8rem h-md-16rem',
             ])
         </div>
     </div>

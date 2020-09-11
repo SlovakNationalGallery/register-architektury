@@ -4,7 +4,7 @@
 @section('content')
 
 @include('components.header')
-<div class="container-fluid py-5 px-3 items">
+<div class="container-fluid py-5 px-3 items overflow-x-hidden">
     <form action="{{ route('architects.index') }}" id="filters">
         <div class="row">
             <div class="col-12 py-3">
@@ -59,18 +59,22 @@
 
     @foreach($architects as $architect)
     <div class="row border-top flex-nowrap py-2 item">
-        <div class="px-3 px-sm-4 flex-shrink-0 w-6rem w-sm-8rem d-flex align-items-end">
+        <div class="px-3 px-sm-4 flex-shrink-0 h-6rem h-sm-8rem d-flex align-items-end">
             @if($architect->has_image)
-            {{ $architect->image_tag->attributes(['class' => 'w-100']) }}
+                {{ $architect->image_tag->attributes(['class' => 'h-100 w-auto']) }}
             @else
-            {{-- Placeholder image --}}
-            <div class="bg-secondary w-100 h-100"></div>
+                <img src="{{ asset('images/no-image-architect.svg') }}" class="h-100" alt="{{ $architect->full_name }}">
             @endif
         </div>
         <div class="d-inline-flex align-items-end pr-1 pr-md-4 flex-sm-shrink-0">
-            <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}">{{ $architect->full_name }}</a></h5>
+            <h5 class="mb-0"><a href="{{ route('architects.show', $architect) }}" class="link-no-underline">{{ $architect->full_name }}</a></h5>
         </div>
-        @include('components.buildings-carousel', ['buildings' => $architect->buildings])
+        <div class="col-7 col-md px-0 px-md-2">
+            @include('components.buildings-carousel', [
+                'buildings' => $architect->buildings,
+                'height' => 'h-6rem h-sm-8rem'
+            ])
+        </div>
     </div>
     @endforeach
 

@@ -1,7 +1,7 @@
 <div class="container-fluid p-0 navbar-expand-md bg-white" id="header">
     <div class="row no-gutters align-items-stretch">
         <div class="d-none d-md-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
-            <h1 class="ls-2 my-auto">
+            <h1 class="ls-2 my-auto font-weight-normal">
                 <a href="{{ route('home') }}">
                     {{ __('header.title') }}<span class="d-lg-none d-xl-inline"> oA HÚ SAV</span>
                 </a>
@@ -64,10 +64,11 @@
             </nav>
         </div>
     </div>
-    @if(Route::is('about.*'))
+</div>
+@if(Route::is('about.*'))
     <div class="row no-gutters">
         <div class="col-md-12">
-            <nav class="nav nav-justified sub-nav bg-light collapse navbar-collapse align-items-stretch">
+            <nav class="nav nav-justified sub-nav bg-light align-items-stretch mt-n1 mt-md-0">
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.department') ? 'active' : '' }}" href="{{ route('about.department') }}">{!! __('header.about.department') !!}</a>
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.articles.*') ? 'active' : '' }}" href="{{ route('about.articles.index') }}">{{ __('header.about.news') }}</a>
                 <a class="nav-item d-sm-flex align-items-center justify-content-center py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.*') ? 'active' : '' }}" href="{{ route('about.projects.index') }}">{{ __('header.about.projects') }}</a>
@@ -75,5 +76,4 @@
             </nav>
         </div>
     </div>
-    @endif
-</div>
+@endif

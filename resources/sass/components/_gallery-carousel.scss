@@ -1,6 +1,35 @@
 $caption-height: $spacer * 8;
 
 .gallery-carousel-main {
+    &:not(.is-fullscreen) {
+        cursor: pointer;
+        opacity: 1;
+        transition: opacity .2s ease-in-out;
+        position: relative;
+
+        &:after {
+            font-family: 'regarch-icons';
+            content: '\1f50d';
+            background-color: $white;
+            @extend .border;
+            padding: 0.2rem 0.4rem;
+            display: inline-block;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            opacity: 0;
+            transition: inherit;
+            pointer-events: none;
+        }
+
+        &:hover {
+            opacity: .8;
+            &:after {
+                opacity: 1;
+            }
+        }
+    }
+
     .carousel-cell {
         height: 100%
     }
