@@ -11,6 +11,7 @@ function initMap() {
 	var center = JSON.parse(map_container.dataset.center);
 	var zoom = map_container.dataset.zoom;
 	var active_id = parseInt(map_container.dataset.active_id);
+	var queryString = window.location.search;
 
 	const map = new mapboxgl.Map({
 		container: 'map',
@@ -32,7 +33,7 @@ function initMap() {
 	 	// Add a GeoJSON source with markers
 	 	map.addSource('buildings', {
 	 		'type': 'geojson',
-	 		'data': '/api/markers',
+	 		'data': '/api/markers'+queryString,
 	 		'generateId': true, // This ensures that all features have unique IDs
 	 		'cluster': true,
 	 		'clusterMaxZoom': 14,
