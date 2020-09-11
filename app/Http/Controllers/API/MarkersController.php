@@ -26,19 +26,21 @@ class MarkersController extends Controller
         $features = [];
 
         foreach($buildings as $building) {
-            $features[] = [
-                    'type' => 'Feature',
-                    'geometry' => [
-                        'type' => 'Point',
-                        'coordinates' => $building->lng_lat
-                    ],
-                    'properties' => [
-                        'id' => $building->id,
-                        'title' => $building->title,
-                        'description' => $building->architect_names,
-                        'url' => $building->url
-                    ]
-            ];
+            if (!empty($building->lng_lat)) {
+                $features[] = [
+                        'type' => 'Feature',
+                        'geometry' => [
+                            'type' => 'Point',
+                            'coordinates' => $building->lng_lat
+                        ],
+                        'properties' => [
+                            'id' => $building->id,
+                            'title' => $building->title,
+                            'description' => $building->architect_names,
+                            'url' => $building->url
+                        ]
+                ];
+            }
         }
 
         return $features;
