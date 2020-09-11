@@ -16,11 +16,11 @@ class CreateFeaturedFiltersTable extends Migration
         Schema::create('featured_filters', function (Blueprint $table) {
             $table->id();
 
-            $table->json('description');
-            $table->json('architects');
-            $table->json('locations');
-            $table->json('functions');
-            $table->json('year_ranges');
+            $table->json('description')->nullable();
+            $table->json('architect_tags')->nullable();
+            $table->json('location_tags')->nullable();
+            $table->json('function_tags')->nullable();
+            $table->json('year_range_tags')->nullable();
             $table->timestamp('published_at')->nullable();
 
             $table->timestamps();
