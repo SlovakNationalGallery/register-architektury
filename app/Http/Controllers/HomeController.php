@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $locale = app()->getLocale();
         $buildings = Building::search('*');
-        $featured_filter = FeaturedFilter::published()->limit(1)->get()->first();
+        $featured_filter = FeaturedFilter::published()->orderBy('published_at', 'desc')->first();
 
         if ($featured_filter) {
             foreach ($featured_filter->tags as $filter) {
