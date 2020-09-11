@@ -17,17 +17,7 @@ use Illuminate\Http\Response;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
-	Route::get('/', function (Request $request) {
-	    $search = $request->input('search');
-	    $buildings = (new \App\Models\Building)->newQuery();
-
-	    if (!empty($search)) {
-	    	$buildings = \App\Models\Building::search($search);
-	    }
-
-	    $buildings = $buildings->paginate(20);
-	    return view('welcome', compact('buildings'));
-	})->name('home');
+	Route::get('/', 'HomeController@index')->name('home');
 
     Route::get('objekty', 'BuildingController@index')->name('building.index');
 	Route::get('objekt/{id}-{slug}', 'BuildingController@show')->name('building.detail');
