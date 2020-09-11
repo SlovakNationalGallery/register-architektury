@@ -24,7 +24,7 @@ function initMap() {
 	const map_container = document.querySelector('#map');
 	var center = JSON.parse(map_container.dataset.center);
 	var zoom = map_container.dataset.zoom;
-	var active_id = map_container.dataset.active_id;
+	var active_id = parseInt(map_container.dataset.active_id);
 
 	const map = new mapboxgl.Map({
 		container: 'map',
@@ -37,13 +37,6 @@ function initMap() {
 
 	// map.addControl(new mapboxgl.NavigationControl());
 
-	// $.getJSON('/api/markers', function(data) {
-    //     data.features.forEach(function(marker) {
-    //     	var is_active = (marker.properties.id == active_id) ? 1 : 0;
-    //     	initMarker(marker, map, is_active);
-    //     });
-    // });
-
 	map.on('load', function () {
 
 	 	// Add a GeoJSON source with markers
@@ -52,8 +45,8 @@ function initMap() {
 	 		'data': '/api/markers',
 	 		'generateId': true, // This ensures that all features have unique IDs
 	 		'cluster': true,
-	 		'clusterMaxZoom': 14, // Max zoom to cluster points on
-	 		'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
+	 		'clusterMaxZoom': 14,
+	 		'clusterRadius': 50
 		});
 
 		map.addLayer({
@@ -62,19 +55,16 @@ function initMap() {
 			source: 'buildings',
 			filter: ['has', 'point_count'],
 			paint: {
-				// Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-				// with three steps to implement three types of circles:
-				//   * Blue, 20px circles when point count is less than 100
-				//   * Yellow, 30px circles when point count is between 100 and 750
-				//   * Pink, 40px circles when point count is greater than or equal to 750
+				// Using step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+				// with three steps to implement three types of circles
 				'circle-color': [
 					'step',
 					['get', 'point_count'],
-					'#51bbd6',
+					'#000000',
 					10,
-					'#f1f075',
+					'#000000',
 					50,
-					'#f28cb1'
+					'#000000'
 				],
 				'circle-radius': [
 					'step',
@@ -97,6 +87,9 @@ function initMap() {
 				'text-field': '{point_count_abbreviated}',
 				'text-font': ['IBM Plex Mono Medium'],
 				'text-size': 12
+			},
+			paint: {
+			    'text-color': '#ffffff'
 			}
 		});
 
@@ -106,15 +99,20 @@ function initMap() {
 			source: 'buildings',
 			filter: ['!', ['has', 'point_count']],
 			paint: {
-				'circle-color': '#000000',
+				'circle-color': [
+					'match',
+					['get', 'id'],
+					active_id,
+					'#ffffff',
+					/* other */ '#000000'
+				],
 				'circle-radius': 7,
 				'circle-stroke-width': [
 					'case',
 					['boolean', ['feature-state', 'hover'], false],
-					1,
-					3
+					3,
+					1
 				],
-				// 'circle-stroke-width': 1,
 				'circle-stroke-color': '#707070'
 			}
 		});
@@ -138,10 +136,6 @@ function initMap() {
 			);
 		});
 
-		// When a click event occurs on a feature in
-		// the unclustered-point layer, open a popup at
-		// the location of the feature, with
-		// description HTML from its properties.
 		map.on('click', 'unclustered-point', function (e) {
 			var coordinates = e.features[0].geometry.coordinates.slice();
 
