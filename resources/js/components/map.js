@@ -28,10 +28,12 @@ function initMap() {
 
 	const map = new mapboxgl.Map({
 		container: 'map',
-		style: 'mapbox://styles/mapbox/streets-v11',
+		style: 'mapbox://styles/lab-sng/ckey3tyxr0ak719qgxj4y219b/draft',
 		center: center,
 		zoom: zoom
 	});
+
+	var hoveredBuildingId = null;
 
 	// map.addControl(new mapboxgl.NavigationControl());
 
@@ -44,10 +46,11 @@ function initMap() {
 
 	map.on('load', function () {
 
-	 	// Add a GeoJSON source with 2 points
-	 	map.addSource('points', {
+	 	// Add a GeoJSON source with markers
+	 	map.addSource('buildings', {
 	 		'type': 'geojson',
 	 		'data': '/api/markers',
+	 		'generateId': true, // This ensures that all features have unique IDs
 	 		'cluster': true,
 	 		'clusterMaxZoom': 14, // Max zoom to cluster points on
 	 		'clusterRadius': 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -56,7 +59,7 @@ function initMap() {
 		map.addLayer({
 			id: 'clusters',
 			type: 'circle',
-			source: 'points',
+			source: 'buildings',
 			filter: ['has', 'point_count'],
 			paint: {
 				// Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
@@ -88,11 +91,11 @@ function initMap() {
 		map.addLayer({
 			id: 'cluster-count',
 			type: 'symbol',
-			source: 'points',
+			source: 'buildings',
 			filter: ['has', 'point_count'],
 			layout: {
 				'text-field': '{point_count_abbreviated}',
-				'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+				'text-font': ['IBM Plex Mono Medium'],
 				'text-size': 12
 			}
 		});
@@ -100,15 +103,94 @@ function initMap() {
 		map.addLayer({
 			id: 'unclustered-point',
 			type: 'circle',
-			source: 'points',
+			source: 'buildings',
 			filter: ['!', ['has', 'point_count']],
 			paint: {
-				'circle-color': '#11b4da',
+				'circle-color': '#000000',
 				'circle-radius': 7,
-				'circle-stroke-width': 1,
-				'circle-stroke-color': '#fff'
+				'circle-stroke-width': [
+					'case',
+					['boolean', ['feature-state', 'hover'], false],
+					1,
+					3
+				],
+				// 'circle-stroke-width': 1,
+				'circle-stroke-color': '#707070'
 			}
 		});
+
+		// inspect a cluster on click
+		map.on('click', 'clusters', function (e) {
+			var features = map.queryRenderedFeatures(e.point, {
+				layers: ['clusters']
+			});
+			var clusterId = features[0].properties.cluster_id;
+			map.getSource('buildings').getClusterExpansionZoom(
+				clusterId,
+				function (err, zoom) {
+					if (err) return;
+
+					map.easeTo({
+						center: features[0].geometry.coordinates,
+						zoom: zoom
+					});
+				}
+			);
+		});
+
+		// When a click event occurs on a feature in
+		// the unclustered-point layer, open a popup at
+		// the location of the feature, with
+		// description HTML from its properties.
+		map.on('click', 'unclustered-point', function (e) {
+			var coordinates = e.features[0].geometry.coordinates.slice();
+
+			new mapboxgl.Popup({ offset: 5 })
+				.setLngLat(coordinates)
+				.setHTML(
+					'<div class="d-inline-block p-1 pt-2"><a href="' + e.features[0].properties.url + '" class="link-no-underline">' + e.features[0].properties.title + '</a></div>'
+					)
+				.addTo(map);
+		});
+
+		// hover clusters
+		map.on('mouseenter', 'clusters', function () {
+			map.getCanvas().style.cursor = 'pointer';
+		});
+		map.on('mouseleave', 'clusters', function () {
+			map.getCanvas().style.cursor = '';
+		});
+
+		// hover points
+		map.on('mousemove', 'unclustered-point', function (e) {
+			map.getCanvas().style.cursor = 'pointer';
+			if (e.features.length > 0) {
+				if (hoveredBuildingId) {
+					map.setFeatureState(
+						{ source: 'buildings', id: hoveredBuildingId },
+						{ hover: false }
+					);
+				}
+				hoveredBuildingId = e.features[0].id;
+				map.setFeatureState(
+					{ source: 'buildings', id: hoveredBuildingId },
+					{ hover: true }
+				);
+			}
+		});
+
+		map.on('mouseleave', 'unclustered-point', function () {
+			map.getCanvas().style.cursor = '';
+
+			if (hoveredBuildingId) {
+				map.setFeatureState(
+					{ source: 'buildings', id: hoveredBuildingId },
+					{ hover: false }
+				);
+			}
+			hoveredBuildingId = null;
+		});
+
  	});
 }
 
