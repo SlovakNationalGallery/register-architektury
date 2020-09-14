@@ -15,7 +15,7 @@ function initMap() {
 
 	const map = new mapboxgl.Map({
 		container: 'map',
-		style: 'mapbox://styles/lab-sng/ckey3tyxr0ak719qgxj4y219b/draft', // @TODO switch to production once the map edits is fine
+		style: process.env.MIX_MAPBOX_STYLE,
 		center: center,
 		zoom: zoom
 	});
