@@ -8,14 +8,15 @@ function initMap() {
 	map_initialised = true;
 
 	const map_container = document.querySelector('#map');
-	var center = JSON.parse(map_container.dataset.center);
-	var zoom = map_container.dataset.zoom;
-	var active_id = parseInt(map_container.dataset.active_id);
-	var queryString = window.location.search;
+	const style = process.env.MIX_MAPBOX_STYLE || 'mapbox://styles/mapbox/streets-v11';
+	const center = JSON.parse(map_container.dataset.center);
+	const zoom = map_container.dataset.zoom;
+	const active_id = parseInt(map_container.dataset.active_id);
+	const queryString = window.location.search;
 
 	const map = new mapboxgl.Map({
 		container: 'map',
-		style: process.env.MIX_MAPBOX_STYLE,
+		style: style,
 		center: center,
 		zoom: zoom
 	});
