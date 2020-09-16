@@ -17,6 +17,14 @@ class HomeController extends Controller
     {
         $locale = app()->getLocale();
         $buildings = Building::search('*');
+
+        if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
+        if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
+        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.folded', 'asc');
+        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.folded', 'desc');
+
+        $buildings->orderBy('title.folded', 'asc');
+
         $featured_filter = FeaturedFilter::published()->orderBy('published_at', 'desc')->first();
 
         if ($featured_filter) {
@@ -25,7 +33,7 @@ class HomeController extends Controller
             }
         }
 
-	    $buildings = $buildings->paginate(20);
+	    $buildings = $buildings->with(['dates', 'collections', 'architects'])->paginate(20);
 	    return view('home', compact('buildings', 'featured_filter'));
     }
 }
