@@ -6,8 +6,11 @@
 @include('components.header')
 
 <div class="container-fluid p-0">
-    <div class="row px-3">
-        <div class="col-md-12 p-3">
+    <div class="row px-3 justify-content-md-center">
+        <div class="col-md-8 col-lg-6 py-4 py-md-5">
+            <p class="lead text-center">{{ __('app.description') }}</p>
+        </div>
+        <div class="col-md-12 p-3 border-top">
             <div class="row items px-3">
                 {{-- TODO --}}
                 @if($featured_filter)
