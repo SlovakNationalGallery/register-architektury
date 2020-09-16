@@ -188,16 +188,18 @@
 
     <div class="cd-box">
         @include('components.map', [
-            'location' => $building->lng_lat,
-            'tags' => $building->tags,
+            'active_id' => $building->id,
+            'center' => $building->lng_lat,
+            'zoom' => 14,
             'show_map' => session('show_map', true),
         ])
     </div>
 
     <div class="cd-box code lang-php hljs xml">
         @@include('components.map', [
-            'location' => $building->lng_lat,
-            'tags' => $building->tags,
+            'active_id' => $building->id,
+            'center' => $building->lng_lat,
+            'zoom' => 14,
             'show_map' => session('show_map', true),
         ])
     </div>

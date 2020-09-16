@@ -29,3 +29,5 @@ Route::post('sync/start', function() {
 });
 
 Route::get('search-sugestions', 'API\SearchSuggestionController@index')->name('search-sugestions');
+
+Route::get('markers', 'API\MarkersController@index')->name('markers');

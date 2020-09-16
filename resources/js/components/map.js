@@ -8,23 +8,169 @@ function initMap() {
 	map_initialised = true;
 
 	const map_container = document.querySelector('#map');
-	var location = JSON.parse(map_container.dataset.location);
+	const style = process.env.MIX_MAPBOX_STYLE || 'mapbox://styles/mapbox/streets-v11';
+	const center = JSON.parse(map_container.dataset.center);
+	const zoom = map_container.dataset.zoom;
+	const active_id = parseInt(map_container.dataset.active_id);
+	const queryString = window.location.search;
 
 	const map = new mapboxgl.Map({
 		container: 'map',
-		style: 'mapbox://styles/mapbox/streets-v11',
-		center: location,
-		zoom: 14
+		style: style,
+		center: center,
+		zoom: zoom
 	});
 
-	var el = document.createElement('div');
-	 el.className = 'marker';
+	var hoveredBuildingId = null;
 
-	const marker = new mapboxgl.Marker(el)
-		.setLngLat(location)
-		.addTo(map);
+	var nav = new mapboxgl.NavigationControl({
+		showCompass: false,
+		showZoom: true
+	});
+	map.addControl(nav, 'top-left');
+
+	map.on('load', function () {
+
+	 	// Add a GeoJSON source with markers
+	 	map.addSource('buildings', {
+	 		'type': 'geojson',
+	 		'data': '/api/markers'+queryString,
+	 		'generateId': true, // This ensures that all features have unique IDs
+	 		'cluster': true,
+	 		'clusterMaxZoom': 14,
+	 		'clusterRadius': 50
+		});
+
+		map.addLayer({
+			id: 'clusters',
+			type: 'circle',
+			source: 'buildings',
+			filter: ['has', 'point_count'],
+			paint: {
+				'circle-color': '#000000',
+				// Using step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+				// with three steps to implement three types of circles
+				'circle-radius': [
+					'step',
+					['get', 'point_count'],
+					20,
+					10,
+					30,
+					50,
+					40
+				]
+			}
+		});
+
+		map.addLayer({
+			id: 'cluster-count',
+			type: 'symbol',
+			source: 'buildings',
+			filter: ['has', 'point_count'],
+			layout: {
+				'text-field': '{point_count_abbreviated}',
+				'text-font': ['IBM Plex Mono Medium'],
+				'text-size': 12
+			},
+			paint: {
+			    'text-color': '#ffffff'
+			}
+		});
+
+		map.addLayer({
+			id: 'unclustered-point',
+			type: 'circle',
+			source: 'buildings',
+			filter: ['!', ['has', 'point_count']],
+			paint: {
+				'circle-color': [
+					'match',
+					['get', 'id'],
+					active_id,
+					'#ffffff',
+					/* other */ '#000000'
+				],
+				'circle-radius': 7,
+				'circle-stroke-width': [
+					'case',
+					['boolean', ['feature-state', 'hover'], false],
+					3,
+					1
+				],
+				'circle-stroke-color': '#707070'
+			}
+		});
+
+		// inspect a cluster on click
+		map.on('click', 'clusters', function (e) {
+			var features = map.queryRenderedFeatures(e.point, {
+				layers: ['clusters']
+			});
+			var clusterId = features[0].properties.cluster_id;
+			map.getSource('buildings').getClusterExpansionZoom(
+				clusterId,
+				function (err, zoom) {
+					if (err) return;
+
+					map.easeTo({
+						center: features[0].geometry.coordinates,
+						zoom: zoom
+					});
+				}
+			);
+		});
+
+		map.on('click', 'unclustered-point', function (e) {
+			var coordinates = e.features[0].geometry.coordinates.slice();
+
+			new mapboxgl.Popup({ offset: 10 })
+				.setLngLat(coordinates)
+				.setHTML(
+					'<div class="d-inline-block p-1 pt-2"><a href="' + e.features[0].properties.url + '" class="link-no-underline">' + e.features[0].properties.title + '</a></div>'
+					)
+				.addTo(map);
+		});
+
+		// hover clusters
+		map.on('mouseenter', 'clusters', function () {
+			map.getCanvas().style.cursor = 'pointer';
+		});
+		map.on('mouseleave', 'clusters', function () {
+			map.getCanvas().style.cursor = '';
+		});
+
+		// hover points
+		map.on('mousemove', 'unclustered-point', function (e) {
+			map.getCanvas().style.cursor = 'pointer';
+			if (e.features.length > 0) {
+				if (hoveredBuildingId) {
+					map.setFeatureState(
+						{ source: 'buildings', id: hoveredBuildingId },
+						{ hover: false }
+					);
+				}
+				hoveredBuildingId = e.features[0].id;
+				map.setFeatureState(
+					{ source: 'buildings', id: hoveredBuildingId },
+					{ hover: true }
+				);
+			}
+		});
+
+		map.on('mouseleave', 'unclustered-point', function () {
+			map.getCanvas().style.cursor = '';
+
+			if (hoveredBuildingId) {
+				map.setFeatureState(
+					{ source: 'buildings', id: hoveredBuildingId },
+					{ hover: false }
+				);
+			}
+			hoveredBuildingId = null;
+		});
+
+ 	});
 }
-
 
 $(document).ready(function(){
 	$('#map-toggle').click(function(){

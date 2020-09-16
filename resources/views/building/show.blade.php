@@ -6,13 +6,15 @@
 @include('components.header')
 
 @include('components.map', [
-    'location' => $building->lng_lat,
+    'active_id' => $building->id,
+    'center' => $building->lng_lat,
+    'zoom' => 14,
     'show_map' => session('show_map', true),
 ])
 
-<div class="container-fluid pt-3 pb-5 px-3">
+<div class="container-fluid px-3">
     <div class="row">
-        <div class="col-md-12 pb-5">
+        <div class="col-md-12 pt-3 pb-5">
             @include('components.tags', ['tags' => $building->tags])
         </div>
     </div>
