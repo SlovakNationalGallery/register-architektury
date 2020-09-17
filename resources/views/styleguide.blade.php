@@ -190,8 +190,7 @@
         @include('components.map', [
             'active_id' => $building->id,
             'center' => $building->lng_lat,
-            'zoom' => 14,
-            'show_map' => session('show_map', true),
+            'zoom' => 15
         ])
     </div>
 
@@ -199,8 +198,7 @@
         @@include('components.map', [
             'active_id' => $building->id,
             'center' => $building->lng_lat,
-            'zoom' => 14,
-            'show_map' => session('show_map', true),
+            'zoom' => 15
         ])
     </div>
 </section>
