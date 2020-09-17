@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Building;
 use App\Models\FeaturedFilter;
 use Illuminate\Http\Request;
+use App\Traits\LoadsBuildingsAndFilterValues;
 
 class HomeController extends Controller
 {
+    use LoadsBuildingsAndFilterValues;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,12 +21,7 @@ class HomeController extends Controller
         $locale = app()->getLocale();
         $buildings = Building::search('*');
 
-        if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
-        if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
-        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.folded', 'asc');
-        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.folded', 'desc');
-
-        $buildings->orderBy('title.folded', 'asc');
+        $buildings = $this->applySort($buildings);
 
         $featured_filter = FeaturedFilter::published()->orderBy('published_at', 'desc')->first();
 
