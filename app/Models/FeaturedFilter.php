@@ -24,11 +24,13 @@ class FeaturedFilter extends Model
     public function getTagsAttribute()
     {
         return collect([
-            ...$this->architect_tags,
-            ...$this->getLocalizedFunctionTags(app()->getLocale()),
-            ...$this->location_tags,
-            ...$this->year_range_tags,
-        ])->filter();
+            $this->architect_tags,
+            $this->getLocalizedFunctionTags(app()->getLocale()),
+            $this->location_tags,
+            $this->year_range_tags,
+        ])
+        ->flatten()
+        ->filter();
     }
 
     public function getLocalizedFunctionTags($locale)
