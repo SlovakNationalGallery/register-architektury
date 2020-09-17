@@ -5,11 +5,7 @@
 
 @include('components.header')
 
-@include('components.map', [
-    'center' => [19.696058, 48.6737532],
-    'zoom' => 6,
-    'show_map' => session('show_map', true),
-])
+@include('components.map')
 
 <div class="container-fluid p-0">
     <div class="row no-gutters">
