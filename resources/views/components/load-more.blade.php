@@ -19,7 +19,7 @@
 	</div>
 
 	@if ($paginator->hasMorePages() )
-		<a href="#" class="btn btn-outline-dark my-5 view-more-button px-5">
+		<a class="btn btn-outline-dark my-5 view-more-button px-5">
 			{!!__('app.load_more')!!}
 		</a>
 	@endif
