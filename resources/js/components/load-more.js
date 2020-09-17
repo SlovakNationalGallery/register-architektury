@@ -4,7 +4,6 @@ const { initializeBuildingsCarousels } = require("./buildings-carousel");
 $(document).ready(function() {
     if ($(".pagination__next").length > 0) {
         const infScroll = new InfiniteScroll(".items", {
-            loadOnScroll: false,
             path: ".pagination__next",
             append: ".item",
             history: "replace",
