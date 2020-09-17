@@ -1,3 +1,4 @@
+@include('components.news-ticker')
 <div class="container-fluid p-0 navbar-expand-md bg-white" id="header">
     <div class="row no-gutters align-items-stretch">
         <div class="d-none d-md-block col-md-12 col-lg-4 py-3 border-bl text-center align-items-center">
