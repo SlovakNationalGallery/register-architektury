@@ -78,18 +78,29 @@ function initMap() {
 		});
 
 		map.addLayer({
+			id: 'active-point',
+			type: 'circle',
+			source: 'buildings',
+			filter: [
+				'all',
+				['!has', 'point_count'],
+				['==', 'id', active_id]
+			],
+			paint: {
+				'circle-color': '#ffffff',
+				'circle-radius': 15,
+				'circle-stroke-width': 1,
+				'circle-stroke-color': '#707070'
+			}
+		});
+
+		map.addLayer({
 			id: 'unclustered-point',
 			type: 'circle',
 			source: 'buildings',
 			filter: ['!', ['has', 'point_count']],
 			paint: {
-				'circle-color': [
-					'match',
-					['get', 'id'],
-					active_id,
-					'#ffffff',
-					/* other */ '#000000'
-				],
+				'circle-color': '#000000',
 				'circle-radius': 7,
 				'circle-stroke-width': [
 					'case',
