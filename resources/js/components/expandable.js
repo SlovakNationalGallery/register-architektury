@@ -1,4 +1,4 @@
-import Readmore from 'readmore-js/dist/readmore.es6.js';
+import Readmore from 'readmore-js/dist/readmore.js';
 
 var more_text, less_text;
 
