@@ -21,7 +21,7 @@ class HomeController extends Controller
         $locale = app()->getLocale();
         $buildings = Building::search('*');
 
-        $buildings = $this->applySort($buildings);
+        $buildings = $this->sortBuildings($buildings);
 
         $featured_filter = FeaturedFilter::published()->orderBy('published_at', 'desc')->first();
 
