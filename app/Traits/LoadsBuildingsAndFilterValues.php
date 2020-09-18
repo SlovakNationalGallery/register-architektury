@@ -12,7 +12,7 @@ trait LoadsBuildingsAndFilterValues
         $buildings = Building::search(request('search', '*'));
         $locale = \App::getLocale();
 
-        $buildings = $this->applySort($buildings);
+        $buildings = $this->sortBuildings($buildings);
 
         foreach (request()->input('filters', []) as $filter) {
             $buildings->where("$locale.tags", $filter);
@@ -36,17 +36,18 @@ trait LoadsBuildingsAndFilterValues
         ];
     }
 
-    protected function applySort($buildings)
+    protected function sortBuildings($buildings)
     {
+        $locale = app()->getLocale();
 
         if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
         if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
-        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.folded', 'asc');
-        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.folded', 'desc');
+        if (request('sort_by') == 'name_asc') $buildings->orderBy("$locale.title_sortable", 'asc');
+        if (request('sort_by') == 'name_desc') $buildings->orderBy("$locale.title_sortable", 'desc');
 
         // default sort if not search
         if (!request()->filled('search') && !request()->filled('sort_by')) {
-            $buildings->orderBy('title.folded', 'asc');
+            $buildings->orderBy("$locale.title_sortable", 'asc');
         }
 
         return $buildings;
