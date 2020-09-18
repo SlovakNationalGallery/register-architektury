@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use ScoutElastic\Searchable;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Support\Arr;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Building extends Model
 {
@@ -122,6 +123,10 @@ class Building extends Model
             ],
 
             // Translatable attributes
+            'sk.title_sortable' => [
+                'type' => 'keyword',
+                'normalizer' => 'asciifolding_normalizer',
+            ],
             'sk.collections' => [
                 'type' => 'keyword',
             ],
@@ -136,6 +141,11 @@ class Building extends Model
                         'type' => 'keyword',
                     ],
                 ],
+            ],
+
+            'en.title_sortable' => [
+                'type' => 'keyword',
+                'normalizer' => 'asciifolding_normalizer',
             ],
             'en.collections' => [
                 'type' => 'keyword',
@@ -152,7 +162,7 @@ class Building extends Model
                     ],
                 ],
             ],
-        ]
+        ],
     ];
 
     protected $with = [
@@ -244,8 +254,9 @@ class Building extends Model
         ]);
         $array['architects'] = $this->architects->pluck('full_name')->all();
 
-        foreach (['sk', 'en'] as $locale) {
+        foreach (LaravelLocalization::getSupportedLanguagesKeys() as $locale) {
             Arr::set($array, "$locale.tags", $this->getTagsAttribute($locale));
+            Arr::set($array, "$locale.title_sortable", $this->getTranslation('title', $locale));
             Arr::set($array, "$locale.collections", $this->collections->map->getTranslation('title', $locale));
         }
 
