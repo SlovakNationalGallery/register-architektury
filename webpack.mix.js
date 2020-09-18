@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-polyfill');
 
 /*
  |--------------------------------------------------------------------------
@@ -17,5 +18,6 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/styleguide.scss', 'public/css');
 
 if (mix.inProduction()) {
-    mix.version();
+    mix.version()
+        .polyfill() // Support IE 11
 }
