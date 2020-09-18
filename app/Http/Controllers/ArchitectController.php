@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Architect;
 use App\Models\Building;
+use App\Traits\LoadsBuildingsAndFilterValues;
 use Illuminate\Http\Request;
 
 class ArchitectController extends Controller
 {
+    use LoadsBuildingsAndFilterValues;
     /**
      * Display a listing of the resource.
      *
@@ -58,12 +60,7 @@ class ArchitectController extends Controller
         $building_ids = $architect->buildings()->pluck('id')->toArray();
         $buildings = Building::search('*')->whereIn('id', $building_ids);
 
-        if (request('sort_by') == 'newest') $buildings->orderBy('year_from', 'desc');
-        if (request('sort_by') == 'oldest') $buildings->orderBy('year_from', 'asc');
-        if (request('sort_by') == 'name_asc') $buildings->orderBy('title.folded', 'asc');
-        if (request('sort_by') == 'name_desc') $buildings->orderBy('title.folded', 'desc');
-
-        if (!request()->filled('sort_by')) $buildings->orderBy('title.folded', 'asc');
+        $this->sortBuildings($buildings);
 
         $buildings = $buildings->paginate(12);
 
