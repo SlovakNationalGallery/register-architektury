@@ -1,10 +1,11 @@
 <div class="card my-3 border">
     <div class="card-body ls-1 pb-1">
-        @if($building->processedImages->isNotEmpty())
-            <a href="{{ $building->url }}" class="image-link">
-                {{ $building->cover_image->img()->attributes(['class' => 'card-img-top mb-4']) }}
-            </a>
-        @endif
+        <a href="{{ $building->url }}" class="image-link">
+            @include('components.card-carousel', [
+                'images' => $building->processedImages->map(fn ($image) => $image->getFirstMedia())
+            ])
+        </a>
+        
         @include('components.tags', ['tags' => $building->tags])
 
     </div>
