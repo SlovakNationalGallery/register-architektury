@@ -1,0 +1,17 @@
+.card-carousel {
+    .btn {
+        position: absolute;
+        top: 50%;
+        margin-top: -0.85rem;
+        z-index: 2;
+        &:disabled {
+            opacity: 0.25;
+        }
+        &.prev-button {
+            left: -1.70rem;
+        }
+        &.next-button {
+            right: -1.70rem;
+        }
+    }
+}
