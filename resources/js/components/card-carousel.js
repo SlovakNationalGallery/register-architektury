@@ -1,11 +1,7 @@
-require('flickity-as-nav-for');
-require('flickity-fullscreen');
-
 $('.card-carousel').each(function(i, obj) {
     const nextButton = $(obj).find('.next-button')[ 0 ];
     const prevButton = $(obj).find('.prev-button')[ 0 ];
 
-    // Initialize main carousel
     new Flickity(obj, {
         prevNextButtons: false,
         pageDots: false,
