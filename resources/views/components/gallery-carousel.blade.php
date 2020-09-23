@@ -1,9 +1,17 @@
 @php
     $captions = $captions ?? [];
 @endphp
+
+@if ($images->isEmpty())
+    <div class="overflow-hidden vh-38 border p-4">
+        <div class="w-100 h-100 d-flex flex-column justify-content-center align-items-center">
+            <img src="{{ asset('images/no-image-building.svg') }}" class="mh-100 mw-100 d-block mx-auto my-auto" alt="">
+        </div>
+    </div>
+@else
 <div class="gallery-carousel-main overflow-hidden vh-38 border p-4">
     @foreach($images as $index => $image)
-    <div class="w-100 d-flex flex-column justify-content-center carousel-cell" data-caption="{{ Arr::get($captions, $index) }}">
+    <div class="w-100 d-flex flex-column justify-content-center align-items-center carousel-cell" data-caption="{{ Arr::get($captions, $index) }}">
         <img
             data-flickity-lazyload-srcset="{{ $image->getSrcset() }}"
             data-flickity-lazyload-src="{{ $image->getUrl() }}"
@@ -28,3 +36,4 @@
     >
     @endforeach
 </div>
+@endif
