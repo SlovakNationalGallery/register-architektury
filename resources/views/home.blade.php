@@ -7,8 +7,8 @@
 
 <div class="container-fluid p-0 border-bottom">
     <div class="row px-3 justify-content-md-center">
-        <div class="col-md-8 col-lg-6 py-4 py-md-5">
-            <p class="lead text-center">{{ __('app.description') }}</p>
+        <div class="col-md-8 col-lg-6 py-3 py-md-4">
+            <p class="text-center m-0">{{ __('app.description') }}</p>
         </div>
     </div>
 </div>
