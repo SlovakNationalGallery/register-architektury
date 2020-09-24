@@ -52,6 +52,10 @@ if (mainCarousel) {
                     img.setAttribute('sizes', img.getAttribute('data-default-sizes'))
                 })
             },
+            lazyLoad(event, cell) {
+                const image = cell.querySelector('img')
+                image.sizes = Math.ceil(cell.getBoundingClientRect().width / window.innerWidth * 100 ) + 'vw'
+            },
             staticClick() {
                 this.viewFullscreen()
             },
