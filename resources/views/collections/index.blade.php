@@ -21,11 +21,11 @@
     @foreach($collections as $collection)
     <div class="row border-top py-2 item">
         <div class="col-lg-6">
-            <h5><a href="{{ route('building.index', ['filters[]' => $collection->title]) }}">{{ $collection->title }}</a></h5>
+            <h3 class="my-3"><a href="{{ route('building.index', ['filters[]' => $collection->title]) }}">{{ $collection->title }}</a></h3>
             <div class="expandable expandable-medium">
                 @if($collection->project)
-                <p class="ml-2">
-                    <a href="{{ route('about.projects.show', $collection->project) }}">🡢 {{ __('collection.go_to_project') }}</a>
+                <p class="">
+                    <a href="{{ route('about.projects.show', $collection->project) }}" class="btn btn-outline-dark btn-sm">{{ __('collection.go_to_project') }}</a>
                 </p>
                 @endif
                 {!! $collection->description !!}

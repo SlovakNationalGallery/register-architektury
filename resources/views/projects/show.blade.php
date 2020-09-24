@@ -6,20 +6,21 @@
 
 <div class="container-fluid my-md-5 my-lg-6">
     @if($project->collection)
-    <div class="row border-top pt-3">
+    <div class="row border-top py-3">
         <div class="col">
             @include('components.buildings-carousel', [
                 'buildings' => $project->collection->buildings,
                 'height' => 'h-8rem h-md-16rem',
             ])
-            <p class="text-center my-4">
-                <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}">🡢 {{ __('collection.go_to_collection') }}</a>
-            </p>
         </div>
     </div>
     @endif
     <div class="row border-top pt-3">
         <div class="col-lg-6 offset-lg-3">
+            <p class="my-4">
+                <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}" class="btn btn-outline-dark btn-sm">{{ __('collection.go_to_collection') }}</a>
+            </p>
+
             <h2 class="mb-2 ls-2">{{ $project->title }}</h2>
         </div>
     </div>
