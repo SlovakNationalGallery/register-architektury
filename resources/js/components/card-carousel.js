@@ -6,8 +6,7 @@ function initializeCardCarousels(scope) {
         new Flickity(obj, {
             prevNextButtons: false,
             pageDots: false,
-            lazyLoad: 2,
-            fullscreen: false,
+            lazyLoad: 1,
             cellSelector: '.carousel-cell',
 
             on: {
@@ -15,11 +14,11 @@ function initializeCardCarousels(scope) {
                     nextButton.onclick = this.next.bind(this)
                     prevButton.onclick = this.previous.bind(this)
 
-                    nextButton.disabled = this.selectedIndex === this.slides.length - 1 || this.slides.length === 0
+                    nextButton.disabled = this.selectedIndex === this.slides.length - 1
                     prevButton.disabled = this.selectedIndex === 0
                 },
                 change(event, index) {
-                    nextButton.disabled = this.selectedIndex === this.slides.length - 1 || this.slides.length === 0
+                    nextButton.disabled = this.selectedIndex === this.slides.length - 1
                     prevButton.disabled = this.selectedIndex === 0
                 }
             }
