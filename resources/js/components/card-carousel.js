@@ -20,7 +20,11 @@ function initializeCardCarousels(scope) {
                 change(event, index) {
                     nextButton.disabled = this.selectedIndex === this.slides.length - 1
                     prevButton.disabled = this.selectedIndex === 0
-                }
+                },
+                lazyLoad(event, cell) {
+                    const image = cell.querySelector('img')
+                    image.sizes = Math.ceil(cell.getBoundingClientRect().width / window.innerWidth * 100 ) + 'vw'
+                },
             }
         });
     });
