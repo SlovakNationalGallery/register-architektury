@@ -4,11 +4,11 @@
 @section('content')
 
 @include('components.header')
-<div class="container-fluid py-5 px-3 items overflow-x-hidden">
+<div class="container-fluid py-5 px-0 items overflow-x-hidden">
     <form action="{{ route('architects.index') }}" id="filters">
         <div class="row">
             <div class="col-12 py-3">
-                <ul class="d-flex justify-content-center flex-wrap px-0">
+                <ul class="d-flex justify-content-center flex-wrap px-0 mb-0">
                     @foreach (range('A', 'Z') as $letter)
                     @php
                         $extra_classes = [];
@@ -58,7 +58,7 @@
     </form>
 
     @foreach($architects as $architect)
-    <div class="row border-top flex-nowrap py-2 item">
+    <div class="row border-top flex-nowrap py-2 item px-3">
         <div class="px-3 px-sm-4 flex-shrink-0 h-6rem h-sm-8rem d-flex align-items-end">
             @if($architect->has_image)
                 {{ $architect->image_tag->attributes(['class' => 'h-100 w-auto']) }}
