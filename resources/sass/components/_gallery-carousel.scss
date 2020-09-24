@@ -36,8 +36,6 @@ $caption-height: $spacer * 8;
 
     .caption {
         display: none;
-        height: $caption-height;
-        bottom: 0;
     }
 
     .btn {
@@ -84,6 +82,13 @@ $caption-height: $spacer * 8;
 
         .caption {
             display: block;
+
+            height: $caption-height;
+
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
         }
 
         .btn {
