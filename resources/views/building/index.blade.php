@@ -66,7 +66,7 @@
             </form>
             {{-- /filters --}}
 
-            <div class="row items px-3">
+            <div class="row items px-3 mb-4">
                 @foreach ($buildings as $i=>$building)
                     <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
                         @include('components.building-card', ['building' => $building])
