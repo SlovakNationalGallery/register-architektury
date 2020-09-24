@@ -10,7 +10,9 @@
         <div class="col-lg-6 order-2 order-lg-1">
             <p class="mb-4">{{ $article->published_at->toDateString() }}</p>
             <h6 class="mb-4 font-weight-bold"><a href="{{ route('about.articles.show', $article) }}" class="link-no-underline">{{ $article->title }}</a></h6>
-            {{ Str::words(strip_tags($article->content), 100) }}
+            <div class="expandable expandable-small expandable-no-link">
+                {{ Str::words(strip_tags($article->content), 200) }}
+            </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0 ">
             @if($article->hasMedia())
