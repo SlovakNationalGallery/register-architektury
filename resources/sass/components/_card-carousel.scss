@@ -11,10 +11,10 @@
             opacity: 0.25;
         }
         &.prev-button {
-            left: -1.70rem;
+            left: -2 * $spacer - .25rem;
         }
         &.next-button {
-            right: -1.70rem;
+            right: -2 * $spacer - .25rem;
         }
     }
 }
