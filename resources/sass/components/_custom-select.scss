@@ -1,5 +1,8 @@
-.select2-container--bootstrap4.select2-container--open .select2-selection {
+.select2-container--bootstrap4.select2-container--open.select2-container--below .select2-selection {
     border-bottom: none;
+}
+.select2-container--bootstrap4.select2-container--open.select2-container--above .select2-selection {
+    border-top: none;
 }
 
 .select2-search--dropdown {
@@ -8,4 +11,9 @@
 
 .select2-results__option {
     padding: 6px 8px;
+}
+
+.select2-selection__placeholder {
+    color: $black !important;
+    letter-spacing: $letter-spacing-2;
 }
