@@ -1,4 +1,4 @@
-<div class="card my-3 border">
+<div class="card my-4 border">
     <div class="card-body ls-1 pb-1">
         {{-- <a href="{{ $building->url }}" class="image-link"> --}}
             @include('components.card-carousel', [
