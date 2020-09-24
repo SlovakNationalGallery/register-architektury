@@ -5,7 +5,7 @@ $images = $building->processedImages->map->getFirstMedia();
     <div class="vh-38 p-4">
     @if ($images->isEmpty())
         <div class="h-100 d-flex flex-column justify-content-center align-items-center">
-            <img src="{{ asset('images/no-image-building.svg') }}" class="w-100" alt="">
+            <img src="{{ asset('images/no-image-building.svg') }}" class="w-100">
         </div>
     @else
         <div class="card-carousel h-100">

@@ -1,4 +1,4 @@
-function initializeCardCarousels(scope) {
+function initializeBuildingCards(scope) {
     scope.querySelectorAll('.card-carousel').forEach(obj => {
         const nextButton = obj.querySelector('.next-button')
         const prevButton = obj.querySelector('.prev-button')
@@ -31,8 +31,8 @@ function initializeCardCarousels(scope) {
 }
 
 // First initialization
-initializeCardCarousels(document)
+initializeBuildingCards(document)
 
 export {
-    initializeCardCarousels
+    initializeBuildingCards
 }
