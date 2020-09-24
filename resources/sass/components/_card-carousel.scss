@@ -1,9 +1,12 @@
 .card-carousel {
+    position: relative;
+
     .btn {
         position: absolute;
         top: 50%;
         margin-top: -0.85rem;
         z-index: 2;
+
         &:disabled {
             opacity: 0.25;
         }
