@@ -4,7 +4,7 @@
 @section('content')
 @include('components.header')
 
-<div class="container-fluid my-lg-7">
+<div class="container-fluid my-md-5 my-lg-6">
     @if($project->collection)
     <div class="row border-top pt-3">
         <div class="col">

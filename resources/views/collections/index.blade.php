@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid px-4 pt-7 pb-3">
+<div class="container-fluid px-4 pt-6 pb-3">
     <div class="row">
         <div class="col text-right">
             @include('components.sort-by', [
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="container-fluid pb-7 px-3 items">
+<div class="container-fluid pb-6 px-3 items">
     @foreach($collections as $collection)
     <div class="row border-top py-2 item">
         <div class="col-lg-6">
