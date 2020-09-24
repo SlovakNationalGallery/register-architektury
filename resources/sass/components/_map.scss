@@ -63,6 +63,9 @@
 }
 
 #map-container {
+    &:focus, #map:focus, canvas:focus {
+        outline: none;
+    }
     .row {
         pointer-events: none;
     }
