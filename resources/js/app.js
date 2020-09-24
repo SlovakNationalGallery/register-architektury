@@ -2,7 +2,7 @@ require('./bootstrap');
 require('./components/filters');
 require('./components/buildings-carousel');
 require('./components/gallery-carousel');
-require('./components/card-carousel');
+require('./components/building-card');
 require('./components/load-more');
 require('./components/map');
 require('./components/timeline');
