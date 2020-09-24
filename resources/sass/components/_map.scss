@@ -98,8 +98,8 @@
     }
 
     .mapboxgl-ctrl-group:not(:empty) {
-        box-shadow: 0 0 6px $green;
         border: 1px solid $dark;
+        box-shadow: none;
     }
 
     .mapboxgl-ctrl-group button + button {
