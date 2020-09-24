@@ -9,7 +9,7 @@ class ArticleController extends Controller
 {
     public function index(Request $request)
     {
-        $articles = Article::published()->paginate(10);
+        $articles = Article::published()->orderBy('published_at', 'desc')->paginate(10);
         return view('articles.index', compact('articles'));
     }
 
