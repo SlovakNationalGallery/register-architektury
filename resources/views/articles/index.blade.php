@@ -4,7 +4,7 @@
 @section('content')
 @include('components.header')
 
-<div class="container-fluid my-lg-7">
+<div class="container-fluid my-md-5 my-lg-6 border-top">
     @foreach($articles as $article)
     <div class="row border-bottom py-3">
         <div class="col-lg-6 order-2 order-lg-1">

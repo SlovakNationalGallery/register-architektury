@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid px-4 pt-4 pt-lg-7">
+<div class="container-fluid px-4 pt-md-5 pt-lg-6 border-bottom pb-3">
     <div class="row">
         <div class="col-lg-3 d-flex align-items-end">
             <p class="mb-4 mb-lg-0">{{ __('app.oa') }} {{ __('app.hu') }}<br/>{{ __('app.sav') }}</p>
@@ -15,7 +15,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid mt-5 mt-lg-3 pb-4 pb-lg-7">
+<div class="container-fluid pb-4 pb-lg-6">
     @php
     $people = [
         (object) [
@@ -45,7 +45,7 @@
     ];
     @endphp
     @foreach($people as $person)
-    <div class="row border-top py-3">
+    <div class="row border-bottom py-3">
         <div class="col-8 col-lg-3 px-4 mb-3 mb-lg-0">
             <img src="{{ $person->image_url }}" class="mw-100" alt="{{ $person->name }}">
         </div>
