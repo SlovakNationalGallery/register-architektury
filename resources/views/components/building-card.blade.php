@@ -4,9 +4,9 @@ $images = $building->processedImages->map->getFirstMedia();
 <div class="building-card card my-4 border">
     <div class="vh-38 p-4">
     @if ($images->isEmpty())
-        <div class="h-100 d-flex flex-column justify-content-center align-items-center">
+        <a href="{{ $building->url }}" class="h-100 d-flex flex-column justify-content-center align-items-center">
             <img src="{{ asset('images/no-image-building.svg') }}" class="w-100">
-        </div>
+        </a>
     @else
         <div class="card-carousel h-100">
             @foreach($images as $index => $image)
