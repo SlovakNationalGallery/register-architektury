@@ -8,9 +8,9 @@
 <div class="container-fluid py-5 px-3">
     <div class="row my-4">
         <div class="col-6 col-lg-3">
-            <div class="border p-4 text-center w-100 vh-38">
+            <div class="border p-4 text-center w-100">
                 @if($architect->has_image)
-                    {{ $architect->image_tag->attributes(['class' => 'mh-100 mw-100']) }}
+                    {{ $architect->image_tag->attributes(['class' => 'mw-100']) }}
                 @else
                     {{-- Placeholder image --}}
                     <img src="{{ asset('images/no-image-architect.svg') }}" class="mh-100 mw-100" alt="{{ $architect->full_name }}">
