@@ -17,6 +17,35 @@ use Illuminate\Http\Response;
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 {
+    // -- Legacy links
+    Route::redirect('/uvod/kontakt.html', '/oddelenie-architektury');
+    Route::redirect('/objekty.html', '/objekty');
+    Route::redirect('/lokality.html', '/objekty');
+    Route::redirect('/architekti.html', '/architekti');
+    Route::redirect('/chronologia.html', '/objekty');
+    Route::redirect('/funkcia.html', '/objekty');
+    Route::redirect('/mapy.html', '/objekty');
+    Route::redirect('/docomomo.html', '/projekty/docomomo');
+    Route::redirect('/atrium.html', '/projekty/atrium');
+    Route::redirect('/momowo.html', '/projekty/momowo');
+    Route::redirect('/sur.html', '/projekty/sur');
+    Route::redirect('/udalosti.html', '/novinky');
+    Route::redirect('/tipy.html', '/');
+
+    // Second-level pages
+    Route::get('/objekty/{oldId}-{slug}.html', 'LegacyRedirectController@showBuilding');
+    Route::get('/architekti/{oldId}-{slug}.html', 'LegacyRedirectController@showArchitect');
+    Route::redirect('/chronologia/{anything}', '/objekty');
+    Route::redirect('/funkcia/{anything}', '/objekty');
+    Route::redirect('/mapy/{anything}', '/objekty');
+    Route::redirect('/docomomo/{anything}', '/projekty/docomomo');
+    Route::redirect('/atrium/{anything}', '/projekty/atrium');
+    Route::redirect('/momowo/{anything}', '/projekty/momowo');
+    Route::redirect('/sur/{anything}', '/projekty/sur');
+
+    // -- End of legacy links
+
+
 	Route::get('/', 'HomeController@index')->name('home');
 
     Route::get('objekty', 'BuildingController@index')->name('building.index');
@@ -37,41 +66,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
         Route::resource('projekty', 'ProjectController')->names('projects')
             ->parameter('projekty', 'project');
         Route::get('publikacie', 'PublicationController@index')->name('publications');
-    });
-});
-
-Route::prefix('index.php')->group(function ()
-{
-    Route::group(['prefix' => 'sk'], function()
-    {
-        // First-level pages
-        Route::redirect('/', '/');
-        Route::redirect('uvod/kontakt.html', '/oddelenie-architektury');
-        Route::redirect('objekty.html', '/objekty');
-        Route::redirect('lokality.html', '/objekty');
-        Route::redirect('architekti.html', '/architekti');
-        Route::redirect('chronologia.html', '/objekty');
-        Route::redirect('funkcia.html', '/objekty');
-        Route::redirect('mapy.html', '/objekty');
-        Route::redirect('docomomo.html', '/projekty/docomomo');
-        Route::redirect('atrium.html', '/projekty/atrium');
-        Route::redirect('momowo.html', '/projekty/momowo');
-        Route::redirect('sur.html', '/projekty/sur');
-        Route::redirect('udalosti.html', '/novinky');
-        Route::redirect('tipy.html', '/');
-
-        // Second-level pages
-        Route::get('objekty/{oldId}-{slug}.html', 'LegacyRedirectController@showBuilding');
-        Route::get('architekti/{oldId}-{slug}.html', 'LegacyRedirectController@showArchitect');
-        Route::redirect('chronologia/{anything}', '/objekty');
-        Route::redirect('funkcia/{anything}', '/objekty');
-        Route::redirect('mapy/{anything}', '/objekty');
-        Route::redirect('docomomo/{anything}', '/projekty/docomomo');
-        Route::redirect('atrium/{anything}', '/projekty/atrium');
-        Route::redirect('momowo/{anything}', '/projekty/momowo');
-        Route::redirect('sur/{anything}', '/projekty/sur');
-
-        Route::fallback(fn () => redirect('/'));
     });
 });
 
