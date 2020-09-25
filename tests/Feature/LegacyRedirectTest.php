@@ -79,6 +79,19 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/en/objects/999-existing-building.html', $building->url);
     }
 
+    public function testRedirectsToMatchingBuildingWithTranslatedTitle()
+    {
+        $building = factory(\App\Models\Building::class)->create([
+            'title' => [
+                'sk' => 'Existing building in Slovak',
+                'en' => 'Existing building in English',
+            ],
+        ]);
+
+        $this->refreshApplicationWithLocale('en');
+        $this->assertRedirect('/index.php/en/objects/999-existing-building-in-english.html', $building->url);
+    }
+
     public function testSearchesForNonMatchingBuilding()
     {
         $this->assertRedirect('/index.php/sk/objekty/999-non-existing-building.html', route('building.index', ['search' => 'non existing building']));
