@@ -9,7 +9,7 @@ use Tests\RefreshSearchIndex;
 
 class LegacyRedirectTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
     public function testIndexPages()
     {
@@ -28,11 +28,15 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/sk/udalosti.html', route('about.articles.index'));
         $this->assertRedirect('/index.php/sk/tipy.html', route('home'));
 
-
         $this->assertRedirect('/index.php/sk/anything-else', route('home'));
     }
 
-
+    public function testBuildingPages()
+    {
+        $building = factory(\App\Models\Building::class)->create(['title' => 'Existing building']);
+        $this->assertRedirect('/index.php/sk/objekty/999-existing-building.html', $building->url);
+        $this->assertRedirect('/index.php/sk/objekty/999-non-existing-building.html', route('building.index', ['search' => 'non existing building']));
+    }
 
     private function assertRedirect($from, $to)
     {
