@@ -11,10 +11,9 @@ class LegacyRedirectTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testIndexPages()
+    public function tesHandleIndexPages()
     {
         $this->assertRedirect('/index.php/sk/', route('home'));
-        $this->assertRedirect('/index.php/sk/uvod/kontakt.html', route('about.department'));
         $this->assertRedirect('/index.php/sk/objekty.html', route('building.index'));
         $this->assertRedirect('/index.php/sk/lokality.html', route('building.index'));
         $this->assertRedirect('/index.php/sk/architekti.html', route('architects.index'));
@@ -29,6 +28,18 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/sk/tipy.html', route('home'));
 
         $this->assertRedirect('/index.php/sk/anything-else', route('home'));
+    }
+
+    public function testHandleSecondLevelPages()
+    {
+        $this->assertRedirect('/index.php/sk/uvod/kontakt.html', route('about.department'));
+        $this->assertRedirect('/index.php/sk/chronologia/anything', route('building.index'));
+        $this->assertRedirect('/index.php/sk/funkcia/anything', route('building.index'));
+        $this->assertRedirect('/index.php/sk/mapy/anything', route('building.index'));
+        $this->assertRedirect('/index.php/sk/docomomo/anything', route('about.projects.show', 'docomomo'));
+        $this->assertRedirect('/index.php/sk/atrium/anything', route('about.projects.show', 'atrium'));
+        $this->assertRedirect('/index.php/sk/momowo/anything', route('about.projects.show', 'momowo'));
+        $this->assertRedirect('/index.php/sk/sur/anything', route('about.projects.show', 'sur'));
     }
 
     public function testRedirectsToMatchingBuilding()

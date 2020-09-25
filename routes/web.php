@@ -44,6 +44,7 @@ Route::prefix('index.php')->group(function ()
 {
     Route::group(['prefix' => 'sk'], function()
     {
+        // First-level pages
         Route::redirect('/', '/');
         Route::redirect('uvod/kontakt.html', '/oddelenie-architektury');
         Route::redirect('objekty.html', '/objekty');
@@ -59,8 +60,16 @@ Route::prefix('index.php')->group(function ()
         Route::redirect('udalosti.html', '/novinky');
         Route::redirect('tipy.html', '/');
 
+        // Second-level pages
         Route::get('objekty/{oldId}-{slug}.html', 'LegacyRedirectController@showBuilding');
         Route::get('architekti/{oldId}-{slug}.html', 'LegacyRedirectController@showArchitect');
+        Route::redirect('chronologia/{anything}', '/objekty');
+        Route::redirect('funkcia/{anything}', '/objekty');
+        Route::redirect('mapy/{anything}', '/objekty');
+        Route::redirect('docomomo/{anything}', '/projekty/docomomo');
+        Route::redirect('atrium/{anything}', '/projekty/atrium');
+        Route::redirect('momowo/{anything}', '/projekty/momowo');
+        Route::redirect('sur/{anything}', '/projekty/sur');
 
         Route::fallback(fn () => redirect('/'));
     });
