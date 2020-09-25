@@ -38,6 +38,16 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/sk/objekty/999-non-existing-building.html', route('building.index', ['search' => 'non existing building']));
     }
 
+    public function testArchitectPages()
+    {
+        $architect = factory(\App\Models\Architect::class)->create([
+            'first_name' => 'architect tibor', // Support multiple first-names
+            'last_name' => 'existing',
+        ]);
+        $this->assertRedirect('/index.php/sk/architekti/999-existing-architect-tibor.html', route('architects.show', $architect));
+        $this->assertRedirect('/index.php/sk/architekti/999-non-existing-architect.html', route('architects.index', ['search' => 'non existing architect']));
+    }
+
     private function assertRedirect($from, $to)
     {
         $response = $this->get($from);

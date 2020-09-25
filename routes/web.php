@@ -60,6 +60,7 @@ Route::prefix('index.php')->group(function ()
         Route::redirect('tipy.html', '/');
 
         Route::get('objekty/{oldId}-{slug}.html', 'LegacyRedirectController@showBuilding');
+        Route::get('architekti/{oldId}-{slug}.html', 'LegacyRedirectController@showArchitect');
 
         Route::fallback(fn () => redirect('/'));
     });
