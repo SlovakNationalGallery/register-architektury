@@ -40,6 +40,29 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
     });
 });
 
+Route::prefix('index.php')->group(function ()
+{
+    Route::group(['prefix' => 'sk'], function()
+    {
+        Route::redirect('/', '/');
+        Route::redirect('uvod/kontakt.html', '/oddelenie-architektury');
+        Route::redirect('objekty.html', '/objekty');
+        Route::redirect('lokality.html', '/objekty');
+        Route::redirect('architekti.html', '/architekti');
+        Route::redirect('chronologia.html', '/objekty');
+        Route::redirect('funkcia.html', '/objekty');
+        Route::redirect('mapy.html', '/objekty');
+        Route::redirect('docomomo.html', '/projekty/docomomo');
+        Route::redirect('atrium.html', '/projekty/atrium');
+        Route::redirect('momowo.html', '/projekty/momowo');
+        Route::redirect('sur.html', '/projekty/sur');
+        Route::redirect('udalosti.html', '/novinky');
+        Route::redirect('tipy.html', '/');
+
+        Route::fallback(fn () => redirect('/'));
+    });
+});
+
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
 
 Route::post('map/hide', function (Request $request) {
