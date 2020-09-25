@@ -24,7 +24,7 @@
                     autofocus
                     >
                     <div class="input-group-append">
-                      <button class="btn bg-transparent" type="button">
+                      <button class="btn bg-transparent" type="submit">
                         <span class="icon-search lead"></span>
                       </button>
                     </div>
