@@ -31,20 +31,28 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/sk/anything-else', route('home'));
     }
 
-    public function testBuildingPages()
+    public function testRedirectsToMatchingBuilding()
     {
         $building = factory(\App\Models\Building::class)->create(['title' => 'Existing building']);
         $this->assertRedirect('/index.php/sk/objekty/999-existing-building.html', $building->url);
+    }
+
+    public function testSearchesForNonMatchingBuilding()
+    {
         $this->assertRedirect('/index.php/sk/objekty/999-non-existing-building.html', route('building.index', ['search' => 'non existing building']));
     }
 
-    public function testArchitectPages()
+    public function testRedirectsToMatchingArchitect()
     {
         $architect = factory(\App\Models\Architect::class)->create([
             'first_name' => 'architect tibor', // Support multiple first-names
             'last_name' => 'existing',
         ]);
         $this->assertRedirect('/index.php/sk/architekti/999-existing-architect-tibor.html', route('architects.show', $architect));
+    }
+
+    public function testSearchesForNonMatchingArchitect()
+    {
         $this->assertRedirect('/index.php/sk/architekti/999-non-existing-architect.html', route('architects.index', ['search' => 'non existing architect']));
     }
 
