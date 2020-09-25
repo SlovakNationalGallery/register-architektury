@@ -59,6 +59,8 @@ Route::prefix('index.php')->group(function ()
         Route::redirect('udalosti.html', '/novinky');
         Route::redirect('tipy.html', '/');
 
+        Route::get('objekty/{oldId}-{slug}.html', 'LegacyRedirectController@showBuilding');
+
         Route::fallback(fn () => redirect('/'));
     });
 });
