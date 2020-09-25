@@ -4,17 +4,15 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Str;
 use Tests\TestCase;
-use Tests\RefreshSearchIndex;
 
 class LegacyRedirectTest extends TestCase
 {
     use RefreshDatabase;
-    use RefreshSearchIndex;
 
-    public function tesHandleIndexPages()
+    public function testHandleIndexPages()
     {
-        $this->assertRedirect('/index.php/sk/', route('home'));
         $this->assertRedirect('/index.php/sk/objekty.html', route('building.index'));
         $this->assertRedirect('/index.php/sk/lokality.html', route('building.index'));
         $this->assertRedirect('/index.php/sk/architekti.html', route('architects.index'));
@@ -27,8 +25,6 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/sk/sur.html', route('about.projects.show', 'sur'));
         $this->assertRedirect('/index.php/sk/udalosti.html', route('about.articles.index'));
         $this->assertRedirect('/index.php/sk/tipy.html', route('home'));
-
-        $this->assertRedirect('/index.php/sk/anything-else', route('home'));
     }
 
     public function testHandleSecondLevelPages()
@@ -70,6 +66,10 @@ class LegacyRedirectTest extends TestCase
 
     private function assertRedirect($from, $to)
     {
+        // Strip index.php and locale
+        $from = Str::replaceFirst('/index.php/sk', '', $from);
+        $from = Str::replaceFirst('/index.php/en', '', $from);
+
         $response = $this->get($from);
         $response->assertRedirect($to);
     }
