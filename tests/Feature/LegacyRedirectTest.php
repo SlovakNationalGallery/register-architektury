@@ -10,6 +10,7 @@ use Tests\RefreshSearchIndex;
 class LegacyRedirectTest extends TestCase
 {
     use RefreshDatabase;
+    use RefreshSearchIndex;
 
     public function tesHandleIndexPages()
     {
