@@ -1,7 +1,7 @@
 @php
 $images = $building->processedImages->map->getFirstMedia();
 @endphp
-<div class="building-card card my-4 border">
+<div class="building-card card my-4 w-100 border">
     <div class="vh-38 p-4">
     @if ($images->isEmpty())
         <a href="{{ $building->url }}" class="h-100 d-flex flex-column justify-content-center align-items-center">
