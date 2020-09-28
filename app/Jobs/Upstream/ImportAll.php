@@ -55,7 +55,6 @@ class ImportAll implements ShouldQueue
             ->leftJoin('Obdobie', 'Obdobie.Pole1', '=', 'Stavby.Štýlová charkteristika')
             ->select(
                 'Evid_č AS source_id',
-                'Pôvodný názov diela AS title',
                 'Alternatívne názvy AS title_alternatives',
                 'Dátum spracovania AS processed_date',
                 'Architekt AS architect_names',
@@ -71,6 +70,7 @@ class ImportAll implements ShouldQueue
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
             )
+            ->selectRaw("JSON_OBJECT('sk', `Pôvodný názov diela`, 'en', `Názov ENG`) as title")
             ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
             ->selectRaw("JSON_OBJECT('sk', Obdobie.Pole1, 'en', Obdobie.Pole2) as style")
             ->selectRaw("JSON_OBJECT('sk', Stav.Stav, 'en', Stav.`Stav ENG`) as status")
@@ -136,6 +136,7 @@ class ImportAll implements ShouldQueue
 
                     $gpsLocation = $this->parseLocationGPS($row->location_gps);
                     $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+                    $row->title = (array) json_decode($row->title);
                     $row->current_function = (array) json_decode($row->current_function);
                     $row->style = (array) json_decode($row->style);
                     $row->status = (array) json_decode($row->status);
