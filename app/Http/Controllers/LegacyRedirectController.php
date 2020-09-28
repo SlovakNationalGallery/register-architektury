@@ -11,8 +11,9 @@ class LegacyRedirectController extends Controller
 {
     public function showBuilding(string $oldId, string $slug)
     {
+        $locale = app()->getLocale();
         $title = (string) Str::of($slug)->replace('-', ' ');
-        $building = Building::search('*')->whereMatch('title.folded', $title)->first();
+        $building = Building::search('*')->whereMatch("$locale.title_sortable", $title)->first();
 
         if ($building) return redirect($building->url);
         return redirect(route('building.index', ['search' => $title]));
