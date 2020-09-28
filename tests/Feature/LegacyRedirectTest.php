@@ -2,14 +2,18 @@
 
 namespace Tests\Feature;
 
+use App\Models\Architect;
+use App\Models\Building;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Str;
+use Tests\RefreshSearchIndex;
 use Tests\TestCase;
 
 class LegacyRedirectTest extends TestCase
 {
     use RefreshDatabase;
+    use RefreshSearchIndex;
 
     public function testRedirectIndexPages()
     {
@@ -47,7 +51,7 @@ class LegacyRedirectTest extends TestCase
         $this->assertRedirect('/index.php/en/tips.html', route('home'));
     }
 
-    public function testHandleSecondLevelPages()
+    public function testRedirectSecondLevelPages()
     {
         // SK
         $this->refreshApplicationWithLocale('sk');
@@ -74,21 +78,21 @@ class LegacyRedirectTest extends TestCase
 
     public function testRedirectsToMatchingBuilding()
     {
-        $building = factory(\App\Models\Building::class)->create(['title' => 'Existing building']);
+        $building = factory(Building::class)->create(['title' => 'Existing building']);
         $this->assertRedirect('/index.php/sk/objekty/999-existing-building.html', $building->url);
         $this->assertRedirect('/index.php/en/objects/999-existing-building.html', $building->url);
     }
 
     public function testRedirectsToMatchingBuildingWithTranslatedTitle()
     {
-        $building = factory(\App\Models\Building::class)->create([
+        $this->refreshApplicationWithLocale('en');
+        $building = factory(Building::class)->create([
             'title' => [
                 'sk' => 'Existing building in Slovak',
                 'en' => 'Existing building in English',
             ],
         ]);
 
-        $this->refreshApplicationWithLocale('en');
         $this->assertRedirect('/index.php/en/objects/999-existing-building-in-english.html', $building->url);
     }
 
@@ -100,7 +104,7 @@ class LegacyRedirectTest extends TestCase
 
     public function testRedirectsToMatchingArchitect()
     {
-        $architect = factory(\App\Models\Architect::class)->create([
+        $architect = factory(Architect::class)->create([
             'first_name' => 'architect tibor', // Support multiple first-names
             'last_name' => 'existing',
         ]);
