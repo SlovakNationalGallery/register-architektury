@@ -44,9 +44,21 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->mapApiRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapLegacyWebRoutes();
 
-        //
+        $this->mapWebRoutes();
+    }
+
+    /**
+     * Web routes from previous version of the Register
+     *
+     * @return void
+     */
+    protected function mapLegacyWebRoutes()
+    {
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web_legacy.php'));
     }
 
     /**
