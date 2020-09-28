@@ -1,3 +1,7 @@
 .overflow-x-hidden {
     overflow-x: hidden;
 }
+
+.container-fluid {
+    overflow-x: hidden; // https://stackoverflow.com/questions/37978307/bootstrap-container-fluid-padding/50005919
+}
