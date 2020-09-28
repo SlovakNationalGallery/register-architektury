@@ -19,8 +19,6 @@
     <php>
         <env name="DB_CONNECTION" value="sqlite"/>
         <env name="DB_DATABASE" value=":memory:"/>
-        <env name="SCOUT_PREFIX" value="regarch_test_"/>
-
 
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
@@ -29,5 +27,7 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
+        <server name="SCOUT_PREFIX" value="regarch_test_"/>
+        <server name="SCOUT_ELASTIC_DOCUMENT_REFRESH" value="true"/>
     </php>
 </phpunit>
