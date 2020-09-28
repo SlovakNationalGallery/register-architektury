@@ -11,7 +11,7 @@ trait RefreshSearchIndex
      *
      * @return void
      */
-    public function setUpSearchIndexes()
+    public function refreshSearchIndex()
     {
         $this->artisan('regarch:elastic:migrate');
         $this->app[Kernel::class]->setArtisan(null);

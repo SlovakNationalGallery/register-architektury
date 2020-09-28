@@ -19,7 +19,7 @@ abstract class TestCase extends BaseTestCase
     {
         $uses = parent::setUpTraits();
         if (isset($uses[RefreshSearchIndex::class])) {
-            $this->setUpSearchIndexes();
+            $this->refreshSearchIndex();
         }
     }
 
