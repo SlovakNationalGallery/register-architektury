@@ -5,9 +5,15 @@ var architects = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/search-sugestions/?search=%QUERY',
-		wildcard: '%QUERY',
-		transform: ({architects}) => architects
+		url: '/api/search-sugestions/',
+		prepare: function (query, settings) {
+            var locale = $('html').attr('lang');
+            settings.url += '?search='+query;
+            settings.url += '&locale='+locale;
+            console.log(settings.url);
+			return settings;
+        },
+        transform: ({architects}) => architects,
 	}
 });
 
@@ -15,8 +21,14 @@ var buildings = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/search-sugestions/?search=%QUERY',
-		wildcard: '%QUERY',
+		url: '/api/search-sugestions/',
+		prepare: function (query, settings) {
+            var locale = $('html').attr('lang');
+            settings.url += '?search='+query;
+            settings.url += '&locale='+locale;
+            console.log(settings.url);
+			return settings;
+        },
 		transform: ({buildings}) => buildings
 	}
 });
