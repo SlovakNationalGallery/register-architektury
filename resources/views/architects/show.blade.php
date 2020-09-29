@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid py-5 px-3">
+<div class="container-fluid py-5">
     <div class="row my-4">
         <div class="col-6 col-lg-3">
             <div class="border p-4 text-center w-100">

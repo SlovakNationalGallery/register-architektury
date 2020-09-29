@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid px-4 pt-md-5 pt-lg-6 border-bottom pb-3">
+<div class="container-fluid pt-md-5 pt-lg-6 border-bottom pb-3">
     <div class="row">
         <div class="col-lg-3 d-flex align-items-end">
             <p class="mb-4 mb-lg-0">{{ __('app.oa') }} {{ __('app.hu') }}<br/>{{ __('app.sav') }}</p>

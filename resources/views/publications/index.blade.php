@@ -5,7 +5,7 @@
 
 @include('components.header')
 
-<div class="container-fluid px-4 pt-6 pb-3">
+<div class="container-fluid pt-6 pb-3">
     <div class="row">
         <div class="col text-right">
             @include('components.sort-by', [
