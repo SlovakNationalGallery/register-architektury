@@ -56,7 +56,7 @@
         </div>
 
         <div class="col-md-3 order-md-1 pb-4">
-            @if ($building->has3DModel())
+            @if (false)
                 <p>
                     <a href="#" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
                 </p>
