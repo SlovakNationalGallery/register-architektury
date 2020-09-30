@@ -326,9 +326,4 @@ class Building extends Model
             'year_max' => ceil(Arr::get($aggregations, 'year_max.value') / 10) * 10,
         ];
     }
-
-    public function has3DModel()
-    {
-        return true; //@TODO
-    }
 }
