@@ -11,7 +11,7 @@
     'zoom' => 15,
 ])
 
-<div class="container-fluid px-3">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12 pt-3 pb-5">
             @include('components.tags', ['tags' => $building->tags])
@@ -84,7 +84,7 @@
     </div>
 </div>
 {{-- related --}}
-<div class="container-fluid px-3 border-top">
+<div class="container-fluid border-top">
     <div class="row mb-4 mt-3">
         <div class="col text-left">
             {{ __('building.related') }} . . .

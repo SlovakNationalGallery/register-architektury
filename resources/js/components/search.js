@@ -5,7 +5,7 @@ var architects = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/search-sugestions/?search=%QUERY',
+		url: '/api/search-sugestions/?locale='+$('html').attr('lang')+'&search=%QUERY',
 		wildcard: '%QUERY',
 		transform: ({architects}) => architects
 	}
@@ -15,7 +15,7 @@ var buildings = new Bloodhound({
 	queryTokenizer: Bloodhound.tokenizers.whitespace,
 	datumTokenizer: Bloodhound.tokenizers.whitespace,
 	remote: {
-		url: '/api/search-sugestions/?search=%QUERY',
+		url: '/api/search-sugestions/?locale='+$('html').attr('lang')+'&search=%QUERY',
 		wildcard: '%QUERY',
 		transform: ({buildings}) => buildings
 	}

@@ -4,7 +4,7 @@
 @section('content')
 @include('components.header')
 
-<div class="container-fluid my-md-5 my-lg-6">
+<div class="container-fluid my-md-5 my-lg-6 overflow-x-hidden">
     <div class="row border-top pt-3">
         <div class="col-lg-6 offset-lg-3">
             <h2 class="mb-2 ls-2">{{ $article->title }}</h2>

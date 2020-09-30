@@ -66,14 +66,14 @@
             </form>
             {{-- /filters --}}
 
-            <div class="row items px-3 mb-4">
+            <div class="row no-gutters items px-3 mb-4">
                 @foreach ($buildings as $i=>$building)
                     <div class="col-lg-3 col-sm-6 d-flex align-items-stretch item">
                         @include('components.building-card', ['building' => $building])
                     </div>
                 @endforeach
             </div>
-            <div class="row">
+            <div class="row no-gutters">
                 <div class="col-md-12 text-center">
                     {{ $buildings->withQueryString()->links() }}
                 </div>

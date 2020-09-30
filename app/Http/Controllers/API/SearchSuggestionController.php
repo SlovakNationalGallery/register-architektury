@@ -14,9 +14,13 @@ class SearchSuggestionController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search', '');
+        $locale = $request->get('locale', app()->getLocale());
+
+        app()->setLocale($locale);
+
         return [
             'architects' => $this->architects($search),
-            'buildings' => $this->buildings($search),
+            'buildings' => $this->buildings($search, $locale),
         ];
     }
 
@@ -45,7 +49,7 @@ class SearchSuggestionController extends Controller
         return $architects->map->only('id', 'url', 'full_name');
     }
 
-    private function buildings($search)
+    private function buildings($search, $locale)
     {
         $buildings = Building::searchRaw([
             'query' => [
@@ -53,13 +57,12 @@ class SearchSuggestionController extends Controller
                     'query' => $search,
                     'type' => 'bool_prefix',
                     'fields' => [
-                        'title.suggest',
-                        'title_alternatives.suggest'
+                        $locale.'.title',
+                        'title_alternatives'
                     ]
                 ]
             ]
         ]);
-
 
         $buildings_suggestions = collect(
             Arr::get($buildings, 'hits.hits'),
