@@ -15,6 +15,11 @@
     <meta property="og:image" content="@yield('og_image', asset('images/og-image.jpg'))" />
     <meta property="og:site_name" content="{{ __('app.title') }}" />
 
+    @if(App::environment('production'))
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179323873-1"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-179323873-1'); </script>
+    @endif
+
     <title>
         @hasSection('title')
            @yield('title') | {{__('app.title')}}
