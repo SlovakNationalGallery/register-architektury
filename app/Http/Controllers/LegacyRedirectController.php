@@ -34,11 +34,4 @@ class LegacyRedirectController extends Controller
         if ($architect) return redirect(route('architects.show', $architect));
         return redirect(route('architects.index', ['search' => "$lastName $firstNames"]));
     }
-
-    // Strips /index.php/ off the URL
-    private function redirectWithoutIndexPhp($url)
-    {
-        $rootUrl = Str::replaceLast('/index.php', '', URL::to('/'));
-        return redirect("$rootUrl$url");
-    }
 }
