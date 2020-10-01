@@ -5,15 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <meta name="description" content="@yield('page_description', 'TODO')">
+    <meta name="description" content="@yield('page_description', __('app.description'))">
     <meta property="og:title" content="@yield('page_title', __('app.title'))" />
-    <meta property="og:description" content="@yield('page_description', 'TODO')">
-    <meta property="og:keywords" content="TODO" />
+    <meta property="og:description" content="@yield('page_description', __('app.description'))">
+    <meta property="og:keywords" content="ustarch, sav, bratislava, slovensko, architekt, register, stavba, dom, byvanie, dielo, pamiatka, docomomo, atrium, slovakia, architect, building, monument, residence" />
     <meta property="og:type" content="website" />
     <meta property="og:author" content="http://lab.sng.sk/" />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="@yield('og_image', 'TODO')" />
+    <meta property="og:image" content="@yield('og_image', asset('images/og-image.jpg'))" />
     <meta property="og:site_name" content="{{ __('app.title') }}" />
+
+    @if(App::environment('production'))
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179323873-1"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'UA-179323873-1'); </script>
+    @endif
 
     <title>
         @hasSection('title')
