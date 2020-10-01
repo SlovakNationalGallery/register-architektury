@@ -10,6 +10,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class Architect extends Model implements HasMedia
 {
@@ -152,7 +153,7 @@ class Architect extends Model implements HasMedia
 
     public function getUrlAttribute()
     {
-        return route('architects.show', $this);
+        return LaravelLocalization::getLocalizedURL(app()->getLocale(), route('architects.show', $this));
     }
 
     public function getSlugOptions(): SlugOptions
