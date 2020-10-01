@@ -19,7 +19,9 @@ Route::get('/sk/architekti/{oldId}-{slug}.html', 'LegacyRedirectController@showA
 Route::get('/en/architects/{oldId}-{slug}.html', 'LegacyRedirectController@showArchitect');
 
 Route::redirect('/sk/lokality.html', '/objekty');
+Route::redirect('/sk/lokality/{anything}', '/objekty');
 Route::redirect('/en/locations-2.html', '/en/objekty');
+Route::redirect('/en/locations-2/{anything}', '/en/objekty');
 
 Route::redirect('/sk/chronologia.html', '/objekty');
 Route::redirect('/sk/chronologia/{anything}', '/objekty');
