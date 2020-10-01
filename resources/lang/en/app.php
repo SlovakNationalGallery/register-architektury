@@ -6,6 +6,7 @@ return [
     'oa_genitive' => 'Department of Architecture',
     'hu' => 'Institute of History',
     'sav' => 'Slovak Academy of Sciences',
+    'financial_support' => 'Created with the financial support of APVV project No.APVV-16-0584',
     'load_more' => 'Show more!',
     'loading' => 'Loading...',
     'last_page' => 'End of content',

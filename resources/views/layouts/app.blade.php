@@ -42,10 +42,10 @@
         <footer class="footer py-3 border-top">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-auto ls-2">
-                        {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>.
+                    <div class="col-md-10 ls-2">
+                        {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>. {{ __('app.financial_support') }}
                     </div>
-                    <div class="col-md ls-2 text-right">
+                    <div class="col-md-2 ls-2 text-md-right">
                         {{ __('app.produced_by') }} <a href="https://lab.sng.sk" class="link-underline" target="_blank">lab.SNG</a>
                     </div>
                 </div>
