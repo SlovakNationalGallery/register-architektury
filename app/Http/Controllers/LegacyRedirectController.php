@@ -16,8 +16,8 @@ class LegacyRedirectController extends Controller
         $title = (string) Str::of($slug)->replace('-', ' ');
         $building = Building::search('*')->whereMatch("$locale.title_sortable", $title)->first();
 
-        if ($building) return $this->redirectWithoutIndexPhp(route('building.detail', [$building->id, $building->slug], false));
-        return $this->redirectWithoutIndexPhp(route('building.index', ['search' => $title], false));
+        if ($building) return redirect(route('building.detail', [$building->id, $building->slug]));
+        return redirect(route('building.index', ['search' => $title]));
     }
 
     public function showArchitect(string $oldId, string $slug)
@@ -31,8 +31,8 @@ class LegacyRedirectController extends Controller
             ->whereMatch('last_name.folded', $lastName)
             ->first();
 
-        if ($architect) return $this->redirectWithoutIndexPhp(route('architects.show', $architect, false));
-        return $this->redirectWithoutIndexPhp(route('architects.index', ['search' => "$lastName $firstNames"], false));
+        if ($architect) return redirect(route('architects.show', $architect));
+        return redirect(route('architects.index', ['search' => "$lastName $firstNames"]));
     }
 
     // Strips /index.php/ off the URL
