@@ -56,6 +56,7 @@ class LegacyRedirectTest extends TestCase
         // SK
         $this->refreshApplicationWithLocale('sk');
         $this->assertRedirect('/index.php/sk/uvod/kontakt.html', route('about.department'));
+        $this->assertRedirect('/index.php/sk/lokality/anything', route('building.index'));
         $this->assertRedirect('/index.php/sk/chronologia/anything', route('building.index'));
         $this->assertRedirect('/index.php/sk/funkcia/anything', route('building.index'));
         $this->assertRedirect('/index.php/sk/mapy/anything', route('building.index'));
@@ -67,6 +68,7 @@ class LegacyRedirectTest extends TestCase
         // EN
         $this->refreshApplicationWithLocale('en');
         $this->assertRedirect('/index.php/en/info/kontakt-2.html', route('about.department'));
+        $this->assertRedirect('/index.php/en/locations-2/anything', route('building.index'));
         $this->assertRedirect('/index.php/en/chronology-2/anything', route('building.index'));
         $this->assertRedirect('/index.php/en/function-2/anything', route('building.index'));
         $this->assertRedirect('/index.php/en/map-google-2/anything', route('building.index'));
