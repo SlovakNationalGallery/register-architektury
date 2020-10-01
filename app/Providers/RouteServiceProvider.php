@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -42,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
+        $this->removeIndexPhpFromUrl();
+
         $this->mapApiRoutes();
 
         $this->mapLegacyWebRoutes();
@@ -88,5 +91,14 @@ class RouteServiceProvider extends ServiceProvider
             ->middleware('api')
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
+    }
+
+    protected function removeIndexPhpFromUrl()
+    {
+        if (Str::contains(request()->getRequestUri(), '/index.php/')) {
+            $url = Str::replaceFirst('index.php/', '', request()->getRequestUri());
+            header("Location: $url", true, 301);
+            exit;
+        }
     }
 }
