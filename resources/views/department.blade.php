@@ -32,13 +32,13 @@
             'email' => 'katarina.haberlandova@savba.sk',
         ],
         (object) [
-            'name' => 'Peter Szalay, PhD.',
+            'name' => 'Mgr. Peter Szalay, PhD.',
             'image_url' => asset('images/peter-szalay.jpg'),
             'role' => __('about.department.researcher_male'),
             'email' => 'peter.szalay@savba.sk',
         ],
         (object) [
-            'name' => 'Ing. arch. Laura Pastoreková Krišteková, PhD.',
+            'name' => 'Ing. arch. Laura Krišteková Pastoreková, PhD.',
             'image_url' => asset('images/laura-pastorekova.jpg'),
             'role' => __('about.department.researcher_female'),
             'email' => 'laura.pastorekova@savba.sk'
