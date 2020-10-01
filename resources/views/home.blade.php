@@ -17,7 +17,7 @@
 
 <div class="container-fluid p-0">
     <div class="row no-gutters">
-        <div class="col-md-12 p-3" id="filters">
+        <div class="col-md-12 p-3 overflow-x-hidden" id="filters">
             {{-- featured filters --}}
             <form action="{{ route('building.index') }}">
                 <div class="row no-gutters align-items-end">
