@@ -10,8 +10,9 @@
         <div class="col-lg-3 d-flex align-items-end">
             <p class="mb-4 mb-lg-0">{{ __('app.oa') }} {{ __('app.hu') }}<br/>{{ __('app.sav') }}</p>
         </div>
-        <div class="col-lg-8 col-xl-6 d-flex align-items-end">
-            <p class="mb-0">{{ __('about.department.intro') }}</p>
+        <div class="col-lg-8 col-xl-6">
+            <p class="">{{ __('about.department.intro') }}</p>
+            <p class="mb-0">{{ __('about.department.established') }}</p>
         </div>
     </div>
 </div>
