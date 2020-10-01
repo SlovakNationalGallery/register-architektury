@@ -7,7 +7,7 @@ return [
     'architects' => 'architekti',
     'builders' => 'stavitelia',
     'bibliography' => 'Literatúra',
-    'related' => 'Súvisiace',
+    'related' => 'súvisiace objekty',
 
     // index
     'count' => '{0} objektov|[1] objekt|[2,4] objekty|[5,*] objektov',

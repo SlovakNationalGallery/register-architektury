@@ -10,8 +10,9 @@
         <div class="col-lg-3 d-flex align-items-end">
             <p class="mb-4 mb-lg-0">{{ __('app.oa') }} {{ __('app.hu') }}<br/>{{ __('app.sav') }}</p>
         </div>
-        <div class="col-lg-8 col-xl-6 d-flex align-items-end">
-            <p class="mb-0">{{ __('about.department.intro') }}</p>
+        <div class="col-lg-8 col-xl-6">
+            <p class="">{{ __('about.department.intro') }}</p>
+            <p class="mb-0">{{ __('about.department.established') }}</p>
         </div>
     </div>
 </div>
@@ -31,13 +32,13 @@
             'email' => 'katarina.haberlandova@savba.sk',
         ],
         (object) [
-            'name' => 'Peter Szalay, PhD.',
+            'name' => 'Mgr. Peter Szalay, PhD.',
             'image_url' => asset('images/peter-szalay.jpg'),
             'role' => __('about.department.researcher_male'),
             'email' => 'peter.szalay@savba.sk',
         ],
         (object) [
-            'name' => 'Ing. arch. Laura Pastoreková Krišteková, PhD.',
+            'name' => 'Ing. arch. Laura Krišteková Pastoreková, PhD.',
             'image_url' => asset('images/laura-pastorekova.jpg'),
             'role' => __('about.department.researcher_female'),
             'email' => 'laura.pastorekova@savba.sk'

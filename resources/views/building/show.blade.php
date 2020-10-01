@@ -87,7 +87,7 @@
 <div class="container-fluid border-top">
     <div class="row mb-4 mt-3">
         <div class="col text-left">
-            {{ __('building.related') }} . . .
+            {{ __('building.related') }}
         </div>
     </div>
     <div class="row items">

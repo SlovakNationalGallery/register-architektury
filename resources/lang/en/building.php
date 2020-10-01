@@ -7,7 +7,7 @@ return [
     'architects' => 'architects',
     'builders' => 'builders',
     'bibliography' => 'Bibliography',
-    'related' => 'Related',
+    'related' => 'related objects',
 
     // index
     'count' => '{0} objects|[1] object|[2,*] objects',

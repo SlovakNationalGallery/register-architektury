@@ -7,6 +7,7 @@ return [
     'description' => 'Register modernej architektúry na Slovensku je výsledkom práce Oddelenia architektúry Historického ústavu SAV a predstavuje najlepšie diela modernistickej architektúry 20. storočia na Slovensku.',
     'hu' => 'Historického ústavu',
     'sav' => 'Slovenskej akadémie vied',
+    'financial_support' => 'Vznikol s finančnou podporou APVV projekt č. APVV-16-058',
     'load_more' => 'Zobraz viac!',
     'loading' => 'Načítava sa...',
     'last_page' => 'A to je všetko',
