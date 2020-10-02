@@ -63,7 +63,7 @@ return [
             'artisan:config:cache',
             'artisan:migrate',
             'elastic:migrate',
-            'artisan:horizon:terminate',
+            'sudo:artisan:horizon:terminate',
         ],
 
         // Deployment is done and live
@@ -157,7 +157,7 @@ return [
     */
 
     'include' => [
-        'deployer/elastic.php',
+        'deployer/custom.php',
     ],
 
     /*
