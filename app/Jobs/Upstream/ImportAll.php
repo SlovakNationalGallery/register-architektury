@@ -69,6 +69,7 @@ class ImportAll implements ShouldQueue
                 'Roky.Rok0 AS decade',
                 'Stavby.Pole1 AS image_filename',
                 'Literatúra: AS bibliography',
+                'SketchUp model AS sketchup_model_url',
             )
             ->selectRaw("JSON_OBJECT('sk', `Pôvodný názov diela`, 'en', `Názov ENG`) as title")
             ->selectRaw("JSON_OBJECT('sk', Funkcia.Pole1, 'en', Funkcia.Pole2) as current_function")
