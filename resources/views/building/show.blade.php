@@ -58,7 +58,7 @@
         <div class="col-md-3 order-md-1 pb-4">
             @if ($building->sketchup_model_url)
                 <p>
-                    <a href="{{$building->sketchup_model_url}}" class="link-no-underline"><span class="icon-cube"></span> 3D Model</a>
+                    <a href="{{$building->sketchup_model_url}}" class="link-no-underline" target="_blank"><span class="icon-cube"></span> 3D Model</a>
                 </p>
             @endif
 
