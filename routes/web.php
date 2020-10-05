@@ -51,3 +51,9 @@ Route::post('map/show', function (Request $request) {
     $request->session()->put('show_map', true);
     return response(null, Response::HTTP_OK);
 });
+
+Route::post('toggle-newsticker', function(Request $request) {
+    $hide_newsticker = $request->session()->get('hide-newsticker', false);
+    $request->session()->put('hide-newsticker', !$hide_newsticker);
+    return response(null, Response::HTTP_OK);
+});
