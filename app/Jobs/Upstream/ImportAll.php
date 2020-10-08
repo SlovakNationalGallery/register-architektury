@@ -110,6 +110,10 @@ class ImportAll implements ShouldQueue
             ->get();
 
         $images = $this->db->table('Obrazky')
+            ->join('Stavby', fn ($join) => $join
+                ->on('Stavby.Evid_č', '=', 'Obrazky.Evidenčné číslo objektu')
+                ->where('Stavby.Web', 1)
+            )
             ->select(
                 'Identifikačné číslo AS source_id',
                 'Evidenčné číslo objektu AS building_source_id',
@@ -190,10 +194,6 @@ class ImportAll implements ShouldQueue
                 foreach($images as $row) {
                     $building = Building::firstWhere('source_id', $row->building_source_id);
 
-                    if (empty($building)) {
-                        $this->log->warning('Skipping image ' . $row->source_id . ' referencing an unknown building');
-                        continue;
-                    }
                     $row->building_id = $building->id;
 
                     Image::updateOrCreate(
