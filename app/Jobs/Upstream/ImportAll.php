@@ -2,7 +2,6 @@
 
 namespace App\Jobs\Upstream;
 
-use App\Jobs\ReindexAll;
 use App\Jobs\ProcessArchitectImage;
 use App\Jobs\ProcessBuildingImage;
 use App\Models\Architect;
@@ -17,7 +16,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class ImportAll implements ShouldQueue
 {
@@ -130,9 +128,15 @@ class ImportAll implements ShouldQueue
         $this->inTransaction(function() use ($architects, $buildings, $building_dates, $images) {
             // Delete objects no longer present in source
             Image::whereNotIn('source_id', Arr::pluck($images, 'source_id'))->delete();
-            Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'))->delete();
-            Building::whereNotIn('source_id', Arr::pluck($buildings, 'source_id'))->delete();
             BuildingDate::whereNotIn('source_id', Arr::pluck($building_dates, 'source_id'))->delete();
+
+            $architectsToDelete = Architect::whereNotIn('source_id', Arr::pluck($architects, 'source_id'));
+            $architectsToDelete->unsearchable(); // Scout does not observe deletions in transactions, so remove from index manually
+            $architectsToDelete->delete();
+
+            $buildingsToDelete = Building::whereNotIn('source_id', Arr::pluck($buildings, 'source_id'));
+            $buildingsToDelete->unsearchable();
+            $buildingsToDelete->delete();
 
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
@@ -202,6 +206,12 @@ class ImportAll implements ShouldQueue
                     );
                 }
             });
+        },
+        // Finally (whether successful or not)
+        function() {
+            $this->log->info('Enqueing search re-index');
+            Building::all()->searchable();
+            Architect::all()->searchable();
         });
 
         $this->log->info('Enqueing image processing');
@@ -211,9 +221,6 @@ class ImportAll implements ShouldQueue
         Architect::withUnprocessedImage()->get()->map(function ($architect) {
             ProcessArchitectImage::dispatch($architect);
         });
-
-        $this->log->info('Enqueing search re-index');
-        ReindexAll::dispatch();
 
         $this->log->info('🚀 Done');
     }
@@ -247,14 +254,18 @@ class ImportAll implements ShouldQueue
         return $dd;
     }
 
-    private function inTransaction($callback) {
-        Building::withoutSyncingToSearch(function () use ($callback) {
-            Architect::withoutSyncingToSearch(function () use ($callback) {
-                DB::connection('mysql')->transaction(function () use ($callback) {
-                    return $callback();
+    private function inTransaction($callback, $finallyCallback) {
+        try {
+            Building::withoutSyncingToSearch(function () use ($callback) {
+                Architect::withoutSyncingToSearch(function () use ($callback) {
+                    DB::connection('mysql')->transaction(function () use ($callback) {
+                        return $callback();
+                    });
                 });
             });
-        });
+        } finally {
+            $finallyCallback();
+        }
     }
 
     private function trimRow($row) {
