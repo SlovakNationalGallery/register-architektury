@@ -79,6 +79,10 @@ class ImportAll implements ShouldQueue
 
         $building_dates = $this->db->table('RokyStavby')
             ->leftJoin('RokyStavbyKategorie', 'RokyStavby.Kategoria', '=', 'RokyStavbyKategorie.ID')
+            ->join('Stavby', fn ($join) => $join
+                ->on('Stavby.Evid_č', '=', 'RokyStavby.StavbaID')
+                ->where('Stavby.Web', 1)
+            )
             ->select(
                 'RokyStavby.ID AS source_id',
                 'StavbaID AS building_source_id',
@@ -163,8 +167,6 @@ class ImportAll implements ShouldQueue
                 $buildings = Building::whereIn('source_id', Arr::pluck($building_dates, 'building_source_id'))->get();
                 foreach($building_dates as $row) {
                     $building = $buildings->firstWhere('source_id', $row->building_source_id);
-                    if (empty($building)) continue;
-
                     BuildingDate::updateOrCreate(
                         ['source_id' => $row->source_id],
                         [
