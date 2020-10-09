@@ -28,6 +28,7 @@ function initMap() {
 		showZoom: true
 	});
 	map.addControl(nav, 'top-left');
+	map.scrollZoom.disable();
 
 	map.on('load', function () {
 
