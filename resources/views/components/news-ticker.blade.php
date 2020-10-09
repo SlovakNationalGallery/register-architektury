@@ -9,5 +9,6 @@
                 <a href="{{ route('about.articles.show', $article) }}" class="link-no-underline mr-3">{{ $article->title }}</a>
             @endforeach
         </marquee>
+        <a href="#close" class="d-block icon-close p-2 link-no-underline border-bottom-0" id="hide-news"></a>
     </div>
 @endif

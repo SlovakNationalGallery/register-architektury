@@ -1,10 +1,11 @@
 require('./bootstrap');
-require('./components/filters');
-require('./components/buildings-carousel');
-require('./components/gallery-carousel');
 require('./components/building-card');
+require('./components/buildings-carousel');
+require('./components/expandable');
+require('./components/filters');
+require('./components/gallery-carousel');
 require('./components/load-more');
 require('./components/map');
-require('./components/timeline');
-require('./components/expandable');
+require('./components/news-ticker');
 require('./components/search');
+require('./components/timeline');

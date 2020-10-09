@@ -1,0 +1,28 @@
+#news {
+    display: flex;
+    line-height: 1rem;
+
+    marquee {
+        position: relative;
+
+        &:before, &:after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 2rem;
+            height: 100%;
+            z-index: 1;
+            top: 0;
+        }
+
+        &:before {
+            left: 0;
+            background: linear-gradient(to right, $light 0%, transparent 100%);
+        }
+
+        &:after {
+            right: 0;
+            background: linear-gradient(to left, $light 0%, transparent 100%);
+        }
+    }
+}
