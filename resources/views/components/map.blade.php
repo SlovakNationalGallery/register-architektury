@@ -1,7 +1,7 @@
 @php
 $center = $center ?? [19.696058, 48.6737532];
 $zoom = $zoom ?? 6;
-$show_map = (Cookie::get('show_map') == 'true');
+$show_map = (Cookie::get('show_map') != 'false');
 @endphp
 
 <div class="container-fluid p-0 position-relative {{ ($show_map) ? 'vh-38' : '' }}" id="map-container">
