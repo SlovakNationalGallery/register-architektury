@@ -1,4 +1,4 @@
-@if (!session('hide-newsticker', false))
+@if (!(Cookie::get('hide_news_ticker') == 'true'))
     @include('components.news-ticker')
 @endif
 
