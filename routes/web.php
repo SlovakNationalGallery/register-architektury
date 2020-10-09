@@ -43,7 +43,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function()
 Route::get('styleguide', 'StyleGuideController@index')->name('styleguide');
 
 Route::post('settings', function(Request $request) {
-    $time = 60 * 1; // in minutes
+    $time = 60; // in minutes
     if ($request->has('hide_news_ticker')) Cookie::queue('hide_news_ticker', $request->input('hide_news_ticker'), $time);
     if ($request->has('show_map')) Cookie::queue('show_map', $request->input('show_map'), $time);
     return response();
