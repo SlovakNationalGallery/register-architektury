@@ -95,14 +95,18 @@ class ImportAll implements ShouldQueue
 
         $architects = $this->db->table('Architekti')
             ->leftJoin('Mesto AS MiestoNarodenia', 'MiestoNarodenia.Identifikácia', '=', 'Architekti.Miesto narodenia')
+            ->leftJoin('Rok AS RokNarodenia', 'RokNarodenia.Identifikácia', '=', 'Architekti.Rok narodenia')
             ->leftJoin('Mesto AS MiestoUmrtia', 'MiestoUmrtia.Identifikácia', '=', 'Architekti.Miesto úmrtia')
+            ->leftJoin('Rok AS RokUmrtia', 'RokUmrtia.Identifikácia', '=', 'Architekti.Rok úmrtia')
             ->select(
                'Architekti.Identifikácia AS source_id',
                'Meno AS first_name',
                'Priezvisko AS last_name',
                'Dátum narodenia AS birth_date',
+               'RokNarodenia.Rok AS birth_year',
                'MiestoNarodenia.Mesto AS birth_place',
                'Dátum úmrtia AS death_date',
+               'RokUmrtia.Rok AS death_year',
                'MiestoUmrtia.Mesto AS death_place',
                'Životopis AS bio',
                'diela AS building_source_ids',
