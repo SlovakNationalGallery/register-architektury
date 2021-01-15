@@ -37,3 +37,11 @@ h5, .h5 {
 p {
     letter-spacing: $letter-spacing-2;
 }
+
+.md-text-truncate {
+    @include media-breakpoint-up(md) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
