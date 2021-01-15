@@ -61,10 +61,11 @@
         <div class="col-md-12">
             {{-- fields bellow should be taken from "featured" collections and translated within them --}}
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}">Do.co,mo.mo</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'atrium' ? 'active' : '' }}" href="{{ route('about.projects.show', 'atrium') }}">ATRIUM</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'momowo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'momowo') }}">MoMoWo</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'sur' ? 'active' : '' }}" href="{{ route('about.projects.show', 'sur') }}">ŠUR</a>
+                @php $unplanned_city_slug = 'unintended-city-architectural-and-town-planning-conceptions-of-19th-and-20th-century-in-the-urban-structure-of-bratislava' @endphp
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}" title="Do.co,mo.mo">Do.co,mo.mo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link md-text-truncate {{ Route::is('about.projects.show') && $project->slug == $unplanned_city_slug ? 'active' : '' }}" href="{{ route('about.projects.show', $unplanned_city_slug) }}" title="{{ __('header.featured.unplanned_city') }}">{{ __('header.featured.unplanned_city') }}</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'momowo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'momowo') }}" title="MoMoWo">MoMoWo</a>
+                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'sur' ? 'active' : '' }}" href="{{ route('about.projects.show', 'sur') }}" title="ŠUR">ŠUR</a>
             </nav>
         </div>
     </div>
