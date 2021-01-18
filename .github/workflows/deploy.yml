@@ -39,7 +39,7 @@ jobs:
         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-node-
-    - uses: shivammathur/setup-php@v1
+    - uses: shivammathur/setup-php@v2
       with:
         php-version: 7.4
         extensions: mbstring, bcmath, fileinfo, pdo_mysql
@@ -58,11 +58,11 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
     - uses: actions/checkout@v1
-    - uses: shivammathur/setup-php@v1
+    - uses: shivammathur/setup-php@v2
       with:
         php-version: 7.4
     - run: composer install --no-progress --no-interaction
-    - uses: atymic/deployer-php-action@0.1.0
+    - uses: atymic/deployer-php-action@0.2.0
       with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
