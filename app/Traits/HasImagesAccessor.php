@@ -6,6 +6,11 @@ use Illuminate\Http\UploadedFile;
 
 trait HasImagesAccessor
 {
+    public function initializeHasImagesAccessor()
+    {
+        $this->fillable[] = 'images';
+    }
+
     public function getImagesAttribute()
     {
         return $this->getMedia();
