@@ -24,4 +24,12 @@ class Publication extends Model
             ->saveSlugsTo('slug')
             ->doNotGenerateSlugsOnUpdate();
     }
+
+    public function scopeOrderByTitle($query, $direction = 'ASC')
+    {
+        $locale = app()->getLocale();
+        $fallbackLocale = config('translatable.fallback_locale');
+
+        return $query->orderByRaw("COALESCE(title->\"$.$locale\", title->\"$.$fallbackLocale\") $direction");
+    }
 }
