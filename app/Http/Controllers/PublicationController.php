@@ -13,10 +13,12 @@ class PublicationController extends Controller
 
         if (request('sort_by') == 'newest') $publications->orderBy('published_at', 'desc');
         if (request('sort_by') == 'oldest') $publications->orderBy('published_at', 'asc');
-        if (request('sort_by') == 'name_asc') $publications->orderBy('title', 'asc');
-        if (request('sort_by') == 'name_desc') $publications->orderBy('title', 'desc');
+        if (request('sort_by') == 'name_asc') $publications->orderByTitle('asc');
+        if (request('sort_by') == 'name_desc') $publications->orderByTitle('desc');
 
-        $publications = $publications->get();
+        $publications = $publications
+            ->orderBy('published_at', 'desc') // sort newest-first by default
+            ->get();
 
         return view('publications.index', compact('publications'));
     }
