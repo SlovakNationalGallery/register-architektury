@@ -17,9 +17,11 @@
     @endif
     <div class="row border-top pt-3">
         <div class="col-lg-6 offset-lg-3">
+            @if($project->collection)
             <p class="my-4">
                 <a href="{{ route('building.index', ['filters[]' => $project->collection->title]) }}" class="btn btn-outline-dark btn-sm">{{ __('collection.go_to_collection') }}</a>
             </p>
+            @endif
 
             <h2 class="mb-2 ls-2">{{ $project->title }}</h2>
         </div>
