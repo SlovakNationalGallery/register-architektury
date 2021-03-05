@@ -59,7 +59,7 @@
     </div>
     <div class="row no-gutters">
         <div class="col-md-12">
-            {{-- fields bellow should be taken from "featured" collections and translated within them --}}
+            {{-- fields below should be taken from "featured" collections and translated within them --}}
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
                 @php $unplanned_city_slug = 'unintended-city-architectural-and-town-planning-conceptions-of-19th-and-20th-century-in-the-urban-structure-of-bratislava' @endphp
                 <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}" title="Do.co,mo.mo">Do.co,mo.mo</a>
