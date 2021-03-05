@@ -4,13 +4,12 @@ namespace App\Traits;
 
 use Illuminate\Http\UploadedFile;
 
+// Note that 'images' attribute must be either added to $fillable
+// or $guarded must be empty ([]) for this trait to work in mass
+// assignment. See https://github.com/laravel/framework/issues/33978
+// for details.
 trait HasImagesAccessor
 {
-    public function initializeHasImagesAccessor()
-    {
-        $this->fillable[] = 'images';
-    }
-
     public function getImagesAttribute()
     {
         return $this->getMedia();
