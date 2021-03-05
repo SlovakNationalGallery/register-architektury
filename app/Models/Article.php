@@ -17,7 +17,7 @@ class Article extends Model implements HasMedia
 {
     use CrudTrait, InteractsWithMedia, HasSlug, HasTranslations, Publishable, HasNavigationHeadings, HasImagesAccessor;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
     protected $dates = ['published_at'];
     protected $translatable = ['title', 'content'];
 
