@@ -59,13 +59,12 @@
     </div>
     <div class="row no-gutters">
         <div class="col-md-12">
-            {{-- fields below should be taken from "featured" collections and translated within them --}}
+            {{-- TODO replace this with a facade --}}
+            @php $setting = \App\Models\Setting::first(); @endphp
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
-                @php $unplanned_city_slug = 'unintended-city-architectural-and-town-planning-conceptions-of-19th-and-20th-century-in-the-urban-structure-of-bratislava' @endphp
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'docomomo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'docomomo') }}" title="Do.co,mo.mo">Do.co,mo.mo</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link md-text-truncate {{ Route::is('about.projects.show') && $project->slug == $unplanned_city_slug ? 'active' : '' }}" href="{{ route('about.projects.show', $unplanned_city_slug) }}" title="{{ __('header.featured.unplanned_city') }}">{{ __('header.featured.unplanned_city') }}</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'momowo' ? 'active' : '' }}" href="{{ route('about.projects.show', 'momowo') }}" title="MoMoWo">MoMoWo</a>
-                <a class="nav-item py-3 ls-3 border-bl nav-link {{ Route::is('about.projects.show') && $project->slug == 'sur' ? 'active' : '' }}" href="{{ route('about.projects.show', 'sur') }}" title="ŠUR">ŠUR</a>
+                @foreach($setting->menuItems as $item)
+                <a class="nav-item py-3 ls-3 border-bl nav-link md-text-truncate {{ Route::is('about.projects.show') && $project->id == $item->project_id ? 'active' : '' }}" href="{{ $item->project_id ? route('about.projects.show', $item->project_slug) : null }}" title="{{ $item->project_title }}">{{ $item->title }}</a>
+                @endforeach
             </nav>
         </div>
     </div>

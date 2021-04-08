@@ -6,9 +6,6 @@ return [
     'architects' => 'architekti',
     'objects' => 'objekty',
     'collections' => 'kolekcie',
-    'featured' => [
-        'unplanned_city' => '(Ne)plánovaná Bratislava'
-    ],
     'about' => [
         'index' => 'oA',
         'department' => 'Oddelenie architektúry HÚ&nbsp;SAV',

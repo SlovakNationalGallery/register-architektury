@@ -6,9 +6,6 @@ return [
     'architects' => 'architects',
     'objects' => 'objects',
     'collections' => 'collections',
-    'featured' => [
-        'unplanned_city' => '(Un)planned City'
-    ],
     'about' => [
         'index' => 'oA',
         'department' => 'Department of Architecture',
