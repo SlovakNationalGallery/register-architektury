@@ -10,6 +10,17 @@ use Illuminate\Support\Collection;
 class Setting extends Model {
     use CrudTrait, HasTranslations;
 
+    protected $fillable = [
+        'menu_item_1_title',
+        'menu_item_2_title',
+        'menu_item_3_title',
+        'menu_item_4_title',
+        'menu_item_1_project_id',
+        'menu_item_2_project_id',
+        'menu_item_3_project_id',
+        'menu_item_4_project_id',
+    ];
+
     protected $translatable = [
         'menu_item_1_title',
         'menu_item_2_title',
