@@ -22,4 +22,5 @@ Route::group([
     Route::crud('collections', 'CollectionCrudController');
     Route::crud('projects', 'ProjectCrudController');
     Route::crud('featured-filters', 'FeaturedFilterCrudController');
+    Route::crud('featured-projects', 'FeaturedProjectCrudController');
 }); // this should be the absolute last line of this file
