@@ -59,10 +59,8 @@
     </div>
     <div class="row no-gutters">
         <div class="col-md-12">
-            {{-- TODO replace this with a facade --}}
-            @php $setting = \App\Models\Setting::first(); @endphp
             <nav class="nav nav-justified sub-nav collapse navbar-collapse">
-                @foreach($setting->menuItems as $item)
+                @foreach(\App\Models\Setting::menuItems() as $item)
                 <a class="nav-item py-3 ls-3 border-bl nav-link md-text-truncate {{ Route::is('about.projects.show') && $project->id == $item->project_id ? 'active' : '' }}" href="{{ $item->project_id ? route('about.projects.show', $item->project_slug) : null }}" title="{{ $item->project_title }}">{{ $item->title }}</a>
                 @endforeach
             </nav>
