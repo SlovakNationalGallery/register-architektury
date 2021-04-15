@@ -25,7 +25,14 @@ class FeaturedProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'menu_item_1_title' => 'exclude_if:locale,en|required',
+            'menu_item_2_title' => 'exclude_if:locale,en|required',
+            'menu_item_3_title' => 'exclude_if:locale,en|required',
+            'menu_item_4_title' => 'exclude_if:locale,en|required',
+            'menu_item_1_project_id' => 'required',
+            'menu_item_2_project_id' => 'required',
+            'menu_item_3_project_id' => 'required',
+            'menu_item_4_project_id' => 'required',
         ];
     }
 
