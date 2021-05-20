@@ -46,11 +46,21 @@
 
         <footer class="footer py-3 border-top">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-10 ls-2">
+                <div class="row ls-2">
+                    <div class="col-md-10">
                         {{ __('app.title') }} <a href="http://www.history.sav.sk/index.php?id=oddelenie-architektury" class="link-underline" target="_blank">{{ __('app.oa_genitive') }}</a> {{ __('app.hu') }} <a href="https://www.sav.sk/" class="link-underline" target="_blank">{{ __('app.sav') }}</a>. {{ __('app.financial_support') }}
                     </div>
-                    <div class="col-md-2 ls-2 text-md-right">
+                    <div class="col-12 mt-3 order-lg-first">
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="https://www.facebook.com/oAoddeleniearchitektury/" class="link-underline">Facebook</a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/oddelenie_architektury/" class="link-underline">Instagram</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 text-lg-right">
                         {{ __('app.produced_by') }} <a href="https://lab.sng.sk" class="link-underline" target="_blank">lab.SNG</a>
                     </div>
                 </div>
