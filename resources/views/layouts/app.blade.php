@@ -53,7 +53,7 @@
                     <div class="col-12 mt-3 order-lg-first">
                         <ul class="list-unstyled">
                             <li>
-                                <a href="https://www.facebook.com/oAoddeleniearchitektury/" class="link-underline">Facebook</a>
+                                <a href="https://www.facebook.com/Oddelenie-architektúry-100618369285276" class="link-underline">Facebook</a>
                             </li>
                             <li>
                                 <a href="https://www.instagram.com/oddelenie_architektury/" class="link-underline">Instagram</a>
