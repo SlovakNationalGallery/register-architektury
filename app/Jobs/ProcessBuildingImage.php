@@ -62,4 +62,9 @@ class ProcessBuildingImage implements ShouldQueue
 
         return $jpegPath;
     }
+
+    public function tags(): array
+    {
+        return ['upstream:image:'.$this->image->source_id];
+    }
 }
