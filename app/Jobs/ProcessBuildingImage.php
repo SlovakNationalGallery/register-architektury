@@ -65,6 +65,9 @@ class ProcessBuildingImage implements ShouldQueue
 
     public function tags(): array
     {
-        return ['upstream:image:'.$this->image->source_id];
+        return [
+            Image::class . $this->image->id,
+            'upstream:image:' . $this->image->source_id
+        ];
     }
 }
