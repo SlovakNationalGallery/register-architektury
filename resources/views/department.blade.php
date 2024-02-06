@@ -43,6 +43,12 @@
             'role' => __('about.department.researcher_female'),
             'email' => 'laura.pastorekova@savba.sk'
         ],
+        (object) [
+            'name' => 'Ing. arch. Monika Bočková, PhD.',
+            'image_url' => asset('images/monika-bockova.jpg'),
+            'role' => __('about.department.researcher_female'),
+            'email' => 'monika.bockova@savba.sk'
+        ],
     ];
     @endphp
     @foreach($people as $person)
