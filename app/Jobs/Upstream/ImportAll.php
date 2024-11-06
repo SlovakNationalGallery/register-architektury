@@ -16,6 +16,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class ImportAll implements ShouldQueue
 {
@@ -149,20 +150,26 @@ class ImportAll implements ShouldQueue
             $this->log->info('Processing ' . count($buildings) . ' buildings...');
             Building::unguarded(function() use ($buildings) {
                 foreach($buildings as $row) {
-                    $row = $this->trimRow($row);
+                    try {
+                        DB::connection('mysql')->transaction(function () use ($row) {
+                            $row = $this->trimRow($row);
 
-                    $gpsLocation = $this->parseLocationGPS($row->location_gps);
-                    $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
-                    $row->title = (array) json_decode($row->title);
-                    $row->current_function = (array) json_decode($row->current_function);
-                    $row->style = (array) json_decode($row->style);
-                    $row->status = (array) json_decode($row->status);
-                    $row->description = (array) json_decode($row->description);
+                            $gpsLocation = $this->parseLocationGPS($row->location_gps);
+                            $row->location_gps = $gpsLocation ? "$gpsLocation->lat,$gpsLocation->lon" : null;
+                            $row->title = (array)json_decode($row->title);
+                            $row->current_function = (array)json_decode($row->current_function);
+                            $row->style = (array)json_decode($row->style);
+                            $row->status = (array)json_decode($row->status);
+                            $row->description = (array)json_decode($row->description);
 
-                    Building::updateOrCreate(
-                        ['source_id' => $row->source_id],
-                        (array) $row
-                    );
+                            Building::updateOrCreate(
+                                ['source_id' => $row->source_id],
+                                (array)$row
+                            );
+                        });
+                    } catch (Throwable $e) {
+                        $this->log->error('Error processing building', ['source_id' => $row->source_id, 'error' => $e->getMessage()]);
+                    }
                 }
             });
 
@@ -170,46 +177,64 @@ class ImportAll implements ShouldQueue
             BuildingDate::unguarded(function() use ($building_dates) {
                 $buildings = Building::whereIn('source_id', Arr::pluck($building_dates, 'building_source_id'))->get();
                 foreach($building_dates as $row) {
-                    $building = $buildings->firstWhere('source_id', $row->building_source_id);
-                    BuildingDate::updateOrCreate(
-                        ['source_id' => $row->source_id],
-                        [
-                            'source_id' => $row->source_id,
-                            'building_id' => $building->id,
-                            'from' => $row->from,
-                            'to' => $row->to,
-                            'category' => (array) json_decode($row->category),
-                            'note' => (array) json_decode($row->note),
-                        ]
-                    );
+                    try {
+                        DB::connection('mysql')->transaction(function () use ($row, $buildings) {
+                            $building = $buildings->firstWhere('source_id', $row->building_source_id);
+                            BuildingDate::updateOrCreate(
+                                ['source_id' => $row->source_id],
+                                [
+                                    'source_id' => $row->source_id,
+                                    'building_id' => $building->id,
+                                    'from' => $row->from,
+                                    'to' => $row->to,
+                                    'category' => (array)json_decode($row->category),
+                                    'note' => (array)json_decode($row->note),
+                                ]
+                            );
+                        });
+                    } catch (Throwable $e) {
+                        $this->log->error('Error processing building date', ['source_id' => $row->source_id, 'error' => $e->getMessage()]);
+                    }
                 }
             });
 
             $this->log->info('Processing ' . count($architects) . ' architects...');
             Architect::unguarded(function() use ($architects) {
                 foreach($architects as $row) {
-                    $building_source_ids = empty($row->building_source_ids) ? [] : explode(';', $row->building_source_ids);
+                    try {
+                        DB::connection('mysql')->transaction(function () use ($row) {
+                            $building_source_ids = empty($row->building_source_ids) ? [] : explode(';', $row->building_source_ids);
 
-                    Architect::updateOrCreate(
-                        ['source_id' => $row->source_id],
-                        Arr::except((array) $row, ['building_source_ids'])
-                    )->buildings()->sync(
-                        Building::whereIn('source_id', $building_source_ids)->pluck('id')
-                    );
+                            Architect::updateOrCreate(
+                                ['source_id' => $row->source_id],
+                                Arr::except((array) $row, ['building_source_ids'])
+                            )->buildings()->sync(
+                                Building::whereIn('source_id', $building_source_ids)->pluck('id')
+                            );
+                        });
+                    } catch (Throwable $e) {
+                        $this->log->error('Error processing architect', ['source_id' => $row->source_id, 'error' => $e->getMessage()]);
+                    }
                 }
             });
 
             $this->log->info('Processing ' . count($images) . ' images...');
             Image::unguarded(function() use ($images) {
                 foreach($images as $row) {
-                    $building = Building::firstWhere('source_id', $row->building_source_id);
+                    try {
+                        DB::connection('mysql')->transaction(function () use ($row) {
+                            $building = Building::firstWhere('source_id', $row->building_source_id);
 
-                    $row->building_id = $building->id;
+                            $row->building_id = $building->id;
 
-                    Image::updateOrCreate(
-                        ['source_id' => $row->source_id],
-                        Arr::except((array) $row, ['building_source_id']),
-                    );
+                            Image::updateOrCreate(
+                                ['source_id' => $row->source_id],
+                                Arr::except((array) $row, ['building_source_id']),
+                            );
+                        });
+                    } catch (Throwable $e) {
+                        $this->log->error('Error processing image', ['source_id' => $row->source_id, 'error' => $e->getMessage()]);
+                    }
                 }
             });
         },
