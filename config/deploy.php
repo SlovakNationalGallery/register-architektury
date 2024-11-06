@@ -103,6 +103,7 @@ return [
         'repository' => 'https://github.com/SlovakNationalGallery/register-architektury.git',
         'http_user' => 'www-data',
         'bin/php' => 'php7.4',
+        'bin/npm' => 'n --offline exec 20 npm',
         'bin/composer' => 'php7.4 $(which composer)',
         'php_fpm_service' => 'php7.4-fpm',
         'shared_dirs' => [
